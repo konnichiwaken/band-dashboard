@@ -1,0 +1,35 @@
+{
+  "name": "band-dashboard",
+  "description": "Band dashboard to assist with DUMB administrative duties.",
+  "version": "0.0.1",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "authors": [
+    {
+      "name": "Ken McAndrews",
+      "email": "ken.mcandrews@gmail.com",
+      "homepage": "http://kenmcandre.ws"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KonichiwaKen/band-dashboard"
+  },
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "angular-cookies": "~1.4.7",
+    "bootstrap": "~3.3.5",
+    "bootstrap-material-design": "~0.3.0",
+    "jquery": "~2.1.4",
+    "ng-dialog": "ngDialog#~0.5.5",
+    "underscore": "~1.8.3",
+    "snackbarjs": "~1.0.0"
+  }
+}

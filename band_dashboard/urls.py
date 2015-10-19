@@ -14,8 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
-from django.contrib import admin
+
+
+from band_dashboard.views import IndexView
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url('^.*$', IndexView.as_view(), name='index'),
 ]

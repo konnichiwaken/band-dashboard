@@ -1,0 +1,22 @@
+{
+  "name": "band-dashboard",
+  "version": "0.0.1",
+  "description": "Band dashboard to assist with DUMB administrative duties.",
+  "bugs": "https://github.com/KonichiwaKen/band-dashboard/issues",
+  "license": "MIT",
+  "author": {
+    "name": "Ken McAndrews",
+    "email": "ken.mcandrews@gmail.com",
+    "url": "http://kenmcandre.ws"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KonichiwaKen/band-dashboard"
+  },
+  "dependencies": {
+    "bower": "^1.6.3",
+    "gulp": "^3.9.0",
+    "gulp-ng-annotate": "^1.1.0",
+    "gulp-uglify": "^1.4.2"
+  }
+}
