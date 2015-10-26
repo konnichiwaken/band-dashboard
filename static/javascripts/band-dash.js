@@ -5,7 +5,8 @@
     .module('band-dash', [
       'band-dash.config',
       'band-dash.routes',
-      'band-dash.authentication'
+      'band-dash.authentication',
+      'band-dash.layout'
     ]);
 
   angular

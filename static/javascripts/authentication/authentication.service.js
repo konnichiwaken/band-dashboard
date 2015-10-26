@@ -23,6 +23,7 @@
     var Authentication = {
       register: register,
       login: login,
+      logout: logout,
       getAuthenticatedAccount: getAuthenticatedAccount,
       isAuthenticated: isAuthenticated,
       setAuthenticatedAccount: setAuthenticatedAccount,
@@ -41,7 +42,7 @@
     * @param {string} first_name The first name entered by the user
     * @param {string} last_name The last name entered by the user
     * @returns {Promise}
-    * @memberOf thinkster.authentication.Authentication
+    * @memberOf band-dash.authentication.Authentication
     */
     function register(email, password, first_name, last_name) {
       return $http.post('/api/v1/accounts/', {
@@ -58,7 +59,7 @@
      * @param {string} email The email entered by the user
      * @param {string} password The password entered by the user
      * @returns {Promise}
-     * @memberOf thinkster.authentication.Authentication
+     * @memberOf band-dash.authentication.Authentication
      */
     function login(email, password) {
       return $http.post('/api/v1/auth/login/', {
@@ -78,10 +79,39 @@
 
       /**
        * @name loginErrorFn
-       * @desc Log "Epic failure!" to the console
+       * @desc Log "Login failure" to the console
        */
       function loginErrorFn(data, status, headers, config) {
         console.error('Login failure');
+      }
+    }
+
+    /**
+     * @name logout
+     * @desc Try to log the user out
+     * @returns {Promise}
+     * @memberOf band-dash.authentication.Authentication
+     */
+    function logout() {
+      return $http.post('/api/v1/auth/logout/')
+        .then(logoutSuccessFn, logoutErrorFn);
+
+      /**
+       * @name logoutSuccessFn
+       * @desc Unauthenticate and redirect to index with page reload
+       */
+      function logoutSuccessFn(data, status, headers, config) {
+        Authentication.unauthenticate();
+
+        window.location = '/';
+      }
+
+      /**
+       * @name logoutErrorFn
+       * @desc Log "Error when logging out" to the console
+       */
+      function logoutErrorFn(data, status, headers, config) {
+        console.error('Error when logging out');
       }
     }
 
@@ -103,7 +133,7 @@
      * @name isAuthenticated
      * @desc Check if the current user is authenticated
      * @returns {boolean} True is user is authenticated, else false.
-     * @memberOf thinkster.authentication.Authentication
+     * @memberOf band-dash.authentication.Authentication
      */
     function isAuthenticated() {
       return !!$cookies.authenticatedAccount;
@@ -114,7 +144,7 @@
      * @desc Stringify the account object and store it in a cookie
      * @param {Object} user The account object to be stored
      * @returns {undefined}
-     * @memberOf thinkster.authentication.Authentication
+     * @memberOf band-dash.authentication.Authentication
      */
     function setAuthenticatedAccount(account) {
       $cookies.authenticatedAccount = JSON.stringify(account);
@@ -124,7 +154,7 @@
      * @name unauthenticate
      * @desc Delete the cookie where the user object is stored
      * @returns {undefined}
-     * @memberOf thinkster.authentication.Authentication
+     * @memberOf band-dash.authentication.Authentication
      */
     function unauthenticate() {
       delete $cookies.authenticatedAccount;
