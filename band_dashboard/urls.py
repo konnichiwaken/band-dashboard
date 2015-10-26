@@ -13,11 +13,22 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
+from django.conf.urls import include
+from django.conf.urls import patterns
+from django.conf.urls import url
+from rest_framework_nested import routers
 
-
+from authentication.views import AccountViewSet
 from band_dashboard.views import IndexView
 
-urlpatterns = [
+
+router = routers.SimpleRouter()
+router.register(r'accounts', AccountViewSet)
+
+urlpatterns = patterns(
+     '',
+    # ... URLs
+    url(r'^api/v1/', include(router.urls)),
+
     url('^.*$', IndexView.as_view(), name='index'),
-]
+)
