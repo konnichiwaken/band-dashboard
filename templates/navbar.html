@@ -13,8 +13,8 @@
     <div class="collapse navbar-collapse" id="band-dash-nav">
       <ul class="nav navbar-nav pull-right">
         {% if user.is_authenticated %}
-          <li><a href="/+{{ user.username }}">+{{ user.username }}</a></li>
-          <li><a href="/+{{ user.username }}/settings">Settings</a></li>
+          <li><a href="/+{{ user.email }}">+{{ user.email }}</a></li>
+          <li><a href="/+{{ user.email }}/settings">Settings</a></li>
           <li><a href="javascript:void(0)">Logout</a></li>
         {% else %}
           <li><a href="/login">Login</a></li>
