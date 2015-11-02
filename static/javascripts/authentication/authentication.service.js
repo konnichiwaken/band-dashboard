@@ -39,18 +39,39 @@
     * @desc Try to register a new user
     * @param {string} email The email entered by the user
     * @param {string} password The password entered by the user
-    * @param {string} first_name The first name entered by the user
-    * @param {string} last_name The last name entered by the user
+    * @param {string} username The username entered by the user
+    * @param {string} section The section entered by the user
+    * @param {string} instrument_number The instrument number entered by the user
     * @returns {Promise}
     * @memberOf band-dash.authentication.Authentication
     */
-    function register(email, password, first_name, last_name) {
+    function register(email, password, first_name, last_name, section, instrument_number) {
       return $http.post('/api/v1/accounts/', {
         email: email,
         password: password,
         first_name: first_name,
-        last_name: last_name
-      });
+        last_name: last_name,
+        band_member: {
+          section: section,
+          instrument_number: instrument_number
+        }
+      }).then(registerSuccessFn, registerErrorFn);
+
+      /**
+      * @name registerSuccessFn
+      * @desc Log the new user in
+      */
+      function registerSuccessFn(data, status, headers, config) {
+        Authentication.login(email, password);
+      }
+
+      /**
+      * @name registerErrorFn
+      * @desc Log "Epic failure!" to the console
+      */
+      function registerErrorFn(data, status, headers, config) {
+        console.error('Error when registering');
+      }
     }
 
     /**
