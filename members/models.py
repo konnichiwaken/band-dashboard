@@ -3,6 +3,10 @@ from django.db import models
 from authentication.models import Account
 
 
+class Band(models.Model):
+    identifier = models.CharField(max_length=255, verbose_name='Band identifier')
+
+
 class BandMember(models.Model):
     BASS = 'bass'
     CLARINET = 'clarinet'
@@ -25,5 +29,6 @@ class BandMember(models.Model):
     account = models.OneToOneField(Account, related_name='band_member', verbose_name='Account')
     section = models.CharField(max_length=255, choices=SECTION_CHOICES, verbose_name='Section')
     instrument_number = models.IntegerField(null=True, verbose_name='Instrument number')
+    band = models.ForeignKey(Band, related_name='band_members', null=True, verbose_name='Band')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
