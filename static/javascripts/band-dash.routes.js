@@ -20,6 +20,10 @@
       controller: 'LoginController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/authentication/login.html'
+    }).when('/attendance/create/event_type', {
+      controller: 'EventTypeController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/attendance/create-event-type.html'
     }).otherwise('/');
   }
 })();

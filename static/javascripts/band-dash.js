@@ -6,7 +6,8 @@
       'band-dash.config',
       'band-dash.routes',
       'band-dash.authentication',
-      'band-dash.layout'
+      'band-dash.layout',
+      'band-dash.attendance'
     ]);
 
   angular

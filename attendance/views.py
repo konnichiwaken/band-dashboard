@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from attendance.models import EventType
+from attendance.serializers import EventTypeSerializer
+
+
+class EventTypeViewSet(viewsets.ModelViewSet):
+    queryset = EventType.objects.all()
+    serializer_class = EventTypeSerializer
+

@@ -15,6 +15,7 @@ class EventType(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=255, verbose_name='Title')
     time = models.DateTimeField(verbose_name='Date and time of event')
+    type = models.ForeignKey(EventType, related_name='events', verbose_name='Event type')
     band = models.ForeignKey(Band, related_name='Events', null=True, verbose_name='Band')
     points = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Points')
     ready_to_play = models.IntegerField(verbose_name='Minutes before event for RTP')
