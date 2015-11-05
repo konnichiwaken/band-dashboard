@@ -8,17 +8,17 @@
 
         <div class="form-group">
           <label for="create_event_type__name">Name</label>
-          <input type="text" class="form-control" id="login__email" ng-model="vm.name" placeholder="ex. Men's basketball game" required/>
+          <input type="text" class="form-control" id="create_event_type__name" ng-model="vm.name" placeholder="ex. Men's basketball game" required>
         </div>
 
         <div class="form-group">
           <label for="create_event_type__points">Points</label>
-          <input type="number" class="form-control" id="create_event_type__points" ng-model="vm.points" value="0" min="0" required/>
+          <input type="number" class="form-control" id="create_event_type__points" ng-model="vm.points" value="0" min="0" step="0.25" required>
         </div>
 
         <div class="form-group">
           <label for="create_event_type__rtp">Minutes before event for RTP</label>
-          <input type="number" class="form-control" id="create_event_type__rtp" ng-model="vm.rtp" value="0" min="0" required/>
+          <input type="number" class="form-control" id="create_event_type__rtp" ng-model="vm.rtp" value="0" min="0" step="1" required>
         </div>
 
         <div class="form-group">

@@ -21,12 +21,50 @@
     * @desc The Factory to be returned
     */
     var Attendance = {
+      createEvent: createEvent,
       createEventType: createEventType
     };
 
     return Attendance;
 
     ////////////////////
+
+    /**
+    * @name createEvent
+    * @desc Try to create a new event type
+    * @param {string} title The event title entered by the user
+    * @param {string} time The date and time entered by the user
+    * @param {string} type The event type entered by the user
+    * @param {string} assignedBand The assigned band for the event entered by the user
+    * @param {string} points The points for the event entered by the user
+    * @param {string} rtp The RTP for the event entered by the user
+    * @returns {Promise}
+    * @memberOf band-dash.attendance.Attendance
+    */
+    function createEvent(title, time, type, assignedBand, points, rtp) {
+      console.log(title, time, type, assignedBand, points, rtp)
+      // return $http.post('/api/v1/attendance/event_type/', {
+      //   name: name,
+      //   points: points,
+      //   ready_to_play: rtp
+      // }).then(createEventSuccessFn, createTypeErrorFn);
+
+      // /**
+      // * @name createEventTypeSuccessFn
+      // * @desc Log that event type has been created successfully
+      // */
+      // function createEventTypeSuccessFn(data, status, headers, config) {
+      //   console.log('Event type created successfully')
+      // }
+
+      // /**
+      // * @name createEventTypeErrorFn
+      // * @desc Log error to the console
+      // */
+      // function createEventTypeErrorFn(data, status, headers, config) {
+      //   console.error('Error when creating event type');
+      // }
+    }
 
     /**
     * @name createEventType

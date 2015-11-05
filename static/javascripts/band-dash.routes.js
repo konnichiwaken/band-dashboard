@@ -24,6 +24,10 @@
       controller: 'EventTypeController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/attendance/create-event-type.html'
+    }).when('/attendance/create/event', {
+      controller: 'EventController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/attendance/create-event.html'
     }).otherwise('/');
   }
 })();
