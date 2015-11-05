@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = '05!&x!(y0za+9f4r&=6!z@y0$%fm*mj=657z_c0kr(59%n%-p9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'band_dashboard',
         'USER': 'banddashuser',
-        'PASSWORD': '',
+        'PASSWORD': '2mepJJj-ww6JS#',
         'HOST': 'localhost',
         'PORT': '',
     }
