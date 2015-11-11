@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from members.models import Band
 from members.models import BandMember
 
 
@@ -11,6 +12,18 @@ class BandMemberSerializer(serializers.ModelSerializer):
             'account',
             'section',
             'instrument_number',
+            'band',
             'created_at',
             'updated_at',)
         read_only_fields = ('account', 'created_at', 'updated_at',)
+
+
+class BandSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Band
+        fields = ('id',
+            'identifier',
+            'created_at',
+            'updated_at',)
+        read_only_fields = ('created_at', 'updated_at',)

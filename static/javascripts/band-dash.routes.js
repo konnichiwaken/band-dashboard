@@ -28,6 +28,10 @@
       controller: 'EventController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/attendance/create-event.html'
+    }).when('/members/create/band', {
+      controller: 'BandController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/members/create-band.html'
     }).otherwise('/');
   }
 })();

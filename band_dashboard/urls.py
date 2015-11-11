@@ -23,11 +23,13 @@ from authentication.views import AccountViewSet
 from authentication.views import LoginView
 from authentication.views import LogoutView
 from band_dashboard.views import IndexView
+from members.views import BandViewSet
 
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
 router.register(r'attendance/event_type', EventTypeViewSet)
+router.register(r'members/band', BandViewSet)
 
 urlpatterns = patterns(
      '',
