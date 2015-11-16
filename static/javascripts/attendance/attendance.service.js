@@ -31,7 +31,7 @@
 
     /**
     * @name createEvent
-    * @desc Try to create a new event type
+    * @desc Try to create a new event
     * @param {string} title The event title entered by the user
     * @param {string} time The date and time entered by the user
     * @param {string} type The event type entered by the user
@@ -42,28 +42,30 @@
     * @memberOf band-dash.attendance.Attendance
     */
     function createEvent(title, time, type, assignedBand, points, rtp) {
-      console.log(title, time, type, assignedBand, points, rtp)
-      // return $http.post('/api/v1/attendance/event_type/', {
-      //   name: name,
-      //   points: points,
-      //   ready_to_play: rtp
-      // }).then(createEventSuccessFn, createTypeErrorFn);
+      return $http.post('/api/v1/attendance/event/', {
+        title: title,
+        time: time,
+        type: type,
+        band: assignedBand,
+        points: points,
+        ready_to_play: rtp
+      }).then(createEventSuccessFn, createEventErrorFn);
 
-      // /**
-      // * @name createEventTypeSuccessFn
-      // * @desc Log that event type has been created successfully
-      // */
-      // function createEventTypeSuccessFn(data, status, headers, config) {
-      //   console.log('Event type created successfully')
-      // }
+      /**
+      * @name createEventSuccessFn
+      * @desc Log that event has been created successfully
+      */
+      function createEventSuccessFn(data, status, headers, config) {
+        console.log('Event created successfully')
+      }
 
-      // /**
-      // * @name createEventTypeErrorFn
-      // * @desc Log error to the console
-      // */
-      // function createEventTypeErrorFn(data, status, headers, config) {
-      //   console.error('Error when creating event type');
-      // }
+      /**
+      * @name createEventErrorFn
+      * @desc Log error to the console
+      */
+      function createEventErrorFn(data, status, headers, config) {
+        console.error('Error when creating event');
+      }
     }
 
     /**

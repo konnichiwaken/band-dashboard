@@ -19,6 +19,7 @@ from django.conf.urls import url
 from rest_framework_nested import routers
 
 from attendance.views import EventTypeViewSet
+from attendance.views import EventViewSet
 from authentication.views import AccountViewSet
 from authentication.views import LoginView
 from authentication.views import LogoutView
@@ -28,6 +29,7 @@ from members.views import BandViewSet
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
+router.register(r'attendance/event', EventViewSet)
 router.register(r'attendance/event_type', EventTypeViewSet)
 router.register(r'members/band', BandViewSet)
 
