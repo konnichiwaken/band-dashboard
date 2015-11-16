@@ -31,6 +31,10 @@
       $http.get('/api/v1/attendance/event_type/').success(function(response) {
         vm.eventTypes = response;
       });
+
+      $http.get('/api/v1/members/band/').success(function(response) {
+        vm.bands = response;
+      });
     }
 
     /**
@@ -39,7 +43,13 @@
     * @memberOf band-dash.attendance.EventController
     */
     function createEvent() {
-      Attendance.createEvent(vm.title, vm.time, vm.type, vm.assignedBand, vm.type.points, vm.type.ready_to_play);
+      Attendance.createEvent(
+        vm.title,
+        vm.time,
+        vm.type.id,
+        vm.assignedBand,
+        vm.points,
+        vm.rtp);
     }
 
     /**
