@@ -45,8 +45,8 @@
       return $http.post('/api/v1/attendance/event/', {
         title: title,
         time: time,
-        type: type,
-        band: assignedBand,
+        type_id: type,
+        band_id: assignedBand,
         points: points,
         ready_to_play: rtp
       }).then(createEventSuccessFn, createEventErrorFn);
