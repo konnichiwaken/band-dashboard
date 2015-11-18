@@ -53,8 +53,8 @@
     }
 
     /**
-    * @name createEvent
-    * @desc Create an event type
+    * @name updateEventType
+    * @desc Updates event type fields in form
     * @memberOf band-dash.attendance.EventController
     */
     function updateEventType() {

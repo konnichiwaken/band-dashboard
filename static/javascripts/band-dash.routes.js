@@ -32,6 +32,10 @@
       controller: 'BandController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/members/create-band.html'
+    }).when('/attendance/view/events', {
+      controller: 'AttendanceController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/attendance/view-events.html'
     }).otherwise('/');
   }
 })();
