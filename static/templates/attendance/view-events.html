@@ -12,10 +12,10 @@
         </tr>
 
         <tr ng-repeat="event in vm.events">
-          <td>{{ event.title }}</td>
-          <td>{{ event.time }}</td>
-          <td>{{ event.band.identifier }}</td>
-          <td>{{ event.type.name }}</td>
+          <td>{{event.title}}</td>
+          <td>{{event.time | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+          <td>{{event.band.identifier}}</td>
+          <td>{{event.type.name}}</td>
         </tr>
       </table>
     </div>
