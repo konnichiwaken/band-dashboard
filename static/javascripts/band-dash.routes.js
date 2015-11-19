@@ -20,19 +20,19 @@
       controller: 'LoginController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/authentication/login.html'
-    }).when('/attendance/create/event_type', {
+    }).when('/event_type/create', {
       controller: 'EventTypeController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/attendance/create-event-type.html'
-    }).when('/attendance/create/event', {
+    }).when('/event/create', {
       controller: 'EventController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/attendance/create-event.html'
-    }).when('/members/create/band', {
+    }).when('/band/create', {
       controller: 'BandController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/members/create-band.html'
-    }).when('/attendance/view/events', {
+    }).when('/attendance/view_all', {
       controller: 'AttendanceController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/attendance/view-events.html'
