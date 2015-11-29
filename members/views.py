@@ -54,9 +54,19 @@ class BandAssignmentView(views.APIView):
             if action == 'assign':
                 band.unassigned_members.remove(band_member)
                 band.assigned_members.add(band_member)
+                for event in band.events:
+                    if Attendance.objects.filter(event=event, member=band_member).exists():
+                        Attendance.objects.filter(
+                            event=event, member=band_member).update(is_active=True)
+                    else:
+                        Attendance.objects.create(event=event, member=band_member)
             elif action =='unassign':
                 band.unassigned_members.add(band_member)
                 band.assigned_members.remove(band_member)
+                for event in band.events:
+                    if Attendance.objects.filter(event=event, member=band_member).exists():
+                        Attendance.objects.filter(
+                            event=event, member=band_member).update(is_active=False)
 
             band.save()
 
