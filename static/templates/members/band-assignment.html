@@ -22,7 +22,7 @@
             <td>{{member.name}}</td>
             <td>{{member.section}}</td>
             <td>
-              <button type="btn btn-primary" ng-click="unassignMember(member.id)">Unassign</button>
+              <button type="btn btn-primary" ng-click="vm.unassignMember(member.id)">Unassign</button>
             </td>
           </tr>
         </table>
@@ -42,7 +42,7 @@
             <td>{{member.name}}</td>
             <td>{{member.section}}</td>
             <td>
-              <button type="btn btn-primary" ng-click="assignMember(member.id)">Assign</button>
+              <button type="btn btn-primary" ng-click="vm.assignMember(member.id)">Assign</button>
             </td>
           </tr>
         </table>
