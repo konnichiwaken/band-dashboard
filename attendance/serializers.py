@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from attendance.models import Attendance
 from attendance.models import Event
 from attendance.models import EventType
 from members.models import Band
@@ -46,4 +47,7 @@ class EventSerializer(serializers.ModelSerializer):
         type = EventType.objects.get(id=type_id)
         band = Band.objects.get(id=band_id)
         event = Event.objects.create(band=band, type=type, **validated_data)
+        for member in band.assigned_members.all():
+            Attendance.objects.create(event=event, member=member)
+
         return event
