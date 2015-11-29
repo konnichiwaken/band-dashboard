@@ -4,6 +4,7 @@ from attendance.models import Attendance
 from attendance.models import Event
 from attendance.models import EventType
 from members.models import Band
+from members.serializers import BandMemberSerializer
 from members.serializers import BandSerializer
 
 
@@ -51,3 +52,12 @@ class EventSerializer(serializers.ModelSerializer):
             Attendance.objects.create(event=event, member=member)
 
         return event
+
+
+class AttendanceSerializer(serializers.ModelSerializer):
+    member = BandMemberSerializer()
+
+    class Meta:
+        model = Attendance
+        fields = ('id', 'member', 'check_in_time', 'created_at', 'updated_at',)
+        read_only_fields = ('member', 'created_at', 'updated_at',)

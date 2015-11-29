@@ -22,7 +22,8 @@
     */
     var Attendance = {
       createEvent: createEvent,
-      createEventType: createEventType
+      createEventType: createEventType,
+      submitAttendance: submitAttendance
     };
 
     return Attendance;
@@ -99,6 +100,10 @@
       function createEventTypeErrorFn(data, status, headers, config) {
         console.error('Error when creating event type');
       }
+    }
+
+    function submitAttendance(attendanceID, attendanceCheckIn) {
+      console.log(attendanceID, attendanceCheckIn);
     }
   }
 })();
