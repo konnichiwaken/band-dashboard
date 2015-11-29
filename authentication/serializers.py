@@ -2,6 +2,7 @@ from django.contrib.auth import update_session_auth_hash
 from rest_framework import serializers
 
 from authentication.models import Account
+from members.models import Band
 from members.models import BandMember
 from members.serializers import BandMemberSerializer
 
@@ -27,7 +28,11 @@ class AccountSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         band_member_data = validated_data.pop('band_member')
         account = Account.objects.create_user(**validated_data)
-        BandMember.objects.create(account=account, **band_member_data)
+        band_member = BandMember.objects.create(account=account, **band_member_data)
+        for band in Band.objects.all():
+            band.unassigned_members.add(band_member)
+            band.save()
+
         return account
 
     def update(self, instance, validated_data):
