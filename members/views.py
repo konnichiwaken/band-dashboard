@@ -4,6 +4,7 @@ from rest_framework import views
 from rest_framework import viewsets
 from rest_framework.response import Response
 
+from attendance.models import Attendance
 from members.models import Band
 from members.models import BandMember
 from members.serializers import BandSerializer
@@ -54,20 +55,24 @@ class BandAssignmentView(views.APIView):
             if action == 'assign':
                 band.unassigned_members.remove(band_member)
                 band.assigned_members.add(band_member)
-                for event in band.events:
+                for event in band.events.all():
                     if Attendance.objects.filter(event=event, member=band_member).exists():
                         Attendance.objects.filter(
                             event=event, member=band_member).update(is_active=True)
                     else:
                         Attendance.objects.create(event=event, member=band_member)
-            elif action =='unassign':
+            elif action == 'unassign':
                 band.unassigned_members.add(band_member)
                 band.assigned_members.remove(band_member)
-                for event in band.events:
+                for event in band.events.all():
                     if Attendance.objects.filter(event=event, member=band_member).exists():
                         Attendance.objects.filter(
                             event=event, member=band_member).update(is_active=False)
 
             band.save()
-
-        return Response()
+            return Response()
+        else:
+            return Response({
+                'status': 'Bad request',
+                'message': 'Missing parameter in request',
+            }, status=status.HTTP_400_BAD_REQUEST)

@@ -37,7 +37,7 @@ class AccountViewSet(viewsets.ModelViewSet):
 
         return Response({
             'status': 'Bad request',
-            'message': 'Account could not be created with received data.'
+            'message': 'Account could not be created with received data.',
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
