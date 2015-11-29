@@ -18,6 +18,7 @@ from django.conf.urls import patterns
 from django.conf.urls import url
 from rest_framework_nested import routers
 
+from attendance.views import AttendanceViewSet
 from attendance.views import EventTypeViewSet
 from attendance.views import EventViewSet
 from authentication.views import AccountViewSet
@@ -30,8 +31,9 @@ from members.views import BandAssignmentView
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
-router.register(r'attendance/event', EventViewSet)
+router.register(r'attendance/event', EventViewSet, base_name='event')
 router.register(r'attendance/event_type', EventTypeViewSet)
+router.register(r'attendance/event_attendance', AttendanceViewSet, base_name='event_attendance')
 router.register(r'members/band', BandViewSet)
 
 urlpatterns = patterns(
