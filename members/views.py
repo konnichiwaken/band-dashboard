@@ -1,8 +1,11 @@
+import json
+
 from rest_framework import views
 from rest_framework import viewsets
 from rest_framework.response import Response
 
 from members.models import Band
+from members.models import BandMember
 from members.serializers import BandSerializer
 
 
@@ -38,3 +41,23 @@ class BandAssignmentView(views.APIView):
             band_assignments[band.id] = member_assignments
 
         return Response(band_assignments)
+
+
+    def post(self, request, format=None):
+        data = json.loads(request.body)
+        member_id = data.get('member', None)
+        band_id = data.get('band', None)
+        action = data.get('action', None)
+        if member_id and band_id and action:
+            band_member = BandMember.objects.get(id=member_id)
+            band = Band.objects.get(id=band_id)
+            if action == 'assign':
+                band.unassigned_members.remove(band_member)
+                band.assigned_members.add(band_member)
+            elif action =='unassign':
+                band.unassigned_members.add(band_member)
+                band.assigned_members.remove(band_member)
+
+            band.save()
+
+        return Response()
