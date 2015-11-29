@@ -27,3 +27,9 @@ class BandSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',)
         read_only_fields = ('created_at', 'updated_at',)
+
+    def create(self, validated_data):
+        band = Band.objects.create(**validated_data)
+        band.unassigned_members = BandMember.objects.all()
+        band.save()
+        return band
