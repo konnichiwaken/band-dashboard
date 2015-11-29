@@ -36,6 +36,10 @@
       controller: 'AttendanceController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/attendance/view-events.html'
+    }).when('/band/assign', {
+      controller: 'BandAssignmentController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/members/band-assignment.html'
     }).otherwise('/');
   }
 })();
