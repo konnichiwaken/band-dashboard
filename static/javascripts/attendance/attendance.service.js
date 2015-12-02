@@ -102,8 +102,26 @@
       }
     }
 
-    function submitAttendance(attendanceID, attendanceCheckIn) {
-      console.log(attendanceID, attendanceCheckIn);
+    function submitAttendance(attendance) {
+      return $http.put(
+        '/api/v1/attendance/event_attendance/' + attendance.id + '/',
+        attendance).then(submitAttendanceSuccessFn, submitAttendanceErrorFn);
+
+      /**
+      * @name submitAttendanceSuccessFn
+      * @desc Log that event type has been created successfully
+      */
+      function submitAttendanceSuccessFn(data, status, headers, config) {
+        console.log('Attendance submitted successfully')
+      }
+
+      /**
+      * @name submitAttendanceErrorFn
+      * @desc Log error to the console
+      */
+      function submitAttendanceErrorFn(data, status, headers, config) {
+        console.error('Error when submitting attendance');
+      }
     }
   }
 })();

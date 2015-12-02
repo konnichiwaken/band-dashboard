@@ -28,6 +28,8 @@
     Attendance) {
     var vm = this;
 
+    vm.submitAttendance = submitAttendance;
+
     activate()
 
     /**
@@ -44,13 +46,18 @@
 
       $http.get('/api/v1/attendance/event_attendance/?event_id=' + $routeParams.event).success(
         function(response) {
+          for (var i = 0; i < response.length; i++) {
+            if (response[i].check_in_time) {
+              response[i].check_in_time = new Date(response[i].check_in_time);
+            }
+          }
           vm.attendances = response;
         }
       );
     }
 
-    function submitAttendance(attendanceID, attendanceCheckIn) {
-      Attendance.submitAttendance(attendanceID, attendanceCheckIn);
+    function submitAttendance(attendance) {
+      Attendance.submitAttendance(attendance);
     }
   }
 })();

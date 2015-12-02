@@ -15,11 +15,11 @@
         <tr ng-repeat="attendance in vm.attendances">
           <td>{{attendance.member.full_name}}</td>
           <td>{{attendance.member.section}}</td>
-          <td>{{attendance.check_in_time}}</td>
+          <td><input type="time" ng-model="attendance.check_in_time"></td>
           <td>{{attendance.status}}</td>
           <td>
             <button type="btn btn-primary"
-              ng-click="submitAttendance(attendance.id, attendance.check_in_time)">
+              ng-click="vm.submitAttendance(attendance)">
               Submit
             </button>
           </td>
