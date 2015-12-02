@@ -55,9 +55,9 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class AttendanceSerializer(serializers.ModelSerializer):
-    member = BandMemberSerializer()
+    member = BandMemberSerializer(read_only=True)
 
     class Meta:
         model = Attendance
         fields = ('id', 'member', 'check_in_time', 'created_at', 'updated_at',)
-        read_only_fields = ('member', 'created_at', 'updated_at',)
+        read_only_fields = ('created_at', 'updated_at',)
