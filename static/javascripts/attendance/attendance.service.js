@@ -114,7 +114,8 @@
       * @desc Log that event type has been created successfully
       */
       function submitOnTimeSuccessFn(data, status, headers, config) {
-        console.log('Attendance submitted successfully')
+        console.log('Attendance submitted successfully');
+        return true;
       }
 
       /**
@@ -137,7 +138,8 @@
       * @desc Log that event type has been created successfully
       */
       function submitLateSuccessFn(data, status, headers, config) {
-        console.log('Attendance submitted successfully')
+        console.log('Attendance submitted successfully');
+        return data.data;
       }
 
       /**
