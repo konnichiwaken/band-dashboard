@@ -7,7 +7,7 @@
         <tr>
           <th>Band member</th>
           <th>Section</th>
-          <th>Check-in time</th>
+          <th>Check-in time (if late)</th>
           <th>Attendance status</th>
           <th>Submit attendance</th>
         </tr>
@@ -19,8 +19,12 @@
           <td>{{attendance.status}}</td>
           <td>
             <button type="btn btn-primary"
-              ng-click="vm.submitAttendance(attendance)">
-              Submit
+              ng-click="vm.submitOnTime(attendance)">
+              On-time
+            </button>
+            <button type="btn btn-primary"
+              ng-click="vm.submitLate(attendance)">
+              Late
             </button>
           </td>
         </tr>

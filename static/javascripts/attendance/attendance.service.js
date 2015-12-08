@@ -23,7 +23,8 @@
     var Attendance = {
       createEvent: createEvent,
       createEventType: createEventType,
-      submitAttendance: submitAttendance
+      submitOnTime: submitOnTime,
+      submitLate: submitLate
     };
 
     return Attendance;
@@ -102,24 +103,48 @@
       }
     }
 
-    function submitAttendance(attendance) {
+    function submitOnTime(attendance) {
+      attendance.is_late = false;
       return $http.put(
         '/api/v1/attendance/event_attendance/' + attendance.id + '/',
-        attendance).then(submitAttendanceSuccessFn, submitAttendanceErrorFn);
+        attendance).then(submitOnTimeSuccessFn, submitOnTimeErrorFn);
 
       /**
-      * @name submitAttendanceSuccessFn
+      * @name submitOnTimeSuccessFn
       * @desc Log that event type has been created successfully
       */
-      function submitAttendanceSuccessFn(data, status, headers, config) {
+      function submitOnTimeSuccessFn(data, status, headers, config) {
         console.log('Attendance submitted successfully')
       }
 
       /**
-      * @name submitAttendanceErrorFn
+      * @name submitOnTimeErrorFn
       * @desc Log error to the console
       */
-      function submitAttendanceErrorFn(data, status, headers, config) {
+      function submitOnTimeErrorFn(data, status, headers, config) {
+        console.error('Error when submitting attendance');
+      }
+    }
+
+    function submitLate(attendance) {
+      attendance.is_late = true;
+      return $http.put(
+        '/api/v1/attendance/event_attendance/' + attendance.id + '/',
+        attendance).then(submitLateSuccessFn, submitLateErrorFn);
+
+      /**
+      * @name submitLateSuccessFn
+      * @desc Log that event type has been created successfully
+      */
+      function submitLateSuccessFn(data, status, headers, config) {
+        console.log('Attendance submitted successfully')
+      }
+
+      /**
+      * @name submitLateErrorFn
+      * @desc Log error to the console
+      */
+      function submitLateErrorFn(data, status, headers, config) {
         console.error('Error when submitting attendance');
       }
     }

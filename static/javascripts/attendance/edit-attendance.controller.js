@@ -28,7 +28,8 @@
     Attendance) {
     var vm = this;
 
-    vm.submitAttendance = submitAttendance;
+    vm.submitOnTime = submitOnTime;
+    vm.submitLate = submitLate;
 
     activate()
 
@@ -56,8 +57,13 @@
       );
     }
 
-    function submitAttendance(attendance) {
-      Attendance.submitAttendance(attendance);
+    function submitOnTime(attendance) {
+      Attendance.submitOnTime(attendance);
+      attendance.check_in_time = null;
+    }
+
+    function submitLate(attendance) {
+      Attendance.submitLate(attendance);
     }
   }
 })();
