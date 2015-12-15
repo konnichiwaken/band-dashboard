@@ -52,7 +52,7 @@ class EventSerializer(serializers.ModelSerializer):
         band = Band.objects.get(id=band_id)
         event = Event.objects.create(band=band, type=type, **validated_data)
         for member in band.assigned_members.all():
-            Attendance.objects.create(event=event, member=member)
+            Attendance.objects.create(event=event, member=member, assigned=True)
 
         return event
 
@@ -63,7 +63,15 @@ class AttendanceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Attendance
-        fields = ('id', 'member', 'check_in_time', 'points', 'is_late', 'created_at', 'updated_at',)
+        fields = (
+            'id',
+            'member',
+            'check_in_time',
+            'points',
+            'is_late',
+            'assigned',
+            'created_at',
+            'updated_at',)
         read_only_fields = ('created_at', 'updated_at',)
 
     def update(self, instance, validated_data):
