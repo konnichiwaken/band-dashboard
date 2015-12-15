@@ -30,6 +30,7 @@
 
     vm.submitOnTime = submitOnTime;
     vm.submitLate = submitLate;
+    vm.addUnassignedMember = addUnassignedMember;
 
     activate()
 
@@ -39,6 +40,8 @@
     * @memberOf band-dash.attendance.EditAttendanceController
     */
     function activate() {
+      vm.assignedAttendances = [];
+      vm.unassignedAttendances = [];
       $http.get('/api/v1/attendance/event/?id=' + $routeParams.event).success(
         function(response) {
           vm.event = response[0];
@@ -50,10 +53,20 @@
                   response[i].check_in_time = new Date(response[i].check_in_time);
                 }
                 determineAttendanceStatus(response[i]);
+                if (response[i].assigned) {
+                  vm.assignedAttendances.push(response[i]);
+                } else {
+                  vm.unassignedAttendances.push(response[i]);
+                }
               }
-              vm.attendances = response;
             }
           );
+        }
+      );
+
+      $http.get('/api/v1/members/unassigned/?event_id=' + $routeParams.event).success(
+        function(response) {
+          vm.unassignedMembers = response;
         }
       );
     }
@@ -75,6 +88,14 @@
           determineAttendanceStatus(attendance);
         }
       });
+    }
+
+    function addUnassignedMember() {
+      var unassignedAttendance = [];
+      unassignedAttendance.member = angular.copy(vm.unassignedMember);
+      vm.unassignedAttendances.push(unassignedAttendance);
+      var index = vm.unassignedMembers.indexOf(vm.unassignedMember);
+      vm.unassignedMembers.splice(index, 1);
     }
 
     function determineAttendanceStatus(attendance) {
