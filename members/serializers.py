@@ -22,7 +22,7 @@ class BandSerializer(serializers.ModelSerializer):
 
 
 class BandMemberSerializer(serializers.ModelSerializer):
-    bands = BandSerializer(many=True)
+    bands = BandSerializer(many=True, required=False)
 
     class Meta:
         model = BandMember
