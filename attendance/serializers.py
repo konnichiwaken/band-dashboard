@@ -70,6 +70,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
             'points',
             'is_late',
             'assigned',
+            'unexcused',
             'created_at',
             'updated_at',)
         read_only_fields = ('created_at', 'updated_at',)
@@ -87,7 +88,10 @@ class AttendanceSerializer(serializers.ModelSerializer):
                 if new_check_in_time < event_time:
                     new_check_in_time = new_check_in_time + datetime.timedelta(days=1)
 
-                points = calculate_attendance_points(new_check_in_time, event)
+                points = calculate_attendance_points(
+                    new_check_in_time,
+                    event,
+                    validated_data.get('unexcused', None))
                 validated_data['check_in_time'] = new_check_in_time
                 validated_data['points'] = points
         elif is_late == False:

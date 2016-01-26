@@ -10,6 +10,7 @@
           <th>Band member</th>
           <th>Section</th>
           <th>Check-in time (if late)</th>
+          <th>Unexcused</th>
           <th>Attendance status</th>
           <th>Submit attendance</th>
         </tr>
@@ -18,6 +19,7 @@
           <td>{{attendance.member.full_name}}</td>
           <td>{{attendance.member.section}}</td>
           <td><input type="time" ng-model="attendance.check_in_time"></td>
+          <td><input type="checkbox" ng-model="attendance.unexcused"></td>
           <td>{{attendance.status}}</td>
           <td>
             <button type="btn btn-primary"
