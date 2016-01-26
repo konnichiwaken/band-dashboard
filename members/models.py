@@ -38,6 +38,7 @@ class Band(models.Model):
     assigned_members = models.ManyToManyField(
         BandMember,
         related_name='bands',
+        blank=True,
         verbose_name='Assigned members')
     unassigned_members = models.ManyToManyField(
         BandMember,
