@@ -30,5 +30,6 @@ class Attendance(models.Model):
     check_in_time = models.DateTimeField(null=True, verbose_name='Check-in time')
     is_active = models.BooleanField(default=True, verbose_name='Is active')
     assigned = models.BooleanField(verbose_name='Assigned to event')
+    unexcused = models.BooleanField(default=False, verbose_name='Unexcused absence')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
