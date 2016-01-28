@@ -105,9 +105,15 @@
 
     function submitOnTime(attendance) {
       attendance.is_late = false;
-      return $http.put(
-        '/api/v1/attendance/event_attendance/' + attendance.id + '/',
-        attendance).then(submitOnTimeSuccessFn, submitOnTimeErrorFn);
+      if (attendance.assigned || (!attendance.assigned && attendance.id)) {
+        return $http.put(
+          '/api/v1/attendance/event_attendance/' + attendance.id + '/',
+          attendance).then(submitOnTimeSuccessFn, submitOnTimeErrorFn);
+      } else {
+        return $http.post(
+          '/api/v1/attendance/unassigned/',
+          attendance).then(submitOnTimeSuccessFn, submitOnTimeErrorFn);
+      }
 
       /**
       * @name submitOnTimeSuccessFn
@@ -129,9 +135,15 @@
 
     function submitLate(attendance) {
       attendance.is_late = true;
-      return $http.put(
-        '/api/v1/attendance/event_attendance/' + attendance.id + '/',
-        attendance).then(submitLateSuccessFn, submitLateErrorFn);
+      if (attendance.assigned || (!attendance.assigned && attendance.id)) {
+        return $http.put(
+          '/api/v1/attendance/event_attendance/' + attendance.id + '/',
+          attendance).then(submitLateSuccessFn, submitLateErrorFn);
+      } else {
+        return $http.post(
+          '/api/v1/attendance/unassigned/',
+          attendance).then(submitLateSuccessFn, submitLateErrorFn);
+      }
 
       /**
       * @name submitLateSuccessFn

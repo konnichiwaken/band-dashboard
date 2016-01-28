@@ -72,6 +72,11 @@
     }
 
     function submitOnTime(attendance) {
+      if (!attendance.assigned) {
+        attendance.event_id = vm.event.id;
+        attendance.member_id = attendance.member.id;
+      }
+
       Attendance.submitOnTime(attendance).then(function(success) {
         if (success) {
           attendance.check_in_time = null;
@@ -81,6 +86,11 @@
     }
 
     function submitLate(attendance) {
+      if (!attendance.assigned) {
+        attendance.event_id = vm.event.id;
+        attendance.member_id = attendance.member.id;
+      }
+
       Attendance.submitLate(attendance).then(function(new_attendance) {
         if (new_attendance) {
           attendance.check_in_time = new Date(new_attendance.check_in_time);
@@ -91,8 +101,9 @@
     }
 
     function addUnassignedMember() {
-      var unassignedAttendance = [];
+      var unassignedAttendance = {};
       unassignedAttendance.member = angular.copy(vm.unassignedMember);
+      unassignedAttendance.assigned = false;
       vm.unassignedAttendances.push(unassignedAttendance);
       var index = vm.unassignedMembers.indexOf(vm.unassignedMember);
       vm.unassignedMembers.splice(index, 1);

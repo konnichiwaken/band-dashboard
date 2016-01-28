@@ -1,4 +1,10 @@
+import json
+
+from django.forms.models import model_to_dict
+from rest_framework import status
+from rest_framework import views
 from rest_framework import viewsets
+from rest_framework.response import Response
 
 from attendance.models import Attendance
 from attendance.models import Event
@@ -35,3 +41,18 @@ class AttendanceViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(event_id=event_id)
 
         return queryset
+
+
+class UnassignedAttendanceView(views.APIView):
+
+    def post(self, request, format=None):
+        data = json.loads(request.body)
+        serializer = AttendanceSerializer(data=data)
+        if serializer.is_valid():
+            attendance = serializer.save()
+            return Response(model_to_dict(attendance), status=status.HTTP_201_CREATED)
+
+        return Response({
+            'status': 'Bad request',
+            'message': serializer.errors,
+        }, status=status.HTTP_400_BAD_REQUEST)
