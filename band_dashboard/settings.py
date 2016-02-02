@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'authentication',
     'members',
     'attendance',
+    'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (

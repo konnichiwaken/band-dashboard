@@ -77,10 +77,13 @@
         attendance.member_id = attendance.member.id;
       }
 
-      Attendance.submitOnTime(attendance).then(function(success) {
-        if (success) {
+      Attendance.submitOnTime(attendance).then(function(newAttendance) {
+        if (newAttendance) {
           attendance.check_in_time = null;
           attendance.status = 'On time';
+          if (!attendance.id) {
+            attendance.id = newAttendance.id;
+          }
         }
       });
     }
@@ -91,11 +94,14 @@
         attendance.member_id = attendance.member.id;
       }
 
-      Attendance.submitLate(attendance).then(function(new_attendance) {
-        if (new_attendance) {
-          attendance.check_in_time = new Date(new_attendance.check_in_time);
-          attendance.points = new_attendance.points;
+      Attendance.submitLate(attendance).then(function(newAttendance) {
+        if (newAttendance) {
+          attendance.check_in_time = new Date(newAttendance.check_in_time);
+          attendance.points = newAttendance.points;
           determineAttendanceStatus(attendance);
+          if (!attendance.id) {
+            attendance.id = newAttendance.id;
+          }
         }
       });
     }

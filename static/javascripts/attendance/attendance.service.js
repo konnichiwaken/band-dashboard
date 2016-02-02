@@ -112,16 +112,25 @@
       } else {
         return $http.post(
           '/api/v1/attendance/unassigned/',
-          attendance).then(submitOnTimeSuccessFn, submitOnTimeErrorFn);
+          attendance).then(submitOnTimeUnassignedSuccessFn, submitOnTimeErrorFn);
       }
 
       /**
       * @name submitOnTimeSuccessFn
-      * @desc Log that event type has been created successfully
+      * @desc Log that attendance has been created successfully
       */
       function submitOnTimeSuccessFn(data, status, headers, config) {
         console.log('Attendance submitted successfully');
-        return true;
+        return data.data;
+      }
+
+      /**
+      * @name submitOnTimeUnassignedSuccessFn
+      * @desc Log that unassigned attendance has been created successfully
+      */
+      function submitOnTimeUnassignedSuccessFn(data, status, headers, config) {
+        console.log('Attendance submitted successfully');
+        return data.data;
       }
 
       /**
