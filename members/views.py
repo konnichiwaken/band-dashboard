@@ -81,7 +81,12 @@ class UnassignedMembersView(views.APIView):
             event = Event.objects.filter(id=event_id)
             if event.exists():
                 band = event.first().band
-                unassigned_members = band.unassigned_members.all()
+                existing_unassigned_members = Attendance.objects.filter(
+                    event=event,
+                    assigned=False,
+                    is_active=True).values_list('member_id', flat=True).distinct()
+                unassigned_members = band.unassigned_members.all().exclude(
+                    id__in=existing_unassigned_members)
                 unassigned_members_dicts = []
                 for unassigned_member in unassigned_members:
                     full_name = unassigned_member.full_name
