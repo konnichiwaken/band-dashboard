@@ -83,6 +83,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
         check_in_time = validated_data.get('check_in_time', None)
         is_late = validated_data.pop('is_late', None)
         event_id = validated_data.get('event_id', None)
+        assigned = validated_data.get('assigned', None)
         if event_id:
             event = Event.objects.get(id=event_id)
 
@@ -99,12 +100,13 @@ class AttendanceSerializer(serializers.ModelSerializer):
                     new_check_in_time,
                     event,
                     validated_data.get('unexcused', None),
-                    validated_data.get('assigned', None))
+                    assigned)
                 validated_data['check_in_time'] = new_check_in_time
                 validated_data['points'] = points
         else:
             validated_data['check_in_time'] = None
-            validated_data['points'] = event.points
+            points = event.points if assigned else event.points / 2
+            validated_data['points'] = points
 
         attendance = Attendance.objects.create(**validated_data)
         return attendance
