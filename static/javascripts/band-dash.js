@@ -8,7 +8,8 @@
       'band-dash.authentication',
       'band-dash.layout',
       'band-dash.attendance',
-      'band-dash.members'
+      'band-dash.members',
+      'band-dash.utils'
     ]);
 
   angular

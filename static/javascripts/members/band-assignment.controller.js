@@ -9,12 +9,12 @@
     .module('band-dash.members')
     .controller('BandAssignmentController', BandAssignmentController);
 
-  BandAssignmentController.$inject = ['$location', '$scope', '$http', 'Members'];
+  BandAssignmentController.$inject = ['$location', '$scope', '$http', 'Members', 'Snackbar'];
 
   /**
   * @namespace BandAssignmentController
   */
-  function BandAssignmentController($location, $scope, $http, Members) {
+  function BandAssignmentController($location, $scope, $http, Members, Snackbar) {
     var vm = this;
 
     vm.updateBand = updateBand;
@@ -51,7 +51,9 @@
         member: memberID,
         band: vm.selectedBand,
         action: 'assign'
-      }).success(function(response) {
+      }).then(assignMemberSuccessFn, assignMemberErrorFn);
+
+      function assignMemberSuccessFn(data, status, headers, config) {
         var memberIndex = -1;
         for (var i = 0; i < vm.assignments[vm.selectedBand].unassigned.length; i++) {
           if (vm.assignments[vm.selectedBand].unassigned[i].id == memberID) {
@@ -64,7 +66,11 @@
           var member = vm.assignments[vm.selectedBand].unassigned.splice(memberIndex, 1)[0];
           vm.assignments[vm.selectedBand].assigned.push(member);
         }
-      });
+      }
+
+      function assignMemberErrorFn(data, status, headers, config) {
+        Snackbar.error('Unable to assign member');
+      }
     }
 
     function unassignMember(memberID) {
@@ -72,7 +78,9 @@
         member: memberID,
         band: vm.selectedBand,
         action: 'unassign'
-      }).success(function(response) {
+      }).then(unassignMemberSuccessFn, unassignMemberErrorFn);
+
+      function unassignMemberSuccessFn(data, status, headers, config) {
         var memberIndex = -1;
         for (var i = 0; i < vm.assignments[vm.selectedBand].assigned.length; i++) {
           if (vm.assignments[vm.selectedBand].assigned[i].id == memberID) {
@@ -85,7 +93,11 @@
           var member = vm.assignments[vm.selectedBand].assigned.splice(memberIndex, 1)[0];
           vm.assignments[vm.selectedBand].unassigned.push(member);
         }
-      });
+      }
+
+      function unassignMemberErrorFn(data, status, headers, config) {
+        Snackbar.error('Unable to unassign member');
+      }
     }
   }
 })();

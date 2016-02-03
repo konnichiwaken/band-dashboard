@@ -9,13 +9,13 @@
     .module('band-dash.authentication')
     .factory('Authentication', Authentication);
 
-  Authentication.$inject = ['$cookies', '$http'];
+  Authentication.$inject = ['$cookies', '$http', 'Snackbar'];
 
   /**
   * @namespace Authentication
   * @returns {Factory}
   */
-  function Authentication($cookies, $http) {
+  function Authentication($cookies, $http, Snackbar) {
     /**
     * @name Authentication
     * @desc The Factory to be returned
@@ -62,15 +62,15 @@
       * @desc Log the new user in
       */
       function registerSuccessFn(data, status, headers, config) {
-        Authentication.login(email, password);
+        Authentication.login(vm.email, vm.password);
       }
 
       /**
       * @name registerErrorFn
-      * @desc Log "Epic failure!" to the console
+      * @desc Log that there was a failure when attempting to register a new user
       */
       function registerErrorFn(data, status, headers, config) {
-        console.error('Error when registering');
+        Snackbar.error('Couldn\'t register');
       }
     }
 
@@ -94,16 +94,15 @@
        */
       function loginSuccessFn(data, status, headers, config) {
         Authentication.setAuthenticatedAccount(data.data);
-
         window.location = '/';
       }
 
       /**
        * @name loginErrorFn
-       * @desc Log "Login failure" to the console
+       * @desc Log that there was a login failure
        */
       function loginErrorFn(data, status, headers, config) {
-        console.error('Login failure');
+        Snackbar.error('Couldn\'t log in with supplied credentials');
       }
     }
 
@@ -123,7 +122,6 @@
        */
       function logoutSuccessFn(data, status, headers, config) {
         Authentication.unauthenticate();
-
         window.location = '/';
       }
 
@@ -132,7 +130,7 @@
        * @desc Log "Error when logging out" to the console
        */
       function logoutErrorFn(data, status, headers, config) {
-        console.error('Error when logging out');
+        Snackbar.error('Can\'t log out');
       }
     }
 
