@@ -56,6 +56,10 @@
                 }
                 determineAttendanceStatus(response[i]);
                 if (response[i].assigned) {
+                  if (!response[i].unexcused) {
+                    response[i].unexcused = false;
+                  }
+
                   vm.assignedAttendances.push(response[i]);
                 } else {
                   vm.unassignedAttendances.push(response[i]);

@@ -9,12 +9,12 @@
     .module('band-dash.attendance')
     .controller('EventController', EventController);
 
-  EventController.$inject = ['$location', '$scope', '$http', 'Attendance'];
+  EventController.$inject = ['$location', '$scope', '$http', 'Attendance', 'Snackbar'];
 
   /**
   * @namespace EventController
   */
-  function EventController($location, $scope, $http, Attendance) {
+  function EventController($location, $scope, $http, Attendance, Snackbar) {
     var vm = this;
 
     vm.createEvent = createEvent;
