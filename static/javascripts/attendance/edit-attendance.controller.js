@@ -78,6 +78,7 @@
     }
 
     function submitOnTime(attendance) {
+      attendance.unexcused = false;
       if (!attendance.assigned) {
         attendance.event_id = vm.event.id;
         attendance.member_id = attendance.member.id;
