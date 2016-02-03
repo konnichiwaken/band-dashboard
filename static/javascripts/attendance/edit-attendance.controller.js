@@ -14,7 +14,8 @@
     '$scope',
     '$http',
     '$routeParams',
-    'Attendance'
+    'Attendance',
+    'Snackbar'
   ];
 
   /**
@@ -25,7 +26,8 @@
     $scope,
     $http,
     $routeParams,
-    Attendance) {
+    Attendance,
+    Snackbar) {
     var vm = this;
 
     vm.submitOnTime = submitOnTime;
@@ -77,7 +79,14 @@
         attendance.member_id = attendance.member.id;
       }
 
-      Attendance.submitOnTime(attendance).then(function(newAttendance) {
+      Attendance.submitOnTime(attendance).then(submitOnTimeSuccessFn, submitOnTimeErrorFn);
+
+      /**
+      * @name submitOnTimeSuccessFn
+      * @desc Log that on time attendance has been submitted successfully
+      */
+      function submitOnTimeSuccessFn(data, status, headers, config) {
+        var newAttendance = data.data;
         if (newAttendance) {
           attendance.check_in_time = null;
           attendance.status = 'On time';
@@ -85,7 +94,17 @@
             attendance.id = newAttendance.id;
           }
         }
-      });
+
+        Snackbar.show('Attendance submitted successfully');
+      }
+
+      /**
+      * @name submitOnTimeErrorFn
+      * @desc Log that error occurred when submitting on time attendance
+      */
+      function submitOnTimeErrorFn(data, status, headers, config) {
+        Snackbar.error(data.error);
+      }
     }
 
     function submitLate(attendance) {
@@ -94,7 +113,14 @@
         attendance.member_id = attendance.member.id;
       }
 
-      Attendance.submitLate(attendance).then(function(newAttendance) {
+      Attendance.submitLate(attendance).then(submitLateSuccessFn, submitLateErrorFn);
+
+      /**
+      * @name submitLateSuccessFn
+      * @desc Log that late attendance has been submitted successfully
+      */
+      function submitLateSuccessFn(data, status, headers, config) {
+        var newAttendance = data.data;
         if (newAttendance) {
           attendance.check_in_time = new Date(newAttendance.check_in_time);
           attendance.points = newAttendance.points;
@@ -103,7 +129,17 @@
             attendance.id = newAttendance.id;
           }
         }
-      });
+
+        Snackbar.show('Attendance submitted successfully');
+      }
+
+      /**
+      * @name submitLateErrorFn
+      * @desc Log that error occurred when submitting late attendance
+      */
+      function submitLateErrorFn(data, status, headers, config) {
+        Snackbar.error(data.error);
+      }
     }
 
     function addUnassignedMember() {

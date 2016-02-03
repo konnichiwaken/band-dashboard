@@ -40,7 +40,7 @@
         vm.first_name,
         vm.last_name,
         vm.section,
-        vm.instrument_number)
+        vm.instrument_number);
     }
   }
 })();

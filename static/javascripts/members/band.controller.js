@@ -9,12 +9,12 @@
     .module('band-dash.members')
     .controller('BandController', BandController);
 
-  BandController.$inject = ['$location', '$scope', 'Members'];
+  BandController.$inject = ['$location', '$scope', 'Members', 'Snackbar'];
 
   /**
   * @namespace BandController
   */
-  function BandController($location, $scope, Members) {
+  function BandController($location, $scope, Members, Snackbar) {
     var vm = this;
 
     vm.createBand = createBand;
@@ -25,7 +25,23 @@
     * @memberOf band-dash.members.BandController
     */
     function createBand() {
-      Members.createBand(vm.identifier);
+      Members.createBand(vm.identifier).then(createBandSuccessFn, createBandErrorFn);
+
+      /**
+      * @name createBandTypeSuccessFn
+      * @desc Log that event type has been created successfully
+      */
+      function createBandSuccessFn(data, status, headers, config) {
+        Snackbar.show('Band created successfully');
+      }
+
+      /**
+      * @name createBandTypeErrorFn
+      * @desc Log error to the console
+      */
+      function createBandErrorFn(data, status, headers, config) {
+        Snackbar.error('Error when creating band');
+      }
     }
   }
 })();

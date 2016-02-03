@@ -49,7 +49,23 @@
         vm.type.id,
         vm.assignedBand,
         vm.points,
-        vm.rtp);
+        vm.rtp).then(createEventSuccessFn, createEventErrorFn);
+
+      /**
+      * @name createEventSuccessFn
+      * @desc Log that event has been created successfully
+      */
+      function createEventSuccessFn(data, status, headers, config) {
+        Snackbar.show('Event created successfully');
+      }
+
+      /**
+      * @name createEventErrorFn
+      * @desc Log that error occurred when trying to create event
+      */
+      function createEventErrorFn(data, status, headers, config) {
+        Snackbar.error(data.error);
+      }
     }
 
     /**

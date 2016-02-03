@@ -51,23 +51,7 @@
         band_id: assignedBand,
         points: points,
         ready_to_play: rtp
-      }).then(createEventSuccessFn, createEventErrorFn);
-
-      /**
-      * @name createEventSuccessFn
-      * @desc Log that event has been created successfully
-      */
-      function createEventSuccessFn(data, status, headers, config) {
-        console.log('Event created successfully')
-      }
-
-      /**
-      * @name createEventErrorFn
-      * @desc Log error to the console
-      */
-      function createEventErrorFn(data, status, headers, config) {
-        console.error('Error when creating event');
-      }
+      });
     }
 
     /**
@@ -84,23 +68,7 @@
         name: name,
         points: points,
         ready_to_play: rtp
-      }).then(createEventTypeSuccessFn, createEventTypeErrorFn);
-
-      /**
-      * @name createEventTypeSuccessFn
-      * @desc Log that event type has been created successfully
-      */
-      function createEventTypeSuccessFn(data, status, headers, config) {
-        console.log('Event type created successfully')
-      }
-
-      /**
-      * @name createEventTypeErrorFn
-      * @desc Log error to the console
-      */
-      function createEventTypeErrorFn(data, status, headers, config) {
-        console.error('Error when creating event type');
-      }
+      });
     }
 
     function submitOnTime(attendance) {
@@ -108,37 +76,11 @@
       if (attendance.assigned || (!attendance.assigned && attendance.id)) {
         return $http.put(
           '/api/v1/attendance/event_attendance/' + attendance.id + '/',
-          attendance).then(submitOnTimeSuccessFn, submitOnTimeErrorFn);
+          attendance);
       } else {
         return $http.post(
           '/api/v1/attendance/unassigned/',
-          attendance).then(submitOnTimeUnassignedSuccessFn, submitOnTimeErrorFn);
-      }
-
-      /**
-      * @name submitOnTimeSuccessFn
-      * @desc Log that attendance has been created successfully
-      */
-      function submitOnTimeSuccessFn(data, status, headers, config) {
-        console.log('Attendance submitted successfully');
-        return data.data;
-      }
-
-      /**
-      * @name submitOnTimeUnassignedSuccessFn
-      * @desc Log that unassigned attendance has been created successfully
-      */
-      function submitOnTimeUnassignedSuccessFn(data, status, headers, config) {
-        console.log('Attendance submitted successfully');
-        return data.data;
-      }
-
-      /**
-      * @name submitOnTimeErrorFn
-      * @desc Log error to the console
-      */
-      function submitOnTimeErrorFn(data, status, headers, config) {
-        console.error('Error when submitting attendance');
+          attendance);
       }
     }
 
@@ -147,28 +89,11 @@
       if (attendance.assigned || (!attendance.assigned && attendance.id)) {
         return $http.put(
           '/api/v1/attendance/event_attendance/' + attendance.id + '/',
-          attendance).then(submitLateSuccessFn, submitLateErrorFn);
+          attendance);
       } else {
         return $http.post(
           '/api/v1/attendance/unassigned/',
-          attendance).then(submitLateSuccessFn, submitLateErrorFn);
-      }
-
-      /**
-      * @name submitLateSuccessFn
-      * @desc Log that event type has been created successfully
-      */
-      function submitLateSuccessFn(data, status, headers, config) {
-        console.log('Attendance submitted successfully');
-        return data.data;
-      }
-
-      /**
-      * @name submitLateErrorFn
-      * @desc Log error to the console
-      */
-      function submitLateErrorFn(data, status, headers, config) {
-        console.error('Error when submitting attendance');
+          attendance);
       }
     }
   }
