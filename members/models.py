@@ -34,7 +34,7 @@ class BandMember(models.Model):
 
 
 class Band(models.Model):
-    identifier = models.CharField(max_length=255, verbose_name='Band identifier')
+    identifier = models.CharField(max_length=255, unique=True, verbose_name='Band identifier')
     assigned_members = models.ManyToManyField(
         BandMember,
         related_name='bands',
