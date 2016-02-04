@@ -24,7 +24,8 @@
       createEvent: createEvent,
       createEventType: createEventType,
       submitOnTime: submitOnTime,
-      submitLate: submitLate
+      submitLate: submitLate,
+      submitAbsence: submitAbsence
     };
 
     return Attendance;
@@ -95,6 +96,13 @@
           '/api/v1/attendance/unassigned/',
           attendance);
       }
+    }
+
+    function submitAbsence(attendance) {
+      attendance.is_late = false;
+      return $http.put(
+        '/api/v1/attendance/event_attendance/' + attendance.id + '/',
+        attendance);
     }
   }
 })();
