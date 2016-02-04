@@ -32,6 +32,7 @@
 
     vm.submitOnTime = submitOnTime;
     vm.submitLate = submitLate;
+    vm.submitAbsence = submitAbsence;
     vm.addUnassignedMember = addUnassignedMember;
 
     activate()
@@ -143,6 +144,39 @@
       * @desc Log that error occurred when submitting late attendance
       */
       function submitLateErrorFn(data, status, headers, config) {
+        Snackbar.error(data.error);
+      }
+    }
+
+    function submitAbsence(attendance) {
+      attendance.is_absence = true;
+      attendance.event_id = vm.event.id;
+      attendance.member_id = attendance.member.id;
+
+      Attendance.submitAbsence(attendance).then(submitAbsenceSuccessFn, submitAbsenceErrorFn);
+
+      /**
+      * @name submitAbsenceSuccessFn
+      * @desc Log that on time attendance has been submitted successfully
+      */
+      function submitAbsenceSuccessFn(data, status, headers, config) {
+        var newAttendance = data.data;
+        if (newAttendance) {
+          attendance.check_in_time = null;
+          attendance.status = 'Absent';
+          if (!attendance.id) {
+            attendance.id = newAttendance.id;
+          }
+        }
+
+        Snackbar.show('Absence submitted successfully');
+      }
+
+      /**
+      * @name submitAbsenceErrorFn
+      * @desc Log that error occurred when submitting on time attendance
+      */
+      function submitAbsenceErrorFn(data, status, headers, config) {
         Snackbar.error(data.error);
       }
     }

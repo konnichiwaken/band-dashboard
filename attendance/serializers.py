@@ -75,6 +75,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
             'is_late',
             'assigned',
             'unexcused',
+            'is_absence',
             'created_at',
             'updated_at',)
         read_only_fields = ('created_at', 'updated_at',)
@@ -116,26 +117,30 @@ class AttendanceSerializer(serializers.ModelSerializer):
         is_late = validated_data.pop('is_late', None)
         event = instance.event
         assigned = validated_data.get('assigned', None)
-        if is_late:
-            if check_in_time:
-                event_time = event.time
-                new_check_in_time = event_time.replace(
-                    hour=check_in_time.hour,
-                    minute=check_in_time.minute)
-                if new_check_in_time < event_time:
-                    new_check_in_time = new_check_in_time + datetime.timedelta(days=1)
-
-                points = calculate_attendance_points(
-                    new_check_in_time,
-                    event,
-                    validated_data.get('unexcused', None),
-                    assigned)
-                validated_data['check_in_time'] = new_check_in_time
-                validated_data['points'] = points
-        else:
+        if validated_data.get('is_absence', None):
             validated_data['check_in_time'] = None
-            points = event.points if assigned else event.points / 2
-            validated_data['points'] = points
+            validated_data['points'] = 0
+        else:
+            if is_late:
+                if check_in_time:
+                    event_time = event.time
+                    new_check_in_time = event_time.replace(
+                        hour=check_in_time.hour,
+                        minute=check_in_time.minute)
+                    if new_check_in_time < event_time:
+                        new_check_in_time = new_check_in_time + datetime.timedelta(days=1)
+
+                    points = calculate_attendance_points(
+                        new_check_in_time,
+                        event,
+                        validated_data.get('unexcused', None),
+                        assigned)
+                    validated_data['check_in_time'] = new_check_in_time
+                    validated_data['points'] = points
+            else:
+                validated_data['check_in_time'] = None
+                points = event.points if assigned else event.points / 2
+                validated_data['points'] = points
 
         Attendance.objects.filter(id=instance.id).update(**validated_data)
         attendance = Attendance.objects.get(id=instance.id)
