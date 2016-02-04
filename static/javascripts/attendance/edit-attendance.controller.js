@@ -80,6 +80,7 @@
 
     function submitOnTime(attendance) {
       attendance.unexcused = false;
+      attendance.is_absence = false;
       if (!attendance.assigned) {
         attendance.event_id = vm.event.id;
         attendance.member_id = attendance.member.id;
@@ -114,6 +115,7 @@
     }
 
     function submitLate(attendance) {
+      attendance.is_absence = false;
       if (!attendance.assigned) {
         attendance.event_id = vm.event.id;
         attendance.member_id = attendance.member.id;
