@@ -25,7 +25,8 @@
       createEventType: createEventType,
       submitOnTime: submitOnTime,
       submitLate: submitLate,
-      submitAbsence: submitAbsence
+      submitAbsence: submitAbsence,
+      determineAttendanceStatus: determineAttendanceStatus
     };
 
     return Attendance;
@@ -103,6 +104,22 @@
       return $http.put(
         '/api/v1/attendance/event_attendance/' + attendance.id + '/',
         attendance);
+    }
+
+    function determineAttendanceStatus(attendance, event) {
+      if (attendance.points) {
+        if (attendance.check_in_time) {
+          var eventTime = new Date(event.time);
+          var timeDelta = attendance.check_in_time - eventTime;
+          var minutesLate = Math.round((timeDelta / 1000) / 60);
+          var minutesLateFifteen = Math.ceil(minutesLate / 15) * 15;
+          attendance.status = minutesLateFifteen.toString().concat(' minutes late');
+        } else if (attendance.is_absence) {
+          attendance.status = 'Absent';
+        } else {
+          attendance.status = 'On time';
+        }
+      }
     }
   }
 })();
