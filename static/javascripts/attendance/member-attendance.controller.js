@@ -25,9 +25,20 @@
     * @memberOf band-dash.attendance.AttendanceController
     */
     function activate() {
+      vm.members = {};
       $http.get('/api/v1/attendance/event_attendance/').success(function(response) {
         var attendances = response;
-        console.log(attendances);
+        for (var i = 0; i < attendances.length; i++) {
+          var attendance = attendances[i];
+          var member = attendance.member;
+          if (member.id in vm.members) {
+            vm.members[member.id]['attendances'].push(attendance);
+          } else {
+            vm.members[member.id] = {};
+            vm.members[member.id]['attendances'] = [attendance];
+            vm.members[member.id]['name'] = member.full_name;
+          }
+        }
       });
     }
   }
