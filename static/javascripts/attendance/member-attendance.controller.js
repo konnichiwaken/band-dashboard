@@ -31,6 +31,9 @@
         for (var i = 0; i < attendances.length; i++) {
           var attendance = attendances[i];
           var member = attendance.member;
+          if (attendance.check_in_time) {
+            attendance.check_in_time = new Date(attendance.check_in_time);
+          }
           Attendance.determineAttendanceStatus(attendance, attendance.event);
           if (member.id in vm.members) {
             vm.members[member.id]['attendances'].push(attendance);
