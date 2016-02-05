@@ -61,6 +61,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
     member = BandMemberSerializer(read_only=True)
     member_id = serializers.IntegerField(min_value=0)
     is_late = serializers.BooleanField(required=False)
+    event = EventSerializer(read_only=True)
     event_id = serializers.IntegerField(min_value=0)
 
     class Meta:
@@ -71,6 +72,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
             'member_id',
             'check_in_time',
             'points',
+            'event',
             'event_id',
             'is_late',
             'assigned',

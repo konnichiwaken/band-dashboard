@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>View member attendance</h1>
+
+    <div class="well" ng-repeat="member in vm.members">
+      <h1>{{member.name}}</h1>
+      <table class="table table-striped table-hover">
+        <tr>
+          <th>Event</th>
+          <th>Time of event</th>
+          <th>Status</th>
+          <th>Assigned</th>
+          <th>Excused</th>
+          <th>Points</th>
+        </tr>
+
+        <tr ng-repeat="attendance in member.attendances">
+          <td>{{attendance.event.title}}</td>
+          <td>{{attendance.event.time | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+          <td>{{attendance.status}}</td>
+          <td>{{attendance.assigned}}</td>
+          <td>{{!attendance.unexcused}}</td>
+          <td>{{attendance.points}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

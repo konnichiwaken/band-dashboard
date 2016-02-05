@@ -44,6 +44,10 @@
       controller: 'EditAttendanceController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/attendance/event-attendance.html'
+    }).when('/attendance/members/all', {
+      controller: 'MemberAttendanceController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/attendance/view-all-member-attendance.html'
     }).otherwise('/');
   }
 })();

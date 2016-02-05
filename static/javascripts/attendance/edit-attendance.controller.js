@@ -55,7 +55,7 @@
                 if (response[i].check_in_time) {
                   response[i].check_in_time = new Date(response[i].check_in_time);
                 }
-                determineAttendanceStatus(response[i]);
+                Attendance.determineAttendanceStatus(response[i], vm.event);
                 if (response[i].assigned) {
                   if (!response[i].unexcused) {
                     response[i].unexcused = false;
@@ -132,7 +132,7 @@
         if (newAttendance) {
           attendance.check_in_time = new Date(newAttendance.check_in_time);
           attendance.points = newAttendance.points;
-          determineAttendanceStatus(attendance);
+          Attendance.determineAttendanceStatus(attendance, vm.event);
           if (!attendance.id) {
             attendance.id = newAttendance.id;
           }
@@ -190,20 +190,6 @@
       vm.unassignedAttendances.push(unassignedAttendance);
       var index = vm.unassignedMembers.indexOf(vm.unassignedMember);
       vm.unassignedMembers.splice(index, 1);
-    }
-
-    function determineAttendanceStatus(attendance) {
-      if (attendance.points) {
-        if (attendance.check_in_time) {
-          var eventTime = new Date(vm.event.time);
-          var timeDelta = attendance.check_in_time - eventTime;
-          var minutesLate = Math.round((timeDelta / 1000) / 60);
-          var minutesLateFifteen = Math.ceil(minutesLate / 15) * 15;
-          attendance.status = minutesLateFifteen.toString().concat(' minutes late');
-        } else {
-          attendance.status = 'On time';
-        }
-      }
     }
   }
 })();
