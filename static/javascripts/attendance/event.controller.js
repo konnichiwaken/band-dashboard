@@ -64,7 +64,7 @@
       * @desc Log that error occurred when trying to create event
       */
       function createEventErrorFn(data, status, headers, config) {
-        Snackbar.error(data.error);
+        Snackbar.error(data.data.detail);
       }
     }
 
