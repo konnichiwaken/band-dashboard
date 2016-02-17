@@ -42,7 +42,7 @@
       * @desc Log that an error occurred when attempting to create event type
       */
       function createEventTypeErrorFn(data, status, headers, config) {
-        Snackbar.error(data.error);
+        Snackbar.error(data.data.detail);
       }
     }
   }

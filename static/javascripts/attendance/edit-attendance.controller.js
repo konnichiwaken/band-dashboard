@@ -110,7 +110,7 @@
       * @desc Log that error occurred when submitting on time attendance
       */
       function submitOnTimeErrorFn(data, status, headers, config) {
-        Snackbar.error(data.error);
+        Snackbar.error(data.data.detail);
       }
     }
 
@@ -146,7 +146,7 @@
       * @desc Log that error occurred when submitting late attendance
       */
       function submitLateErrorFn(data, status, headers, config) {
-        Snackbar.error(data.error);
+        Snackbar.error(data.data.detail);
       }
     }
 
@@ -179,7 +179,7 @@
       * @desc Log that error occurred when submitting on time attendance
       */
       function submitAbsenceErrorFn(data, status, headers, config) {
-        Snackbar.error(data.error);
+        Snackbar.error(data.data.detail);
       }
     }
 

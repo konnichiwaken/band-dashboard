@@ -4,11 +4,13 @@ from django.forms.models import model_to_dict
 from rest_framework import status
 from rest_framework import views
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from attendance.models import Attendance
 from attendance.models import Event
 from attendance.models import EventType
+from attendance.permissions import IsAttendanceAdminOrReadOnly
 from attendance.serializers import AttendanceSerializer
 from attendance.serializers import EventSerializer
 from attendance.serializers import EventTypeSerializer
@@ -17,10 +19,12 @@ from attendance.serializers import EventTypeSerializer
 class EventTypeViewSet(viewsets.ModelViewSet):
     queryset = EventType.objects.all()
     serializer_class = EventTypeSerializer
+    permission_classes = (IsAuthenticated, IsAttendanceAdminOrReadOnly,)
 
 
 class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
+    permission_classes = (IsAuthenticated, IsAttendanceAdminOrReadOnly,)
 
     def get_queryset(self):
         queryset = Event.objects.all()
