@@ -14,6 +14,7 @@ from attendance.permissions import IsAttendanceAdminOrReadOnly
 from attendance.serializers import AttendanceSerializer
 from attendance.serializers import EventSerializer
 from attendance.serializers import EventTypeSerializer
+from attendance.utils import is_attendance_admin
 
 
 class EventTypeViewSet(viewsets.ModelViewSet):
@@ -37,12 +38,17 @@ class EventViewSet(viewsets.ModelViewSet):
 
 class AttendanceViewSet(viewsets.ModelViewSet):
     serializer_class = AttendanceSerializer
+    permission_classes = (IsAuthenticated, IsAttendanceAdminOrReadOnly,)
 
     def get_queryset(self):
         queryset = Attendance.objects.filter(is_active=True)
         event_id = self.request.query_params.get('event_id', None)
         if event_id:
             queryset = queryset.filter(event_id=event_id)
+
+        account = self.request.user
+        if not is_attendance_admin(account):
+            queryset = queryset.filter(member__account=account)
 
         return queryset
 

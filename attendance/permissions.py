@@ -1,5 +1,7 @@
 from rest_framework import permissions
 
+from attendance.utils import is_attendance_admin
+
 
 class IsAttendanceAdminOrReadOnly(permissions.BasePermission):
 
@@ -7,9 +9,8 @@ class IsAttendanceAdminOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        if request.user:
-            user_roles = set(request.user.roles.values_list('name', flat=True))
-            attendance_admin_roles = ['Secretary']
-            return bool(user_roles.intersection(attendance_admin_roles))
+        user = request.user
+        if user:
+            return is_attendance_admin(user)
 
         return False
