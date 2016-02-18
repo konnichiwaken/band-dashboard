@@ -4,6 +4,8 @@ import math
 
 from decimal import Decimal
 
+from attendance.settings import ATTENDANCE_ADMIN_ROLES
+
 
 def calculate_attendance_points(check_in_time, event, unexcused, assigned):
     time_delta = check_in_time - event.time
@@ -23,3 +25,7 @@ def calculate_attendance_points(check_in_time, event, unexcused, assigned):
         attendance_points = 0
 
     return attendance_points
+
+def is_attendance_admin(account):
+    roles = set(account.roles.values_list('name', flat=True))
+    return bool(roles.intersection(ATTENDANCE_ADMIN_ROLES))
