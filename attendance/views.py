@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from attendance.models import Attendance
 from attendance.models import Event
 from attendance.models import EventType
+from attendance.permissions import IsAttendanceAdmin
 from attendance.permissions import IsAttendanceAdminOrReadOnly
 from attendance.serializers import AttendanceSerializer
 from attendance.serializers import EventSerializer
@@ -54,6 +55,7 @@ class AttendanceViewSet(viewsets.ModelViewSet):
 
 
 class UnassignedAttendanceView(views.APIView):
+    permission_classes = (IsAuthenticated, IsAttendanceAdmin,)
 
     def post(self, request, format=None):
         data = json.loads(request.body)

@@ -14,3 +14,13 @@ class IsAttendanceAdminOrReadOnly(permissions.BasePermission):
             return is_attendance_admin(user)
 
         return False
+
+
+class IsAttendanceAdmin(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        user = request.user
+        if user:
+            return is_attendance_admin(user)
+
+        return False
