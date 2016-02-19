@@ -69,7 +69,7 @@
       }
 
       function assignMemberErrorFn(data, status, headers, config) {
-        Snackbar.error('Unable to assign member');
+        Snackbar.error(data.data.detail);
       }
     }
 
@@ -96,7 +96,7 @@
       }
 
       function unassignMemberErrorFn(data, status, headers, config) {
-        Snackbar.error('Unable to unassign member');
+        Snackbar.error(data.data.detail);
       }
     }
   }
