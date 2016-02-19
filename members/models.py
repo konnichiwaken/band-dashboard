@@ -46,3 +46,12 @@ class Band(models.Model):
         verbose_name='Unassigned members')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class Role(models.Model):
+    name = models.CharField(max_length=255, unique=True, verbose_name='Role name')
+    accounts = models.ManyToManyField(
+        Account,
+        related_name='roles',
+        blank=True,
+        verbose_name='Accounts with role')
