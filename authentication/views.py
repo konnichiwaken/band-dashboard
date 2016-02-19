@@ -3,13 +3,14 @@ import json
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
-from rest_framework import permissions
 from rest_framework import status
 from rest_framework import views
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from authentication.models import Account
+from authentication.permissions import CanCreateAccount
 from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer
 
@@ -18,15 +19,11 @@ class AccountViewSet(viewsets.ModelViewSet):
     lookup_field = 'email'
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-
-    def get_permissions(self):
-        if self.request.method in permissions.SAFE_METHODS:
-            return (permissions.AllowAny(),)
-
-        if self.request.method == 'POST':
-            return (permissions.AllowAny(),)
-
-        return (permissions.IsAuthenticated(), IsAccountOwner(),)
+    permission_classes = (
+        CanCreateAccount,
+        IsAccountOwner,
+        IsAuthenticated,
+    )
 
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -71,7 +68,7 @@ class LoginView(views.APIView):
 
 
 class LogoutView(views.APIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request, format=None):
         logout(request)

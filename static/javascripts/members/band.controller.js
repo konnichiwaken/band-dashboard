@@ -40,7 +40,7 @@
       * @desc Log error to the console
       */
       function createBandErrorFn(data, status, headers, config) {
-        Snackbar.error('Error when creating band');
+        Snackbar.error(data.data.detail);
       }
     }
   }

@@ -1,0 +1,1 @@
+ATTENDANCE_ADMIN_ROLES = ['Secretary']

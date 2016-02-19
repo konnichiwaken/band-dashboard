@@ -3,10 +3,13 @@ import json
 from django.forms import model_to_dict
 from rest_framework import views
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from attendance.models import Attendance
 from attendance.models import Event
+from attendance.permissions import IsAttendanceAdmin
+from attendance.permissions import IsAttendanceAdminOrReadOnly
 from members.models import Band
 from members.models import BandMember
 from members.serializers import BandSerializer
@@ -15,9 +18,11 @@ from members.serializers import BandSerializer
 class BandViewSet(viewsets.ModelViewSet):
     queryset = Band.objects.all()
     serializer_class = BandSerializer
+    permission_classes = (IsAuthenticated, IsAttendanceAdminOrReadOnly,)
 
 
 class BandAssignmentView(views.APIView):
+    permission_classes = (IsAuthenticated, IsAttendanceAdminOrReadOnly,)
 
     def get(self, request, format=None):
         band_assignments = {}
@@ -74,6 +79,7 @@ class BandAssignmentView(views.APIView):
 
 
 class UnassignedMembersView(views.APIView):
+    permission_classes = (IsAuthenticated, IsAttendanceAdmin,)
 
     def get(self, request, format=None):
         event_id = self.request.query_params.get('event_id', None)
