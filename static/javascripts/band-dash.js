@@ -9,11 +9,11 @@
       'band-dash.layout',
       'band-dash.attendance',
       'band-dash.members',
-      'band-dash.utils'
+      'band-dash.utils',
     ]);
 
   angular
-    .module('band-dash.routes', ['ngRoute']);
+    .module('band-dash.routes', ['ui.router']);
 
   angular
     .module('band-dash.config', []);
