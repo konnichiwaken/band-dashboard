@@ -13,7 +13,7 @@
     '$location',
     '$scope',
     '$http',
-    '$routeParams',
+    '$stateParams',
     'Attendance',
     'Snackbar'
   ];
@@ -25,7 +25,7 @@
     $location,
     $scope,
     $http,
-    $routeParams,
+    $stateParams,
     Attendance,
     Snackbar) {
     var vm = this;
@@ -45,11 +45,11 @@
     function activate() {
       vm.assignedAttendances = [];
       vm.unassignedAttendances = [];
-      $http.get('/api/v1/attendance/event/?id=' + $routeParams.event).success(
+      $http.get('/api/v1/attendance/event/?id=' + $stateParams.event).success(
         function(response) {
           vm.event = response[0];
 
-          $http.get('/api/v1/attendance/event_attendance/?event_id=' + $routeParams.event).success(
+          $http.get('/api/v1/attendance/event_attendance/?event_id=' + $stateParams.event).success(
             function(response) {
               for (var i = 0; i < response.length; i++) {
                 if (response[i].check_in_time) {
@@ -71,7 +71,7 @@
         }
       );
 
-      $http.get('/api/v1/members/unassigned/?event_id=' + $routeParams.event).success(
+      $http.get('/api/v1/members/unassigned/?event_id=' + $stateParams.event).success(
         function(response) {
           vm.unassignedMembers = response;
         }
