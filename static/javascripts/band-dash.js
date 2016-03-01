@@ -10,6 +10,7 @@
       'band-dash.attendance',
       'band-dash.members',
       'band-dash.utils',
+      'permission',
     ]);
 
   angular
