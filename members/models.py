@@ -55,3 +55,6 @@ class Role(models.Model):
         related_name='roles',
         blank=True,
         verbose_name='Accounts with role')
+
+    def __unicode__(self):
+        return self.name
