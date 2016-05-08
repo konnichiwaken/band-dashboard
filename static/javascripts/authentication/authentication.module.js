@@ -7,7 +7,7 @@
 
   function run(RoleStore, Authentication, $filter) {
     RoleStore
-      .defineRole('director', [], function(stateParams) {
+      .defineRole('director', function() {
         if (Authentication.isAuthenticated()) {
           var account = Authentication.getAuthenticatedAccount();
           for (var i = 0; i < account.roles.length; i++) {
@@ -22,7 +22,7 @@
       });
 
     RoleStore
-      .defineRole('president', [], function(stateParams) {
+      .defineRole('president', function() {
         if (Authentication.isAuthenticated()) {
           var account = Authentication.getAuthenticatedAccount();
           for (var i = 0; i < account.roles.length; i++) {
@@ -37,7 +37,7 @@
       });
 
     RoleStore
-      .defineRole('secretary', [], function(stateParams) {
+      .defineRole('secretary', function() {
         if (Authentication.isAuthenticated()) {
           var account = Authentication.getAuthenticatedAccount();
           for (var i = 0; i < account.roles.length; i++) {
