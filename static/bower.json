@@ -22,9 +22,9 @@
     "url": "https://github.com/KonichiwaKen/band-dashboard"
   },
   "dependencies": {
-    "angular": "~1.4.7",
+    "angular": "~1.4.8",
     "angular-cookies": "~1.4.7",
-    "angular-permission": "^2.0.9",
+    "angular-permission": "~3.0.1",
     "angular-ui-router": "~0.2.18",
     "bootstrap": "~3.3.5",
     "bootstrap-material-design": "~0.3.0",
