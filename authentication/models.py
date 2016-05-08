@@ -10,7 +10,7 @@ class AccountManager(BaseUserManager):
             raise ValueError('Users must have a valid email address.')
 
         if not kwargs.get('first_name') or not kwargs.get('last_name'):
-            raise ValueError('Users must have a valid first namd and last name.')
+            raise ValueError('Users must have a valid first name and last name.')
 
         account = self.model(
             email=self.normalize_email(email),
