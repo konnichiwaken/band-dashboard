@@ -11,6 +11,7 @@ class AccountSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)
     confirm_password = serializers.CharField(write_only=True, required=False)
     band_member = BandMemberSerializer()
+    roles = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Account
@@ -22,7 +23,8 @@ class AccountSerializer(serializers.ModelSerializer):
             'last_name',
             'password',
             'confirm_password',
-            'band_member',)
+            'band_member',
+            'roles',)
         read_only_fields = ('created_at', 'updated_at',)
 
     def create(self, validated_data):

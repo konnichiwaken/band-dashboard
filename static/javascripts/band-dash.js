@@ -4,16 +4,19 @@
   angular
     .module('band-dash', [
       'band-dash.config',
-      'band-dash.routes',
       'band-dash.authentication',
       'band-dash.layout',
       'band-dash.attendance',
       'band-dash.members',
       'band-dash.utils',
+      'ui.router',
+      'permission',
+      'permission.ui',
+      'band-dash.routes',
     ]);
 
   angular
-    .module('band-dash.routes', ['ui.router']);
+    .module('band-dash.routes', []);
 
   angular
     .module('band-dash.config', []);

@@ -12,24 +12,26 @@
 
     <div class="collapse navbar-collapse" id="band-dash-nav">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Attendance <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/attendance/view_all">View/edit attendance</a></li>
-            <li><a href="/attendance/members/all">View member attendances</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/event/create">Create event</a></li>
-            <li><a href="/event_type/create">Create event type</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Members <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/band/assign">Band assignments</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/band/create">Create band</a></li>
-          </ul>
-        </li>
+        {% if user.is_authenticated %}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Attendance <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li permission permission-only="['director','president','secretary']"><a href="/attendance/view_all">View/edit attendance</a></li>
+              <li><a href="/attendance/members/all">View member attendance</a></li>
+              <li role="separator" class="divider" permission permission-only="['director','president','secretary']"></li>
+              <li permission permission-only="['director','president','secretary']"><a href="/event/create">Create event</a></li>
+              <li permission permission-only="['director','president','secretary']"><a href="/event_type/create">Create event type</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Members <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/band/assign">Band assignments</a></li>
+              <li role="separator" class="divider" permission permission-only="['director','president','secretary']"></li>
+              <li><a href="/band/create" permission permission-only="['director','president','secretary']">Create band</a></li>
+            </ul>
+          </li>
+        {% endif %}
       </ul>
       <ul class="nav navbar-nav pull-right">
         {% if user.is_authenticated %}
