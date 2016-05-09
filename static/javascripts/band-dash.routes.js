@@ -23,6 +23,11 @@
         url: '/register',
         controller: 'RegisterController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['director', 'president', 'secretary']
+          }
+        },
         templateUrl: '/static/templates/authentication/register.html'
       })
       .state('login', {
@@ -35,24 +40,44 @@
         url: '/event_type/create',
         controller: 'EventTypeController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['director', 'president', 'secretary']
+          }
+        },
         templateUrl: '/static/templates/attendance/create-event-type.html'
       })
       .state('event_create', {
         url: '/event/create',
         controller: 'EventController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['director', 'president', 'secretary']
+          }
+        },
         templateUrl: '/static/templates/attendance/create-event.html'
       })
       .state('band_create', {
         url: '/band/create',
         controller: 'BandController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['director', 'president', 'secretary']
+          }
+        },
         templateUrl: '/static/templates/members/create-band.html'
       })
       .state('attendance_view_all', {
         url: '/attendance/view_all',
         controller: 'AttendanceController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['director', 'president', 'secretary']
+          }
+        },
         templateUrl: '/static/templates/attendance/view-events.html'
       })
       .state('band_assign', {
@@ -65,6 +90,11 @@
         url: '/event/edit_attendance/:event',
         controller: 'EditAttendanceController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['director', 'president', 'secretary']
+          }
+        },
         templateUrl: '/static/templates/attendance/event-attendance.html'
       })
       .state('attendance_members_all', {
