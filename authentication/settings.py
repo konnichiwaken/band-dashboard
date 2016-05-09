@@ -1,1 +1,1 @@
-ACCOUNT_CREATION_ADMIN_ROLES = ['President', 'Secretary']
+ACCOUNT_CREATION_ADMIN_ROLES = ['Director', 'President', 'Secretary']
