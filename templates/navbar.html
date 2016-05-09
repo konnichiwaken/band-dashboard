@@ -35,12 +35,10 @@
       </ul>
       <ul class="nav navbar-nav pull-right">
         {% if user.is_authenticated %}
-          <li><a href="/+{{ user.email }}">+{{ user.email }}</a></li>
-          <li><a href="/+{{ user.email }}/settings">Settings</a></li>
+          <li><a href="javascript:void(0)">+{{ user.email }}</a></li>
           <li><a href="javascript:void(0)" ng-click="vm.logout()">Logout</a></li>
         {% else %}
           <li><a href="/login">Login</a></li>
-          <li><a href="/register">Register</a></li>
         {% endif %}
       </ul>
     </div> <!-- /.collapse.navbar-collapse -->

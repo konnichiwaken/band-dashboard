@@ -62,7 +62,7 @@
       * @desc Log the new user in
       */
       function registerSuccessFn(data, status, headers, config) {
-        Authentication.login(email, password);
+        Snackbar.show('Account created successfully');
       }
 
       /**

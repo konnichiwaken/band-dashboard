@@ -11,7 +11,7 @@ class AccountSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)
     confirm_password = serializers.CharField(write_only=True, required=False)
     band_member = BandMemberSerializer()
-    roles = serializers.StringRelatedField(many=True)
+    roles = serializers.StringRelatedField(many=True, required=False)
 
     class Meta:
         model = Account
