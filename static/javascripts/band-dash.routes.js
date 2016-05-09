@@ -15,6 +15,10 @@
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
+      .state('splash_page', {
+        url: '/',
+        templateUrl: '/static/templates/splash-page.html'
+      })
       .state('register', {
         url: '/register',
         controller: 'RegisterController',
