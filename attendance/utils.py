@@ -26,6 +26,7 @@ def calculate_attendance_points(check_in_time, event, unexcused, assigned):
 
     return attendance_points
 
+
 def is_attendance_admin(account):
     roles = set(account.roles.values_list('name', flat=True))
     return bool(roles.intersection(ATTENDANCE_ADMIN_ROLES))

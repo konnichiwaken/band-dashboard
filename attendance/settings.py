@@ -1,1 +1,1 @@
-ATTENDANCE_ADMIN_ROLES = ['Secretary']
+ATTENDANCE_ADMIN_ROLES = ['Director', 'President', 'Secretary']

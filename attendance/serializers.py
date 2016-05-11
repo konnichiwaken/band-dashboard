@@ -6,6 +6,7 @@ from attendance.models import Attendance
 from attendance.models import Event
 from attendance.models import EventType
 from attendance.utils import calculate_attendance_points
+from authentication.models import Account
 from members.models import Band
 from members.serializers import BandMemberSerializer
 from members.serializers import BandSerializer
@@ -15,71 +16,86 @@ class EventTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EventType
-        fields = ('id',
+        fields = (
+            'id',
             'name',
             'points',
             'ready_to_play',
             'created_at',
-            'updated_at',)
+            'updated_at',
+        )
         read_only_fields = ('created_at', 'updated_at',)
 
 
 class EventSerializer(serializers.ModelSerializer):
     type = EventTypeSerializer(required=False)
-    band = BandSerializer(required=False)
     type_id = serializers.IntegerField(min_value=0)
-    band_id = serializers.IntegerField(min_value=0)
+    band = BandSerializer(required=False)
+    band_id = serializers.IntegerField(min_value=0, required=False)
 
     class Meta:
         model = Event
-        fields = ('id',
+        fields = (
+            'id',
             'title',
-            'created_at',
-            'updated_at',
             'time',
             'type',
-            'band',
             'type_id',
+            'band',
             'band_id',
             'points',
-            'ready_to_play',)
+            'ready_to_play',
+            'created_at',
+            'updated_at',
+        )
         read_only_fields = ('created_at', 'updated_at',)
 
     def create(self, validated_data):
-        type_id = validated_data.pop('type_id')
-        band_id = validated_data.pop('band_id')
-        type = EventType.objects.get(id=type_id)
-        band = Band.objects.get(id=band_id)
-        event = Event.objects.create(band=band, type=type, **validated_data)
-        for member in band.assigned_members.all():
-            Attendance.objects.create(event=event, member=member, assigned=True)
+        band_id = validated_data.pop('band_id', 0)
+        if band_id:
+            band = Band.objects.get(id=band_id)
+            validated_data['band'] = band
+
+        event_type_id = validated_data.pop('type_id')
+        validated_data['type'] = EventType.objects.get(id=event_type_id)
+        event = Event.objects.create(**validated_data)
+        if band_id:
+            for member in band.assigned_members.all():
+                Attendance.objects.create(event=event, member=member, assigned=True)
+        else:
+            for account in Account.objects.filter(is_active=True, band_member__isnull=False):
+                Attendance.objects.create(
+                    event=event,
+                    member=account.band_member,
+                    assigned=True)
 
         return event
 
 
 class AttendanceSerializer(serializers.ModelSerializer):
+    event = EventSerializer(read_only=True)
+    event_id = serializers.IntegerField(min_value=0)
     member = BandMemberSerializer(read_only=True)
     member_id = serializers.IntegerField(min_value=0)
     is_late = serializers.BooleanField(required=False)
-    event = EventSerializer(read_only=True)
-    event_id = serializers.IntegerField(min_value=0)
 
     class Meta:
         model = Attendance
         fields = (
             'id',
-            'member',
-            'member_id',
-            'check_in_time',
-            'points',
             'event',
             'event_id',
-            'is_late',
+            'member',
+            'member_id',
+            'points',
+            'check_in_time',
             'assigned',
             'unexcused',
             'is_absence',
             'created_at',
-            'updated_at',)
+            'updated_at',
+            'is_late',
+        )
         read_only_fields = ('created_at', 'updated_at',)
 
     def create(self, validated_data):
@@ -144,6 +160,8 @@ class AttendanceSerializer(serializers.ModelSerializer):
                 points = event.points if assigned else event.points / 2
                 validated_data['points'] = points
 
-        Attendance.objects.filter(id=instance.id).update(**validated_data)
         attendance = Attendance.objects.get(id=instance.id)
+        for field, value in validated_data.iteritems():
+            setattr(attendance, field, value)
+
         return attendance
