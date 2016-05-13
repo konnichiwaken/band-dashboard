@@ -10,6 +10,7 @@ from attendance.models import Attendance
 from attendance.models import Event
 from attendance.permissions import IsAttendanceAdmin
 from attendance.permissions import IsAttendanceAdminOrReadOnly
+from authentication.models import Account
 from members.models import Band
 from members.models import BandMember
 from members.serializers import BandSerializer
@@ -84,25 +85,37 @@ class UnassignedMembersView(views.APIView):
     def get(self, request, format=None):
         event_id = self.request.query_params.get('event_id', None)
         if event_id:
-            event = Event.objects.filter(id=event_id)
-            if event.exists():
-                band = event.first().band
-                existing_unassigned_members = Attendance.objects.filter(
-                    event=event,
-                    assigned=False,
-                    is_active=True).values_list('member_id', flat=True).distinct()
-                unassigned_members = band.unassigned_members.all().exclude(
-                    id__in=existing_unassigned_members)
-                unassigned_members_dicts = []
-                for unassigned_member in unassigned_members:
-                    full_name = unassigned_member.full_name
-                    member_dict = model_to_dict(unassigned_member)
-                    member_dict['full_name'] = full_name
-                    unassigned_members_dicts.append(member_dict)
+            try:
+                event = Event.objects.get(id=event_id)
+            except Event.DoesNotExist:
+                return Response({
+                    'status': 'Bad request',
+                    'message': 'Could not find event from event_id',
+                }, status=status.HTTP_400_BAD_REQUEST)
 
-                return Response(unassigned_members_dicts)
+            existing_unassigned_members = Attendance.objects.filter(
+                event=event,
+                assigned=False,
+                is_active=True,
+            ).values_list('member_id', flat=True).distinct()
+            band = event.band
+            if band:
+                unassigned_members_queryset = band.unassigned_members
+            else:
+                unassigned_members_queryset = BandMember.objects.filter(account__is_active=True)
+
+            unassigned_members = unassigned_members_queryset.exclude(
+                id__in=existing_unassigned_members).all()
+            unassigned_members_dicts = []
+            for unassigned_member in unassigned_members:
+                full_name = unassigned_member.full_name
+                member_dict = model_to_dict(unassigned_member)
+                member_dict['full_name'] = full_name
+                unassigned_members_dicts.append(member_dict)
+
+            return Response(unassigned_members_dicts)
 
         return Response({
             'status': 'Bad request',
-            'message': 'Could not find event from event_id',
+            'message': 'No event_id in request',
         }, status=status.HTTP_400_BAD_REQUEST)

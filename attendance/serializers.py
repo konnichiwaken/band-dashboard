@@ -62,12 +62,6 @@ class EventSerializer(serializers.ModelSerializer):
         if band_id:
             for member in band.assigned_members.all():
                 Attendance.objects.create(event=event, member=member, assigned=True)
-        else:
-            for account in Account.objects.filter(is_active=True, band_member__isnull=False):
-                Attendance.objects.create(
-                    event=event,
-                    member=account.band_member,
-                    assigned=True)
 
         return event
 
@@ -115,17 +109,15 @@ class AttendanceSerializer(serializers.ModelSerializer):
                 if new_check_in_time < event_time:
                     new_check_in_time = new_check_in_time + datetime.timedelta(days=1)
 
-                points = calculate_attendance_points(
-                    new_check_in_time,
+                validated_data['points'] = calculate_attendance_points(
                     event,
-                    validated_data.get('unexcused', None),
-                    assigned)
+                    assigned,
+                    check_in_time=new_check_in_time,
+                    unexcused=validated_data.get('unexcused', False))
                 validated_data['check_in_time'] = new_check_in_time
-                validated_data['points'] = points
         else:
+            validated_data['points'] = calculate_attendance_points(event, assigned)
             validated_data['check_in_time'] = None
-            points = event.points if assigned else event.points / 2
-            validated_data['points'] = points
 
         attendance = Attendance.objects.create(**validated_data)
         return attendance

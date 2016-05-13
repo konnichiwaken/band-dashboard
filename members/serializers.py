@@ -8,15 +8,17 @@ class BandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Band
-        fields = ('id',
+        fields = (
+            'id',
             'identifier',
             'created_at',
-            'updated_at',)
+            'updated_at',
+        )
         read_only_fields = ('created_at', 'updated_at',)
 
     def create(self, validated_data):
         band = Band.objects.create(**validated_data)
-        band.unassigned_members = BandMember.objects.all()
+        band.unassigned_members = BandMember.objects.filter(account__is_active=True)
         band.save()
         return band
 
@@ -26,12 +28,14 @@ class BandMemberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BandMember
-        fields = ('id',
+        fields = (
+            'id',
             'account',
             'full_name',
             'section',
             'instrument_number',
             'bands',
             'created_at',
-            'updated_at',)
+            'updated_at',
+        )
         read_only_fields = ('account', 'full_name', 'created_at', 'updated_at',)
