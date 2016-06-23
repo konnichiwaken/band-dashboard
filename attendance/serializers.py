@@ -118,6 +118,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
         else:
             validated_data['points'] = calculate_attendance_points(event, assigned)
             validated_data['check_in_time'] = None
+            validated_data['unexcused'] = None
 
         attendance = Attendance.objects.create(**validated_data)
         return attendance
@@ -149,6 +150,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
                     validated_data['points'] = points
             else:
                 validated_data['check_in_time'] = None
+                validated_data['unexcused'] = None
                 points = event.points if assigned else event.points / 2
                 validated_data['points'] = points
 
