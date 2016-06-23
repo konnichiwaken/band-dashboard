@@ -31,6 +31,11 @@
         for (var i = 0; i < attendances.length; i++) {
           var attendance = attendances[i];
           var member = attendance.member;
+          if (attendance.unexcused || attendance.unexcused === false) {
+            attendance.excused = !attendance.unexcused;
+          } else {
+            attendance.excused = null;
+          }
           if (attendance.check_in_time) {
             attendance.check_in_time = new Date(attendance.check_in_time);
           }
