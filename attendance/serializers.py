@@ -156,4 +156,5 @@ class AttendanceSerializer(serializers.ModelSerializer):
         for field, value in validated_data.iteritems():
             setattr(attendance, field, value)
 
+        attendance.save()
         return attendance
