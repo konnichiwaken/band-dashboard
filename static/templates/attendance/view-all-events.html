@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>View all events</h1>
+
+    <div class="well" ng-repeat="event in vm.events">
+      <h1>{{event.title}}</h1>
+      <p ng-if="event.status"><strong>Status:</strong> {{event.status}}</p>
+      <p><strong>Time of event:</strong> {{event.time | date:"MM/dd/yyyy 'at' h:mma"}}</p>
+      <p><strong>Type of event:</strong> {{event.type.name}}</p>
+      <p>
+        <strong>Band:</strong>
+        <span ng-if="event.band">
+          {{event.band.identifier}}
+        </span>
+        <span ng-hide="event.band">
+          No assigned band
+        </span>
+      </p>
+    </div>
+    </div>
+  </div>
+</div>
