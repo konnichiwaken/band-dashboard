@@ -26,7 +26,7 @@
     */
     function activate() {
       $http.get('/api/v1/attendance/event/').success(function(response) {
-        console.log(response);
+        vm.events = response;
       });
     }
   }

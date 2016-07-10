@@ -2,7 +2,12 @@
   <div class="col-md-8 col-md-offset-2">
     <h1>View all events</h1>
 
-    <div class="well">
+    <div class="well" ng-repeat="event in vm.events">
+      <h1>{{event.title}}</h1>
+      <p><strong>Time of event:</strong> {{event.time | date:"MM/dd/yyyy 'at' h:mma"}}</p>
+      <p><strong>Type of event:</strong> {{event.type.name}}</p>
+      <p><strong>Band:</strong> {{event.band.identifier}}</p>
+    </div>
     </div>
   </div>
 </div>
