@@ -102,6 +102,12 @@
         controller: 'MemberAttendanceController',
         controllerAs: 'vm',
         templateUrl: '/static/templates/attendance/view-all-member-attendance.html'
+      })
+      .state('events_all', {
+        url: '/events/all',
+        controller: 'AllEventsController',
+        controllerAs: 'vm',
+        templateUrl: '/static/templates/attendance/view-all-events.html'
       });
   }
 })();
