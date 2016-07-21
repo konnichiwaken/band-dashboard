@@ -16,6 +16,7 @@ from attendance.serializers import AttendanceSerializer
 from attendance.serializers import EventSerializer
 from attendance.serializers import EventTypeSerializer
 from attendance.utils import is_attendance_admin
+from members.models import BandMember
 
 
 class EventTypeViewSet(viewsets.ModelViewSet):
@@ -68,3 +69,24 @@ class UnassignedAttendanceView(views.APIView):
             'status': 'Bad request',
             'message': serializer.errors,
         }, status=status.HTTP_400_BAD_REQUEST)
+
+class GetUnassignedMembersView(views.APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        account = self.request.user
+        event_id = self.request.query_params.get('event_id')
+        event = Event.objects.get(id=event_id)
+        assignable_members = BandMember.objects.exclude(id=account.band_member.id)
+        if event.band:
+            assigned_members = event.band.assigned_members.values_list("id", flat=True)
+            assignable_members = assignable_members.exclude(id__in=assigned_members)
+
+        section = account.band_member.section
+        assignable_members = assignable_members.filter(section=section)
+        assignable_acounts = [member.account for member in assignable_members]
+        return Response(
+            {
+                'full_name': account.get_full_name(),
+                'id': account.id,
+            } for account in assignable_acounts)
