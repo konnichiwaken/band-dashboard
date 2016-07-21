@@ -39,6 +39,9 @@
               var attendance = vm.attendances[event.id];
               if (attendance.assigned) {
                 var status = "Assigned attendance";
+                if (!attendance.points && attendance.points !== 0) {
+                  event.allowsSubstitution = true;
+                }
               } else {
                 var status = "Unassigned attendance";
               }

@@ -108,6 +108,12 @@
         controller: 'AllEventsController',
         controllerAs: 'vm',
         templateUrl: '/static/templates/attendance/view-all-events.html'
+      })
+      .state('event_substitution_form', {
+        url: '/event/substitution/:event',
+        controller: 'SubstitutionFormController',
+        controllerAs: 'vm',
+        templateUrl: '/static/templates/attendance/substitution-form.html'
       });
   }
 })();

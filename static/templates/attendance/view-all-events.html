@@ -16,7 +16,14 @@
           No assigned band
         </span>
       </p>
-    </div>
+      <p>
+        <span ng-if="event.allowsSubstitution">
+          <strong>Actions:</strong>
+          <a href="/event/substitution/{{event.id}}">
+            <button type="btn btn-primary">Request substitution</button>
+          </a>
+        </span>
+      </p>
     </div>
   </div>
 </div>
