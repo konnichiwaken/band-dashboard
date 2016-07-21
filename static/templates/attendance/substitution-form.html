@@ -4,6 +4,10 @@
 
     <div class="well">
       <p><strong>Band member to substitute:</strong></p>
+      <select
+        ng-model="selectedMember"
+        ng-options="member.full_name for member in vm.unassignedMembers">
+      </select>
     </div>
   </div>
 </div>

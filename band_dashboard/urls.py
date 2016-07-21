@@ -21,6 +21,7 @@ from rest_framework_nested import routers
 from attendance.views import AttendanceViewSet
 from attendance.views import EventTypeViewSet
 from attendance.views import EventViewSet
+from attendance.views import GetUnassignedMembersView
 from attendance.views import UnassignedAttendanceView
 from authentication.views import AccountViewSet
 from authentication.views import LoginView
@@ -52,5 +53,9 @@ urlpatterns = patterns(
         r'^api/v1/members/unassigned/$',
         UnassignedMembersView.as_view(),
         name='unassigned_members'),
+    url(
+        r'^api/v1/get_unassigned_members/$',
+        GetUnassignedMembersView.as_view(),
+        name='get_unassigned_members'),
     url('^.*$', IndexView.as_view(), name='index'),
 )
