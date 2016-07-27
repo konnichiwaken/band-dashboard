@@ -90,3 +90,11 @@ class GetUnassignedMembersView(views.APIView):
                 'full_name': account.get_full_name(),
                 'id': account.id,
             } for account in assignable_acounts)
+
+class SubstitutionFormView(views.APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, format=None):
+        data = json.loads(request.body)
+        print data
+        return Response()

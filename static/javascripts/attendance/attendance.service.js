@@ -26,7 +26,8 @@
       submitOnTime: submitOnTime,
       submitLate: submitLate,
       submitAbsence: submitAbsence,
-      determineAttendanceStatus: determineAttendanceStatus
+      determineAttendanceStatus: determineAttendanceStatus,
+      submitSubstitutionForm: submitSubstitutionForm,
     };
 
     return Attendance;
@@ -120,6 +121,14 @@
           attendance.status = 'On time';
         }
       }
+    }
+
+    function submitSubstitutionForm(eventID, substitutedMemberID, substitutionReason) {
+      return $http.post('/api/v1/attendance/substitution/', {
+        event_id: eventID,
+        substituted_member_id: substitutedMemberID,
+        reason: substitutionReason,
+      });
     }
   }
 })();
