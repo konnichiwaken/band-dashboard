@@ -5,9 +5,11 @@ from rest_framework import serializers
 from attendance.models import Attendance
 from attendance.models import Event
 from attendance.models import EventType
+from attendance.models import SubstitutionForm
 from attendance.utils import calculate_attendance_points
 from authentication.models import Account
 from members.models import Band
+from members.models import BandMember
 from members.serializers import BandMemberSerializer
 from members.serializers import BandSerializer
 
@@ -160,3 +162,22 @@ class AttendanceSerializer(serializers.ModelSerializer):
 
         attendance.save()
         return attendance
+
+
+class SubstitutionFormSerializer(serializers.ModelSerializer):
+    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+    requester = serializers.PrimaryKeyRelatedField(queryset=BandMember.objects.all())
+    requestee = serializers.PrimaryKeyRelatedField(queryset=BandMember.objects.all())
+
+    class Meta:
+        model = SubstitutionForm
+        fields = (
+            'id',
+            'event',
+            'requester',
+            'requestee',
+            'reason',
+            'created_at',
+            'updated_at',
+        )
+        read_only_fields = ('created_at', 'updated_at',)

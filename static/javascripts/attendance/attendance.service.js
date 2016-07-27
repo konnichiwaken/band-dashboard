@@ -124,9 +124,9 @@
     }
 
     function submitSubstitutionForm(eventID, substitutedMemberID, substitutionReason) {
-      return $http.post('/api/v1/attendance/substitution/', {
-        event_id: eventID,
-        substituted_member_id: substitutedMemberID,
+      return $http.post('/api/v1/attendance/substitution_form/', {
+        event: eventID,
+        requestee: substitutedMemberID,
         reason: substitutionReason,
       });
     }
