@@ -47,3 +47,5 @@ class SubstitutionForm(models.Model):
         related_name='substitutions_received',
         verbose_name='Requestee')
     reason = models.CharField(max_length=255, verbose_name='Substitution reason')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

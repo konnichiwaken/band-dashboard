@@ -15,6 +15,7 @@ from attendance.permissions import IsAttendanceAdminOrReadOnly
 from attendance.serializers import AttendanceSerializer
 from attendance.serializers import EventSerializer
 from attendance.serializers import EventTypeSerializer
+from attendance.serializers import SubstitutionFormSerializer
 from attendance.utils import is_attendance_admin
 from members.models import BandMember
 
@@ -70,6 +71,7 @@ class UnassignedAttendanceView(views.APIView):
             'message': serializer.errors,
         }, status=status.HTTP_400_BAD_REQUEST)
 
+
 class GetUnassignedMembersView(views.APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -88,13 +90,32 @@ class GetUnassignedMembersView(views.APIView):
         return Response(
             {
                 'full_name': account.get_full_name(),
-                'id': account.id,
+                'id': account.band_member.id,
             } for account in assignable_acounts)
 
-class SubstitutionFormView(views.APIView):
+
+class SubstitutionFormViewSet(viewsets.ModelViewSet):
+    serializer_class = SubstitutionFormSerializer
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request, format=None):
-        data = json.loads(request.body)
-        print data
-        return Response()
+    def create(self, request):
+        data = request.data
+        data['requester'] = request.user.band_member.id
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            validated_data = serializer.validated_data
+            return_data = {
+                'event_id': validated_data['event'].id,
+                'reason': validated_data['reason'],
+                'requestee_id': validated_data['requestee'].id,
+                'requester_id': validated_data['requester'].id,
+            }
+
+            return Response(return_data, status=status.HTTP_201_CREATED)
+
+        return Response({
+            'status': 'Bad request',
+            'message': 'Account could not be created with received data.',
+        }, status=status.HTTP_400_BAD_REQUEST)
