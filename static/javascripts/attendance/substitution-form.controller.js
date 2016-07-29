@@ -9,12 +9,12 @@
     .module('band-dash.attendance')
     .controller('SubstitutionFormController', SubstitutionFormController);
 
-  SubstitutionFormController.$inject = ['$http', '$stateParams', 'Attendance'];
+  SubstitutionFormController.$inject = ['$http', '$stateParams', 'Attendance', 'Snackbar'];
 
   /**
   * @namespace SubstitutionFormController
   */
-  function SubstitutionFormController($http, $stateParams, Attendance) {
+  function SubstitutionFormController($http, $stateParams, Attendance, Snackbar) {
     var vm = this;
 
     vm.submitSubstitutionForm = submitSubstitutionForm;
@@ -33,7 +33,18 @@
       Attendance.submitSubstitutionForm(
         parseInt($stateParams.event),
         vm.selectedMember.id,
-        vm.substitutionReason);
+        vm.substitutionReason).then(submitSubstitutionFormSuccessFn, submitSubstitutionFormErrorFn);
+
+      function submitSubstitutionFormSuccessFn(data, status, headers, config) {
+        Snackbar.show('Substitution form submitted successfully');
+        setTimeout(function() {
+          window.location = "/events/all";
+        }, 3000);
+      }
+
+      function submitSubstitutionFormErrorFn(data, status, headers, config) {
+        Snackbar.error(data.data.detail);
+      }
     }
   }
 })();
