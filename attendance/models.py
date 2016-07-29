@@ -37,6 +37,15 @@ class Attendance(models.Model):
 
 
 class SubstitutionForm(models.Model):
+    ACCEPTED = 'accept'
+    DECLINED = 'decline'
+    PENDING = 'pending'
+    STATUS_CHOICES = (
+        (ACCEPTED, 'Accepted'),
+        (DECLINED, 'Declined'),
+        (PENDING, 'Pending'),
+    )
+
     event = models.ForeignKey(Event, related_name='substitution_forms', verbose_name='Event')
     requester = models.ForeignKey(
         BandMember,
@@ -47,5 +56,10 @@ class SubstitutionForm(models.Model):
         related_name='substitutions_received',
         verbose_name='Requestee')
     reason = models.CharField(max_length=255, verbose_name='Substitution reason')
+    status = models.CharField(
+        max_length=255,
+        choices=STATUS_CHOICES,
+        default=PENDING,
+        verbose_name='Status')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
