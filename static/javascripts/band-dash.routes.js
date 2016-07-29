@@ -114,6 +114,12 @@
         controller: 'SubstitutionFormController',
         controllerAs: 'vm',
         templateUrl: '/static/templates/attendance/substitution-form.html'
+      })
+      .state('pending_substitution_forms', {
+        url: '/attendance/substitution_forms',
+        controller: 'PendingSubstitutionFormController',
+        controllerAs: 'vm',
+        templateUrl: '/static/templates/attendance/pending-substitution-forms.html'
       });
   }
 })();

@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from attendance.models import Attendance
 from attendance.models import Event
 from attendance.models import EventType
+from attendance.models import SubstitutionForm
 from attendance.permissions import IsAttendanceAdmin
 from attendance.permissions import IsAttendanceAdminOrReadOnly
 from attendance.serializers import AttendanceSerializer
@@ -119,3 +120,27 @@ class SubstitutionFormViewSet(viewsets.ModelViewSet):
             'status': 'Bad request',
             'message': 'Account could not be created with received data.',
         }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetPendingSubstitutionForms(views.APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        requested_substitution_forms = SubstitutionForm.objects.filter(
+            status=SubstitutionForm.PENDING,
+            requester=request.user.band_member).values(
+            'event__title',
+            'requestee__account__first_name',
+            'requestee__account__last_name',
+            'reason')
+        received_substitution_forms = SubstitutionForm.objects.filter(
+            status=SubstitutionForm.PENDING,
+            requestee=request.user.band_member).values(
+            'event__title',
+            'requester__account__first_name',
+            'requester__account__last_name')
+
+        return Response({
+            'requested': requested_substitution_forms,
+            'received': received_substitution_forms,
+        })
