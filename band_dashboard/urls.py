@@ -21,6 +21,7 @@ from rest_framework_nested import routers
 from attendance.views import AttendanceViewSet
 from attendance.views import EventTypeViewSet
 from attendance.views import EventViewSet
+from attendance.views import GetPendingSubstitutionForms
 from attendance.views import GetUnassignedMembersView
 from attendance.views import SubstitutionFormViewSet
 from attendance.views import UnassignedAttendanceView
@@ -62,5 +63,9 @@ urlpatterns = patterns(
         r'^api/v1/get_unassigned_members/$',
         GetUnassignedMembersView.as_view(),
         name='get_unassigned_members'),
+    url(
+        r'^api/v1/pending_substitution_forms/$',
+        GetPendingSubstitutionForms.as_view(),
+        name='get_pending_substitution_forms'),
     url('^.*$', IndexView.as_view(), name='index'),
 )
