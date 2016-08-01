@@ -35,6 +35,16 @@ class Attendance(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def allows_substitution(self):
+        if self.points is None and self.is_active and self.assigned:
+            return not SubstitutionForm.objects.filter(
+                event_id=self.event_id,
+                requester_id=self.member_id,
+                status=SubstitutionForm.PENDING).exists()
+        else:
+            return False
+
 
 class SubstitutionForm(models.Model):
     ACCEPTED = 'accept'

@@ -91,6 +91,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
             'is_late',
+            'allows_substitution',
         )
         read_only_fields = ('created_at', 'updated_at',)
 
