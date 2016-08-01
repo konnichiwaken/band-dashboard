@@ -28,6 +28,8 @@
       submitAbsence: submitAbsence,
       determineAttendanceStatus: determineAttendanceStatus,
       submitSubstitutionForm: submitSubstitutionForm,
+      acceptSubstitution: acceptSubstitution,
+      declineSubstitution, declineSubstitution,
     };
 
     return Attendance;
@@ -128,6 +130,18 @@
         event: eventID,
         requestee: substitutedMemberID,
         reason: substitutionReason,
+      });
+    }
+
+    function acceptSubstitution(substitutionFormID) {
+      return $http.post('/api/v1/attendance/accept_substitution_form/', {
+        substitutionForm: substitutionFormID,
+      });
+    }
+
+    function declineSubstitution(substitutionFormID) {
+      return $http.post('/api/v1/attendance/decline_substitution_form/', {
+        substitutionForm: substitutionFormID,
       });
     }
   }

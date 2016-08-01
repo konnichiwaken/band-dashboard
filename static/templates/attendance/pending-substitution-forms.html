@@ -1,5 +1,9 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
+    <h1 class="text-center" ng-if="!vm.requestedSubstitutionForms.length && !vm.receivedSubstitutionForms.length">
+      Nothing to see here!
+    </h1>
+
     <div class="well" ng-if="vm.requestedSubstitutionForms.length">
       <h1>Requested substitution forms</h1>
 
@@ -30,7 +34,8 @@
         <tr>
           <th>Event</th>
           <th>Event time</th>
-          <th>Member requesting substitute</th>
+          <th>Requesting member</th>
+          <th>Actions</th>
         </tr>
 
         <tr ng-repeat="form in vm.receivedSubstitutionForms">
@@ -39,6 +44,16 @@
           <td>
             {{form.requester__account__first_name}}
             {{form.requester__account__last_name}}
+          </td>
+          <td>
+            <button type="btn btn-primary"
+              ng-click="vm.acceptSubstitution(form.id)">
+              Accept
+            </button>
+            <button type="btn btn-primary"
+              ng-click="vm.declineSubstitution(form.id)">
+              Decline
+            </button>
           </td>
         </tr>
       </table>

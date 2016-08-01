@@ -73,3 +73,11 @@ class SubstitutionForm(models.Model):
         verbose_name='Status')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def accept(self):
+        self.status = self.ACCEPTED
+        self.save()
+
+    def decline(self):
+        self.status = self.DECLINED
+        self.save()
