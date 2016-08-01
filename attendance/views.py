@@ -131,6 +131,7 @@ class GetPendingSubstitutionForms(views.APIView):
             requester=request.user.band_member).values(
             'event__time',
             'event__title',
+            'id',
             'reason',
             'requestee__account__first_name',
             'requestee__account__last_name')
@@ -139,6 +140,7 @@ class GetPendingSubstitutionForms(views.APIView):
             requestee=request.user.band_member).values(
             'event__time',
             'event__title',
+            'id',
             'requester__account__first_name',
             'requester__account__last_name')
 
@@ -146,3 +148,41 @@ class GetPendingSubstitutionForms(views.APIView):
             'requested': requested_substitution_forms,
             'received': received_substitution_forms,
         })
+
+
+class AcceptSubstitutionForm(views.APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        data = json.loads(request.body)
+        substitution_form_id = data['substitutionForm']
+        try:
+            substitution_form = SubstitutionForm.objects.get(
+                id=substitution_form_id,
+                requestee_id=request.user.band_member.id)
+            substitution_form.accept()
+            return Response({})
+        except SubstitutionForm.DoesNotExist:
+            return Response({
+                'status': 'Bad request',
+                'message': 'Could not accept substitution form with given information',
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeclineSubstitutionForm(views.APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        data = json.loads(request.body)
+        substitution_form_id = data['substitutionForm']
+        try:
+            substitution_form = SubstitutionForm.objects.get(
+                id=substitution_form_id,
+                requestee_id=request.user.band_member.id)
+            substitution_form.decline()
+            return Response({})
+        except SubstitutionForm.DoesNotExist:
+            return Response({
+                'status': 'Bad request',
+                'message': 'Could not decline substitution form with given information',
+            }, status=status.HTTP_400_BAD_REQUEST)

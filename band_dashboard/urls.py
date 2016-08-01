@@ -18,7 +18,9 @@ from django.conf.urls import patterns
 from django.conf.urls import url
 from rest_framework_nested import routers
 
+from attendance.views import AcceptSubstitutionForm
 from attendance.views import AttendanceViewSet
+from attendance.views import DeclineSubstitutionForm
 from attendance.views import EventTypeViewSet
 from attendance.views import EventViewSet
 from attendance.views import GetPendingSubstitutionForms
@@ -67,5 +69,13 @@ urlpatterns = patterns(
         r'^api/v1/pending_substitution_forms/$',
         GetPendingSubstitutionForms.as_view(),
         name='get_pending_substitution_forms'),
+    url(
+        r'^api/v1/attendance/accept_substitution_form/$',
+        AcceptSubstitutionForm.as_view(),
+        name='accept_substitution_form'),
+    url(
+        r'^api/v1/attendance/decline_substitution_form/$',
+        DeclineSubstitutionForm.as_view(),
+        name='decline_substitution_form'),
     url('^.*$', IndexView.as_view(), name='index'),
 )
