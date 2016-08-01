@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 from members.models import Band
 from members.models import BandMember
@@ -39,9 +40,12 @@ class Attendance(models.Model):
     def allows_substitution(self):
         if self.points is None and self.is_active and self.assigned:
             return not SubstitutionForm.objects.filter(
-                event_id=self.event_id,
-                requester_id=self.member_id,
-                status=SubstitutionForm.PENDING).exists()
+                Q(event_id=self.event_id) &
+                Q(requester_id=self.member_id) &
+                (
+                    Q(status=SubstitutionForm.PENDING) |
+                    Q(status=SubstitutionForm.ACCEPTED)
+                )).exists()
         else:
             return False
 
