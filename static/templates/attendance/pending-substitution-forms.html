@@ -6,12 +6,14 @@
       <table class="table table-striped table-hover">
         <tr>
           <th>Event</th>
+          <th>Event time</th>
           <th>Member to substitute</th>
           <th>Reason for substitution</th>
         </tr>
 
         <tr ng-repeat="form in vm.requestedSubstitutionForms">
           <td>{{form.event__title}}</td>
+          <td>{{form.event__time | date:"MM/dd/yyyy 'at' h:mma"}}</td>
           <td>
             {{form.requestee__account__first_name}}
             {{form.requestee__account__last_name}}
@@ -27,11 +29,13 @@
       <table class="table table-striped table-hover">
         <tr>
           <th>Event</th>
+          <th>Event time</th>
           <th>Member requesting substitute</th>
         </tr>
 
         <tr ng-repeat="form in vm.receivedSubstitutionForms">
           <td>{{form.event__title}}</td>
+          <td>{{form.event__time | date:"MM/dd/yyyy 'at' h:mma"}}</td>
           <td>
             {{form.requester__account__first_name}}
             {{form.requester__account__last_name}}
