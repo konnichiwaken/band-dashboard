@@ -129,13 +129,15 @@ class GetPendingSubstitutionForms(views.APIView):
         requested_substitution_forms = SubstitutionForm.objects.filter(
             status=SubstitutionForm.PENDING,
             requester=request.user.band_member).values(
+            'event__time',
             'event__title',
+            'reason',
             'requestee__account__first_name',
-            'requestee__account__last_name',
-            'reason')
+            'requestee__account__last_name')
         received_substitution_forms = SubstitutionForm.objects.filter(
             status=SubstitutionForm.PENDING,
             requestee=request.user.band_member).values(
+            'event__time',
             'event__title',
             'requester__account__first_name',
             'requester__account__last_name')
