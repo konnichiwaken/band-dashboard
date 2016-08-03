@@ -1,5 +1,8 @@
+from datetime import timedelta
+
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 
 from members.models import Band
 from members.models import BandMember
@@ -38,7 +41,10 @@ class Attendance(models.Model):
 
     @property
     def allows_substitution(self):
-        if self.points is None and self.is_active and self.assigned:
+        if (self.points is None and
+            self.is_active and
+            self.assigned and
+            self.event.time > (timezone.now() + timedelta(days=1))):
             return not SubstitutionForm.objects.filter(
                 Q(event_id=self.event_id) &
                 Q(requester_id=self.member_id) &
