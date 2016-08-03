@@ -1,4 +1,5 @@
 from authentication.models import Account
+from members.models import BandMember
 from members.models import Role
 
 
@@ -19,6 +20,7 @@ def initialize_test_accounts():
             'last_name': 'Ector',
             'role': 'Director',
             'password': 'director',
+            'section': BandMember.DRUMLINE,
         },
         {
             'email': 'president@duke.edu',
@@ -26,6 +28,7 @@ def initialize_test_accounts():
             'last_name': 'Ident',
             'role': 'President',
             'password': 'president',
+            'section': BandMember.DRUMLINE,
         },
         {
             'email': 'secretary@duke.edu',
@@ -33,17 +36,21 @@ def initialize_test_accounts():
             'last_name': 'Retary',
             'role': 'Secretary',
             'password': 'secretary',
+            'section': BandMember.DRUMLINE,
         },
     ]
     for test_account in test_accounts:
         account_role = test_account.pop('role', None)
         password = test_account.pop('password')
+        section = test_account.pop('section', None)
         account = Account(**test_account)
         account.set_password(password)
         account.save()
         if account_role:
             role = Role.objects.get(name=account_role)
             role.accounts.add(account)
+
+        band_member = BandMember.objects.create(account=account, section=section)
 
 
 def initialize():
