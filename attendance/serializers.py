@@ -127,6 +127,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
         return attendance
 
     def update(self, instance, validated_data):
+        validated_data.pop('member', None)
         check_in_time = validated_data.get('check_in_time', None)
         is_late = validated_data.pop('is_late', None)
         event = instance.event

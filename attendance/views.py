@@ -62,10 +62,19 @@ class UnassignedAttendanceView(views.APIView):
 
     def post(self, request, format=None):
         data = json.loads(request.body)
-        serializer = AttendanceSerializer(data=data)
-        if serializer.is_valid():
-            attendance = serializer.save()
-            return Response(model_to_dict(attendance), status=status.HTTP_201_CREATED)
+        try:
+            member_id = data.get('member_id')
+            event_id = data.get('event_id')
+            attendance = Attendance.objects.get(member_id=member_id, event_id=event_id)
+            data['is_active'] = True
+            serializer = AttendanceSerializer()
+            attendance = serializer.update(attendance, data)
+            return Response(model_to_dict(attendance))
+        except Attendance.DoesNotExist:
+            serializer = AttendanceSerializer(data=data)
+            if serializer.is_valid():
+                attendance = serializer.save()
+                return Response(model_to_dict(attendance))
 
         return Response({
             'status': 'Bad request',
