@@ -13,6 +13,7 @@ from authentication.models import Account
 from authentication.permissions import CanCreateAccount
 from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer
+from authentication.utils import create_account
 
 
 class AccountViewSet(viewsets.ModelViewSet):
@@ -74,3 +75,14 @@ class LogoutView(views.APIView):
         logout(request)
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+
+class CreateAccountsView(views.APIView):
+    permission_classes = (CanCreateAccount, IsAuthenticated,)
+
+    def post(self, request, format=None):
+        data = json.loads(request.body)
+        for account in data['accounts']:
+            create_account(account)
+
+        return Response({}, status=status.HTTP_201_CREATED)
