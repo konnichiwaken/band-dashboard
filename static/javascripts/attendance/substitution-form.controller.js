@@ -39,7 +39,7 @@
         Snackbar.show('Substitution form submitted successfully');
         setTimeout(function() {
           window.location = "/events/all";
-        }, 3000);
+        }, 1500);
       }
 
       function submitSubstitutionFormErrorFn(data, status, headers, config) {
