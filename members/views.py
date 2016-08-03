@@ -83,6 +83,18 @@ class BandAssignmentView(views.APIView):
             elif action == 'unassign':
                 band.unassigned_members.add(band_member)
                 band.assigned_members.remove(band_member)
+                for event in band.events.all():
+                    try:
+                        attendance = Attendance.objects.get(
+                            event=event,
+                            member=band_member,
+                            points__isnull=True,
+                            assigned=True)
+                        attendance.assigned = False
+                        attendance.is_active = False
+                        attendance.save()
+                    except Attendance.DoesNotExist:
+                        pass
 
             band.save()
             return Response()
