@@ -17,7 +17,8 @@
   function RegisterController($location, $scope, Authentication) {
     var vm = this;
 
-    vm.register = register;
+    vm.addAccountRow = addAccountRow;
+    vm.createAccounts = createAccounts;
 
     activate();
 
@@ -26,16 +27,17 @@
      * @desc Actions to be performed when this controller is instantiated
      * @memberOf thinkster.authentication.controllers.RegisterController
      */
-    function activate() {}
+    function activate() {
+      vm.accounts = [];
+      vm.addAccountRow();
+    }
 
-    function register() {
-      Authentication.register(
-        vm.email,
-        vm.password,
-        vm.first_name,
-        vm.last_name,
-        vm.section,
-        vm.instrument_number);
+    function addAccountRow() {
+      vm.accounts.push({'first_name': "", 'last_name': "", 'email': "", 'section': ""});
+    }
+
+    function createAccounts() {
+      Authentication.createAccounts(vm.accounts);
     }
   }
 })();

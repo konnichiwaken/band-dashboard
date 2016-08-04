@@ -59,3 +59,4 @@ target/
 .DS_STORE
 node_modules/
 static/bower_components
+config.cfg
