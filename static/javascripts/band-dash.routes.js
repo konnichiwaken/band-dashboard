@@ -120,6 +120,12 @@
         controller: 'PendingSubstitutionFormController',
         controllerAs: 'vm',
         templateUrl: '/static/templates/attendance/pending-substitution-forms.html'
+      })
+      .state('confirm_account', {
+        url: '/confirm/:token',
+        controller: 'ConfirmAccountController',
+        controllerAs: 'vm',
+        templateUrl: '/static/templates/authentication/confirm-account.html'
       });
   }
 })();

@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from ConfigParser import ConfigParser
 import os
+import socket
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -21,6 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '05!&x!(y0za+9f4r&=6!z@y0$%fm*mj=657z_c0kr(59%n%-p9'
+SECURITY_PASSWORD_SALT = 'k07svyq1@IcxeGQmtOPRJ5hYVP(1XZ'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -43,6 +46,7 @@ INSTALLED_APPS = (
     'members',
     'attendance',
     'django_extensions',
+    'emails',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -134,3 +138,10 @@ REST_FRAMEWORK = {
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 AUTH_USER_MODEL = 'authentication.Account'
+
+HOSTNAME = 'http://localhost:8000'
+
+parser = ConfigParser()
+parser.read("config.cfg")
+EMAIL_USERNAME = parser.get('Gmail', 'EmailAddress')
+EMAIL_PASSWORD = parser.get('Gmail', 'Password')

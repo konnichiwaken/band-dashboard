@@ -21,7 +21,9 @@
     * @desc The Factory to be returned
     */
     var Authentication = {
-      register: register,
+      createAccounts: createAccounts,
+      createPassword: createPassword,
+      confirmAccount: confirmAccount,
       login: login,
       logout: logout,
       getAuthenticatedAccount: getAuthenticatedAccount,
@@ -35,42 +37,31 @@
     ////////////////////
 
     /**
-    * @name register
-    * @desc Try to register a new user
-    * @param {string} email The email entered by the user
-    * @param {string} password The password entered by the user
-    * @param {string} username The username entered by the user
-    * @param {string} section The section entered by the user
-    * @param {string} instrument_number The instrument number entered by the user
+    * @name createAccounts
+    * @desc Try to create a number of accounts
+    * @param {array} accounts The accounts to create
     * @returns {Promise}
     * @memberOf band-dash.authentication.Authentication
     */
-    function register(email, password, first_name, last_name, section, instrument_number) {
-      return $http.post('/api/v1/accounts/', {
-        email: email,
-        password: password,
-        first_name: first_name,
-        last_name: last_name,
-        band_member: {
-          section: section,
-          instrument_number: instrument_number
-        }
-      }).then(registerSuccessFn, registerErrorFn);
+    function createAccounts(accounts) {
+      return $http.post('/api/v1/create_accounts/', {
+        accounts: accounts,
+      }).then(createAccountsSuccessFn, createAccountsErrorFn);
 
       /**
-      * @name registerSuccessFn
+      * @name createAccountsSuccessFn
       * @desc Log the new user in
       */
-      function registerSuccessFn(data, status, headers, config) {
-        Snackbar.show('Account created successfully');
+      function createAccountsSuccessFn(data, status, headers, config) {
+        Snackbar.show('Accounts created successfully');
       }
 
       /**
-      * @name registerErrorFn
+      * @name createAccountsErrorFn
       * @desc Log that there was a failure when attempting to register a new user
       */
-      function registerErrorFn(data, status, headers, config) {
-        Snackbar.error('Couldn\'t register');
+      function createAccountsErrorFn(data, status, headers, config) {
+        Snackbar.error('Couldn\'t create accounts');
       }
     }
 
@@ -178,6 +169,35 @@
      */
     function unauthenticate() {
       $cookies.remove('authenticatedAccount');
+    }
+
+    function confirmAccount(token) {
+      return $http.post('/api/v1/confirm_account/', {token: token}).then(
+        confirmAccountSuccessFn,
+        confirmAccountErrorFn)
+
+      function confirmAccountSuccessFn(data, status, headers, config) {
+        Snackbar.show("Welcome, " + data.data['name'] + "!");
+        return data.data['email'];
+      }
+
+      function confirmAccountErrorFn(data, status, headers, config) {
+        window.location = '/';
+      }
+    }
+
+    function createPassword(email, password) {
+      return $http.post('/api/v1/create_password/', {email: email, password: password}).then(
+        createPasswordSuccessFn,
+        createPasswordErrorFn)
+
+      function createPasswordSuccessFn(data, status, headers, config) {
+        window.location = '/login';
+      }
+
+      function createPasswordErrorFn(data, status, headers, config) {
+        Snackbar.error(data.data);
+      }
     }
   }
 })();
