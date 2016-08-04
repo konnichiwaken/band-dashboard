@@ -22,6 +22,8 @@
     */
     var Authentication = {
       createAccounts: createAccounts,
+      createPassword: createPassword,
+      confirmAccount: confirmAccount,
       login: login,
       logout: logout,
       getAuthenticatedAccount: getAuthenticatedAccount,
@@ -167,6 +169,35 @@
      */
     function unauthenticate() {
       $cookies.remove('authenticatedAccount');
+    }
+
+    function confirmAccount(token) {
+      return $http.post('/api/v1/confirm_account/', {token: token}).then(
+        confirmAccountSuccessFn,
+        confirmAccountErrorFn)
+
+      function confirmAccountSuccessFn(data, status, headers, config) {
+        Snackbar.show("Welcome, " + data.data['name'] + "!");
+        return data.data['email'];
+      }
+
+      function confirmAccountErrorFn(data, status, headers, config) {
+        window.location = '/';
+      }
+    }
+
+    function createPassword(email, password) {
+      return $http.post('/api/v1/create_password/', {email: email, password: password}).then(
+        createPasswordSuccessFn,
+        createPasswordErrorFn)
+
+      function createPasswordSuccessFn(data, status, headers, config) {
+        window.location = '/login';
+      }
+
+      function createPasswordErrorFn(data, status, headers, config) {
+        Snackbar.error(data.data);
+      }
     }
   }
 })();

@@ -28,7 +28,9 @@ from attendance.views import GetUnassignedMembersView
 from attendance.views import SubstitutionFormViewSet
 from attendance.views import UnassignedAttendanceView
 from authentication.views import AccountViewSet
+from authentication.views import ConfirmAccountView
 from authentication.views import CreateAccountsView
+from authentication.views import CreatePasswordView
 from authentication.views import LoginView
 from authentication.views import LogoutView
 from band_dashboard.views import IndexView
@@ -62,7 +64,6 @@ urlpatterns = patterns(
         r'^api/v1/members/unassigned/$',
         UnassignedMembersView.as_view(),
         name='unassigned_members'),
-<<<<<<< e7a42fc36937c30f62c53426a7a2a134112c7eaa
     url(
         r'^api/v1/get_unassigned_members/$',
         GetUnassignedMembersView.as_view(),
@@ -79,8 +80,8 @@ urlpatterns = patterns(
         r'^api/v1/attendance/decline_substitution_form/$',
         DeclineSubstitutionForm.as_view(),
         name='decline_substitution_form'),
-=======
     url(r'^api/v1/create_accounts/$', CreateAccountsView.as_view(), name='create_accounts'),
->>>>>>> Create accounts page and placeholder backend function
+    url(r'^api/v1/confirm_account/$', ConfirmAccountView.as_view(), name='confirm_account'),
+    url(r'^api/v1/create_password/$', CreatePasswordView.as_view(), name='create_password'),
     url('^.*$', IndexView.as_view(), name='index'),
 )
