@@ -15,7 +15,7 @@ def send_registration_email(account):
     message = """
     Hello!
 
-    Welcome to DUMBDash. DUMBDash is the online portal used by the Duke University Marching Band to manage attendance as well as other administrative needs by the band. Please click on this link to activate your account: {}/confirm/{}/.
+    Welcome to DUMBDash. DUMBDash is the online portal used by the Duke University Marching Band to manage attendance as well as other administrative needs by the band. Please click on this link to activate your account: {}/confirm/{}.
 
     Sincerely,
     SG

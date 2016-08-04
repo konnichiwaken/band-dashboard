@@ -13,6 +13,7 @@ from authentication.models import Account
 from authentication.permissions import CanCreateAccount
 from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer
+from authentication.utils import confirm_token
 from authentication.utils import send_registration_email
 from members.models import BandMember
 
@@ -90,3 +91,44 @@ class CreateAccountsView(views.APIView):
             send_registration_email(account)
 
         return Response({}, status=status.HTTP_201_CREATED)
+
+
+class ConfirmAccountView(views.APIView):
+
+    def post(self, request, format=None):
+        data = json.loads(request.body)
+        token = data.get('token')
+        if token:
+            email = confirm_token(token)
+        else:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+        if email:
+            try:
+                account = Account.objects.get(email=email)
+            except Account.DoesNotExist:
+                return Response({}, status=status.HTTP_404_NOT_FOUND)
+            else:
+                return Response({
+                    'email': email,
+                    'name': account.get_full_name(),
+                }, status=status.HTTP_200_OK)
+
+
+class CreatePasswordView(views.APIView):
+
+    def post(self, request, format=None):
+        data = json.loads(request.body)
+        email = data.get('email')
+        password = data.get('password')
+        if not email or not password:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            account = Account.objects.get(email=email)
+            account.is_active = True
+            account.set_password(password)
+            account.save()
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+        except Account.DoesNotExist:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
