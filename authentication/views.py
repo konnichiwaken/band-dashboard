@@ -13,7 +13,8 @@ from authentication.models import Account
 from authentication.permissions import CanCreateAccount
 from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer
-from authentication.utils import create_account
+from authentication.utils import send_registration_email
+from members.models import BandMember
 
 
 class AccountViewSet(viewsets.ModelViewSet):
@@ -82,7 +83,10 @@ class CreateAccountsView(views.APIView):
 
     def post(self, request, format=None):
         data = json.loads(request.body)
-        for account in data['accounts']:
-            create_account(account)
+        for account_data in data['accounts']:
+            section = account_data.pop('section')
+            account = Account.objects.create_user(**account_data)
+            band_member = BandMember.objects.create(section=section, account=account)
+            send_registration_email(account)
 
         return Response({}, status=status.HTTP_201_CREATED)
