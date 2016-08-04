@@ -38,9 +38,12 @@
             if (event.id in vm.attendances) {
               var attendance = vm.attendances[event.id];
               if (attendance.assigned) {
-                var status = "Assigned attendance";
+                var status = "Assigned event";
+                if (attendance.allows_substitution) {
+                  event.allowsSubstitution = true;
+                }
               } else {
-                var status = "Unassigned attendance";
+                var status = "Unassigned event";
               }
 
               event.status = status;
