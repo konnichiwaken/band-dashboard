@@ -18,9 +18,14 @@ from django.conf.urls import patterns
 from django.conf.urls import url
 from rest_framework_nested import routers
 
+from attendance.views import AcceptSubstitutionForm
 from attendance.views import AttendanceViewSet
+from attendance.views import DeclineSubstitutionForm
 from attendance.views import EventTypeViewSet
 from attendance.views import EventViewSet
+from attendance.views import GetPendingSubstitutionForms
+from attendance.views import GetUnassignedMembersView
+from attendance.views import SubstitutionFormViewSet
 from attendance.views import UnassignedAttendanceView
 from authentication.views import AccountViewSet
 from authentication.views import LoginView
@@ -37,6 +42,10 @@ router.register(r'attendance/event', EventViewSet, base_name='event')
 router.register(r'attendance/event_type', EventTypeViewSet)
 router.register(r'attendance/event_attendance', AttendanceViewSet, base_name='event_attendance')
 router.register(r'members/band', BandViewSet)
+router.register(
+    r'attendance/substitution_form',
+    SubstitutionFormViewSet,
+    base_name='substitution_form')
 
 urlpatterns = patterns(
      '',
@@ -52,5 +61,21 @@ urlpatterns = patterns(
         r'^api/v1/members/unassigned/$',
         UnassignedMembersView.as_view(),
         name='unassigned_members'),
+    url(
+        r'^api/v1/get_unassigned_members/$',
+        GetUnassignedMembersView.as_view(),
+        name='get_unassigned_members'),
+    url(
+        r'^api/v1/pending_substitution_forms/$',
+        GetPendingSubstitutionForms.as_view(),
+        name='get_pending_substitution_forms'),
+    url(
+        r'^api/v1/attendance/accept_substitution_form/$',
+        AcceptSubstitutionForm.as_view(),
+        name='accept_substitution_form'),
+    url(
+        r'^api/v1/attendance/decline_substitution_form/$',
+        DeclineSubstitutionForm.as_view(),
+        name='decline_substitution_form'),
     url('^.*$', IndexView.as_view(), name='index'),
 )

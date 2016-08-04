@@ -1,4 +1,8 @@
+from datetime import timedelta
+
 from django.db import models
+from django.db.models import Q
+from django.utils import timezone
 
 from members.models import Band
 from members.models import BandMember
@@ -34,3 +38,69 @@ class Attendance(models.Model):
     is_absence = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def allows_substitution(self):
+        if (self.points is None and
+            self.is_active and
+            self.assigned and
+            self.event.time > (timezone.now() + timedelta(days=1))):
+            return not SubstitutionForm.objects.filter(
+                Q(event_id=self.event_id) &
+                Q(requester_id=self.member_id) &
+                (
+                    Q(status=SubstitutionForm.PENDING) |
+                    Q(status=SubstitutionForm.ACCEPTED)
+                )).exists()
+        else:
+            return False
+
+
+class SubstitutionForm(models.Model):
+    ACCEPTED = 'accept'
+    DECLINED = 'decline'
+    PENDING = 'pending'
+    STATUS_CHOICES = (
+        (ACCEPTED, 'Accepted'),
+        (DECLINED, 'Declined'),
+        (PENDING, 'Pending'),
+    )
+
+    event = models.ForeignKey(Event, related_name='substitution_forms', verbose_name='Event')
+    requester = models.ForeignKey(
+        BandMember,
+        related_name='substitutions_requested',
+        verbose_name='Requester')
+    requestee = models.ForeignKey(
+        BandMember,
+        related_name='substitutions_received',
+        verbose_name='Requestee')
+    reason = models.CharField(max_length=255, verbose_name='Substitution reason')
+    status = models.CharField(
+        max_length=255,
+        choices=STATUS_CHOICES,
+        default=PENDING,
+        verbose_name='Status')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def accept(self):
+        requester_attendance = Attendance.objects.get(event=self.event, member=requester)
+        requester_attendance.is_active = False
+        requester_attendance.assigned = False
+        requester_attendance.save()
+
+        try:
+            requestee_attendance = Attendance.objects.get(event=self.event, member=requestee)
+            requestee_attendance.is_active = True
+            requestee_attendance.assigned = True
+            requestee_attendance.save()
+        except Attendance.DoesNotExist:
+            Attendance.objects.create(event=self.event, member=requestee, assigned=True)
+
+        self.status = self.ACCEPTED
+        self.save()
+
+    def decline(self):
+        self.status = self.DECLINED
+        self.save()

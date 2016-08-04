@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>Substitution form for EVENT</h1>
+
+    <div class="well">
+      <form role="form" ng-submit="vm.submitSubstitutionForm()">
+        <div class="form-group">
+          <label for="substitution__member">Band member to substitute</label>
+          <select
+            id="substitution__member"
+            ng-model="vm.selectedMember"
+            ng-options="member.full_name for member in vm.unassignedMembers"
+            required>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="substitution__reason">Reason for substitution</label>
+          <input
+            type="text"
+            class="form-control"
+            id="substitution__reason"
+            placeholder="ex. I will be saving the world"
+            ng-model="vm.substitutionReason"
+            required>
+          </input>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
