@@ -32,6 +32,10 @@ class BandMember(models.Model):
     def full_name(self):
         return self.account.get_full_name()
 
+    @property
+    def section_display(self):
+        return self.section.capitalize()
+
 
 class Band(models.Model):
     identifier = models.CharField(max_length=255, unique=True, verbose_name='Band identifier')

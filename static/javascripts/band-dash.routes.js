@@ -80,11 +80,11 @@
         },
         templateUrl: '/static/templates/attendance/edit-attendance.html'
       })
-      .state('band_assign', {
-        url: '/band/assign',
+      .state('band_assignments', {
+        url: '/bands/assign',
         controller: 'BandAssignmentController',
         controllerAs: 'vm',
-        templateUrl: '/static/templates/members/band-assignment.html'
+        templateUrl: '/static/templates/members/band-assignments.html'
       })
       .state('event_edit_attendance', {
         url: '/event/edit_attendance/:event',
