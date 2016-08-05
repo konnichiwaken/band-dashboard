@@ -1,5 +1,5 @@
 /**
-* AllEventsController
+* EventListController
 * @namespace band-dash.attendance
 */
 (function () {
@@ -7,14 +7,14 @@
 
   angular
     .module('band-dash.attendance')
-    .controller('AllEventsController', AllEventsController);
+    .controller('EventListController', EventListController);
 
-  AllEventsController.$inject = ['$location', '$scope', '$http'];
+  EventListController.$inject = ['$location', '$scope', '$http'];
 
   /**
-  * @namespace AllEventsController
+  * @namespace EventListController
   */
-  function AllEventsController($location, $scope, $http) {
+  function EventListController($location, $scope, $http) {
     var vm = this;
     vm.attendances = {};
     vm.events = [];
@@ -24,7 +24,7 @@
     /**
     * @name activate
     * @desc Actions to be performed when this controller is instantiated
-    * @memberOf band-dash.attendance.AllEventsController
+    * @memberOf band-dash.attendance.EventListController
     */
     function activate() {
       $http.get('/api/v1/attendance/event_attendance/').success(function(response) {
