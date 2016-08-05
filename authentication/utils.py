@@ -2,7 +2,7 @@ from django.conf import settings
 from itsdangerous import URLSafeTimedSerializer
 
 from authentication.settings import ACCOUNT_CREATION_ADMIN_ROLES
-from emails.utils import send_email
+from emails.models import Email
 
 
 def is_account_creation_admin(account):
@@ -20,7 +20,10 @@ def send_registration_email(account):
     Sincerely,
     SG
     """.format(settings.HOSTNAME, token)
-    send_email(account.email, message, "Register your DUMBDash account")
+    Email.objects.create(
+        recipient=account.email,
+        subject="Register your DUMBDash account",
+        body=message)
 
 
 def generate_confirmation_token(email):
