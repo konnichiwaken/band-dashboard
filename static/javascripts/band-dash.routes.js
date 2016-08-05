@@ -58,8 +58,8 @@
         },
         templateUrl: '/static/templates/attendance/create-event.html'
       })
-      .state('band_create', {
-        url: '/band/create',
+      .state('create_band', {
+        url: '/bands/create',
         controller: 'BandController',
         controllerAs: 'vm',
         data: {
