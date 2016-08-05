@@ -25,6 +25,17 @@
     * @memberOf band-dash.attendance.EventTypeController
     */
     function createEventType() {
+      if (!vm.name) {
+        Snackbar.error("Please enter an event type name");
+        return;
+      } else if (!vm.points) {
+        Snackbar.error("Please enter a default point value");
+        return;
+      } else if (!vm.rtp) {
+        Snackbar.error("Please enter a default RTP time");
+        return;
+      }
+
       Attendance.createEventType(vm.name, vm.points, vm.rtp).then(
         createEventTypeSuccessFn,
         createEventTypeErrorFn);
@@ -35,6 +46,9 @@
       */
       function createEventTypeSuccessFn(data, status, headers, config) {
         Snackbar.show('Event type created successfully');
+        vm.name = null;
+        vm.points = null;
+        vm.rtp = null;
       }
 
       /**
@@ -42,7 +56,7 @@
       * @desc Log that an error occurred when attempting to create event type
       */
       function createEventTypeErrorFn(data, status, headers, config) {
-        Snackbar.error(data.data.detail);
+        Snackbar.error("Can't create event type");
       }
     }
   }

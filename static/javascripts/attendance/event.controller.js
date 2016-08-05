@@ -83,7 +83,7 @@
       * @desc Log that error occurred when trying to create event
       */
       function createEventErrorFn(data, status, headers, config) {
-        Snackbar.error("Error when creating event");
+        Snackbar.error("Can't create event");
       }
     }
 
