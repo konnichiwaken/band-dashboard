@@ -103,11 +103,11 @@
         controllerAs: 'vm',
         templateUrl: '/static/templates/attendance/view-attendance.html'
       })
-      .state('events_all', {
+      .state('event_list', {
         url: '/events/all',
-        controller: 'AllEventsController',
+        controller: 'EventListController',
         controllerAs: 'vm',
-        templateUrl: '/static/templates/attendance/view-all-events.html'
+        templateUrl: '/static/templates/attendance/event-list.html'
       })
       .state('event_substitution_form', {
         url: '/event/substitution/:event',
