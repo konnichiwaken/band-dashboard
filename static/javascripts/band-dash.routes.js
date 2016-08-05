@@ -99,7 +99,7 @@
       })
       .state('view_attendance', {
         url: '/attendance/all',
-        controller: 'MemberAttendanceController',
+        controller: 'ViewAttendanceController',
         controllerAs: 'vm',
         templateUrl: '/static/templates/attendance/view-attendance.html'
       })

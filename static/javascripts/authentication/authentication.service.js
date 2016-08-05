@@ -69,7 +69,7 @@
        */
       function loginSuccessFn(data, status, headers, config) {
         Authentication.setAuthenticatedAccount(data.data);
-        window.location = '/attendance/members/all';
+        window.location = '/attendance/all';
       }
 
       /**
