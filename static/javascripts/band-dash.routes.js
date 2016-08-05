@@ -19,16 +19,16 @@
         url: '/',
         templateUrl: '/static/templates/splash-page.html'
       })
-      .state('register', {
-        url: '/register',
-        controller: 'RegisterController',
+      .state('create_accounts', {
+        url: '/accounts/create',
+        controller: 'CreateAccountsController',
         controllerAs: 'vm',
         data: {
           permissions: {
             only: ['director', 'president', 'secretary']
           }
         },
-        templateUrl: '/static/templates/authentication/register.html'
+        templateUrl: '/static/templates/authentication/create-accounts.html'
       })
       .state('login', {
         url: '/login',
