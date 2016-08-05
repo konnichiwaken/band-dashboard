@@ -69,8 +69,8 @@
         },
         templateUrl: '/static/templates/members/create-band.html'
       })
-      .state('attendance_view_all', {
-        url: '/attendance/view_all',
+      .state('edit_all_attendance', {
+        url: '/attendance/edit',
         controller: 'AttendanceController',
         controllerAs: 'vm',
         data: {
@@ -78,7 +78,7 @@
             only: ['director', 'president', 'secretary']
           }
         },
-        templateUrl: '/static/templates/attendance/view-events.html'
+        templateUrl: '/static/templates/attendance/edit-attendance.html'
       })
       .state('band_assign', {
         url: '/band/assign',
