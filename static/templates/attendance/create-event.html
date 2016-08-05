@@ -1,24 +1,22 @@
 <div class="row">
   <div class="col-md-4 col-md-offset-4">
-    <h1>Create new event</h1>
+    <h1 class="text-center">Create New Event</h1>
 
     <div class="well">
       <form role="form" ng-submit="vm.createEvent()">
-        <div class="alert alert-danger" ng-show="error" ng-bind="error"></div>
-
         <div class="form-group">
           <label for="create_event__title">Title</label>
-          <input type="text" class="form-control" id="create_event__title" ng-model="vm.title" placeholder="ex. Men's basketball game vs UNC" required>
+          <input type="text" class="form-control" id="create_event__title" ng-model="vm.title" placeholder="ex. Men's basketball game vs UNC">
         </div>
 
         <div class="form-group">
           <label for="create_event__time">Date and time of event</label>
-          <input type="datetime-local" class="form-control" id="create_event__time" ng-model="vm.time" required>
+          <input type="datetime-local" class="form-control" id="create_event__time" ng-model="vm.time">
         </div>
 
         <div class="form-group">
           <label for="create_event__type">Type of event</label>
-          <select class="form-control" id="create_event__type" ng-model="vm.type" ng-options="eventType as eventType.name for eventType in vm.eventTypes" ng-change="vm.updateEventType()" required></select>
+          <select class="form-control" id="create_event__type" ng-model="vm.type" ng-options="eventType as eventType.name for eventType in vm.eventTypes" ng-change="vm.updateEventType()"></select>
         </div>
 
         <div class="form-group">
@@ -28,12 +26,12 @@
 
         <div class="form-group">
           <label for="create_event__points">Points</label>
-          <input type="number" class="form-control" id="create_event__points" ng-model="vm.points" value="0" min="0" step="0.25" required>
+          <input type="number" class="form-control" id="create_event__points" ng-model="vm.points" value="0" min="0" step="0.25">
         </div>
 
         <div class="form-group">
           <label for="create_event__rtp">Minutes before event for RTP</label>
-          <input type="number" class="form-control" id="create_event__rtp" ng-model="vm.rtp" value="0" min="0" step="1" required>
+          <input type="number" class="form-control" id="create_event__rtp" ng-model="vm.rtp" value="0" min="0" step="1">
         </div>
 
         <div class="form-group">
