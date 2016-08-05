@@ -97,11 +97,11 @@
         },
         templateUrl: '/static/templates/attendance/event-attendance.html'
       })
-      .state('attendance_members_all', {
-        url: '/attendance/members/all',
+      .state('view_attendance', {
+        url: '/attendance/all',
         controller: 'MemberAttendanceController',
         controllerAs: 'vm',
-        templateUrl: '/static/templates/attendance/view-all-member-attendance.html'
+        templateUrl: '/static/templates/attendance/view-attendance.html'
       })
       .state('events_all', {
         url: '/events/all',
