@@ -33,6 +33,7 @@
       */
       function createBandSuccessFn(data, status, headers, config) {
         Snackbar.show('Band created successfully');
+        vm.identifier = null;
       }
 
       /**
@@ -40,7 +41,7 @@
       * @desc Log error to the console
       */
       function createBandErrorFn(data, status, headers, config) {
-        Snackbar.error(data.data.detail);
+        Snackbar.error("Can't create band");
       }
     }
   }

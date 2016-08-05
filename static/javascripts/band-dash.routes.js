@@ -19,16 +19,16 @@
         url: '/',
         templateUrl: '/static/templates/splash-page.html'
       })
-      .state('register', {
-        url: '/register',
-        controller: 'RegisterController',
+      .state('create_accounts', {
+        url: '/accounts/create',
+        controller: 'CreateAccountsController',
         controllerAs: 'vm',
         data: {
           permissions: {
             only: ['director', 'president', 'secretary']
           }
         },
-        templateUrl: '/static/templates/authentication/register.html'
+        templateUrl: '/static/templates/authentication/create-accounts.html'
       })
       .state('login', {
         url: '/login',
@@ -47,8 +47,8 @@
         },
         templateUrl: '/static/templates/attendance/create-event-type.html'
       })
-      .state('event_create', {
-        url: '/event/create',
+      .state('create_event', {
+        url: '/events/create',
         controller: 'EventController',
         controllerAs: 'vm',
         data: {
@@ -58,8 +58,8 @@
         },
         templateUrl: '/static/templates/attendance/create-event.html'
       })
-      .state('band_create', {
-        url: '/band/create',
+      .state('create_band', {
+        url: '/bands/create',
         controller: 'BandController',
         controllerAs: 'vm',
         data: {
@@ -69,8 +69,8 @@
         },
         templateUrl: '/static/templates/members/create-band.html'
       })
-      .state('attendance_view_all', {
-        url: '/attendance/view_all',
+      .state('edit_all_attendance', {
+        url: '/attendance/edit',
         controller: 'AttendanceController',
         controllerAs: 'vm',
         data: {
@@ -78,16 +78,16 @@
             only: ['director', 'president', 'secretary']
           }
         },
-        templateUrl: '/static/templates/attendance/view-events.html'
+        templateUrl: '/static/templates/attendance/edit-attendance.html'
       })
-      .state('band_assign', {
-        url: '/band/assign',
+      .state('band_assignments', {
+        url: '/bands/assign',
         controller: 'BandAssignmentController',
         controllerAs: 'vm',
-        templateUrl: '/static/templates/members/band-assignment.html'
+        templateUrl: '/static/templates/members/band-assignments.html'
       })
       .state('event_edit_attendance', {
-        url: '/event/edit_attendance/:event',
+        url: '/attendance/edit/:event',
         controller: 'EditAttendanceController',
         controllerAs: 'vm',
         data: {
@@ -97,17 +97,17 @@
         },
         templateUrl: '/static/templates/attendance/event-attendance.html'
       })
-      .state('attendance_members_all', {
-        url: '/attendance/members/all',
-        controller: 'MemberAttendanceController',
+      .state('view_attendance', {
+        url: '/attendance/all',
+        controller: 'ViewAttendanceController',
         controllerAs: 'vm',
-        templateUrl: '/static/templates/attendance/view-all-member-attendance.html'
+        templateUrl: '/static/templates/attendance/view-attendance.html'
       })
-      .state('events_all', {
+      .state('event_list', {
         url: '/events/all',
-        controller: 'AllEventsController',
+        controller: 'EventListController',
         controllerAs: 'vm',
-        templateUrl: '/static/templates/attendance/view-all-events.html'
+        templateUrl: '/static/templates/attendance/event-list.html'
       })
       .state('event_substitution_form', {
         url: '/event/substitution/:event',

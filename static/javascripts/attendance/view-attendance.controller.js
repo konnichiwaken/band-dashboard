@@ -1,5 +1,5 @@
 /**
-* MemberAttendanceController
+* ViewAttendanceController
 * @namespace band-dash.attendance
 */
 (function () {
@@ -7,14 +7,14 @@
 
   angular
     .module('band-dash.attendance')
-    .controller('MemberAttendanceController', MemberAttendanceController);
+    .controller('ViewAttendanceController', ViewAttendanceController);
 
-  MemberAttendanceController.$inject = ['$location', '$scope', '$http', 'Attendance'];
+  ViewAttendanceController.$inject = ['$location', '$scope', '$http', 'Attendance'];
 
   /**
-  * @namespace MemberAttendanceController
+  * @namespace ViewAttendanceController
   */
-  function MemberAttendanceController($location, $scope, $http, Attendance) {
+  function ViewAttendanceController($location, $scope, $http, Attendance) {
     var vm = this;
 
     activate()
@@ -22,7 +22,7 @@
     /**
     * @name activate
     * @desc Actions to be performed when this controller is instantiated
-    * @memberOf band-dash.attendance.AttendanceController
+    * @memberOf band-dash.attendance.ViewAttendanceController
     */
     function activate() {
       vm.members = {};
@@ -48,6 +48,8 @@
             vm.members[member.id]['name'] = member.full_name;
           }
         }
+
+        vm.attendanceExists = Object.keys(vm.members).length != 0;
       });
     }
   }

@@ -43,6 +43,19 @@
     * @memberOf band-dash.attendance.EventController
     */
     function createEvent() {
+      if (!vm.title) {
+        Snackbar.error("Please enter a title");
+        return;
+      } else if (!vm.time) {
+        Snackbar.error("Please enter an event time");
+      } else if (!vm.type) {
+        Snackbar.error("Please enter an event type");
+        return;
+      } else if (!vm.points && vm.points !== 0) {
+        Snackbar.error("Please enter points for event");
+        return;
+      }
+
       Attendance.createEvent(
         vm.title,
         vm.time,
@@ -57,6 +70,12 @@
       */
       function createEventSuccessFn(data, status, headers, config) {
         Snackbar.show('Event created successfully');
+        vm.title = null;
+        vm.time = null;
+        vm.type = null;
+        vm.assignedBand = null;
+        vm.points = null;
+        vm.rtp = null;
       }
 
       /**
@@ -64,7 +83,7 @@
       * @desc Log that error occurred when trying to create event
       */
       function createEventErrorFn(data, status, headers, config) {
-        Snackbar.error(data.data.detail);
+        Snackbar.error("Can't create event");
       }
     }
 

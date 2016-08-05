@@ -46,23 +46,7 @@
     function createAccounts(accounts) {
       return $http.post('/api/v1/create_accounts/', {
         accounts: accounts,
-      }).then(createAccountsSuccessFn, createAccountsErrorFn);
-
-      /**
-      * @name createAccountsSuccessFn
-      * @desc Log the new user in
-      */
-      function createAccountsSuccessFn(data, status, headers, config) {
-        Snackbar.show('Accounts created successfully');
-      }
-
-      /**
-      * @name createAccountsErrorFn
-      * @desc Log that there was a failure when attempting to register a new user
-      */
-      function createAccountsErrorFn(data, status, headers, config) {
-        Snackbar.error('Couldn\'t create accounts');
-      }
+      });
     }
 
     /**
@@ -85,7 +69,7 @@
        */
       function loginSuccessFn(data, status, headers, config) {
         Authentication.setAuthenticatedAccount(data.data);
-        window.location = '/attendance/members/all';
+        window.location = '/attendance/all';
       }
 
       /**

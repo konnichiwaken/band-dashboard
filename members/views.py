@@ -35,7 +35,7 @@ class BandAssignmentView(views.APIView):
                 member_assignment = {
                     "id": assigned_member.id,
                     "name": assigned_member.full_name,
-                    "section": assigned_member.section
+                    "section": assigned_member.section_display
                 }
                 member_assignments["assigned"].append(member_assignment)
 
@@ -43,7 +43,7 @@ class BandAssignmentView(views.APIView):
                 member_assignment = {
                     "id": unassigned_member.id,
                     "name": unassigned_member.full_name,
-                    "section": unassigned_member.section
+                    "section": unassigned_member.section_display
                 }
                 member_assignments["unassigned"].append(member_assignment)
 

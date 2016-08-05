@@ -34,15 +34,15 @@
     }
 
     function createPassword() {
-      if (vm.password === vm.confirmPassword) {
-        Authentication.createPassword(vm.email, vm.password);
-      } else {
+      if (!vm.password) {
+        Snackbar.error("Please enter a password");
+      } else if (!vm.confirmPassword) {
+        Snackbar.error("Please confirm your password");
+      } else if (vm.password !== vm.confirmPassword) {
         Snackbar.error("Passwords did not match");
+      } else {
+        Authentication.createPassword(vm.email, vm.password);
       }
-    }
-
-    function createAccounts() {
-      Authentication.createAccounts(vm.accounts);
     }
   }
 })();
