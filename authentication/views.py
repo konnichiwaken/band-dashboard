@@ -15,7 +15,7 @@ from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer
 from authentication.utils import confirm_token
 from authentication.utils import send_registration_email
-from emails.utils import send_unsent_emails
+from emails.tasks import send_unsent_emails
 from members.models import BandMember
 
 
@@ -91,7 +91,7 @@ class CreateAccountsView(views.APIView):
             band_member = BandMember.objects.create(section=section, account=account)
             send_registration_email(account)
 
-        send_unsent_emails()
+        send_unsent_emails.apply_async(())
         return Response({}, status=status.HTTP_201_CREATED)
 
 
