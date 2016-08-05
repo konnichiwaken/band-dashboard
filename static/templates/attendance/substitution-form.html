@@ -1,16 +1,16 @@
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <h1>Substitution form for EVENT</h1>
+  <div class="col-md-6 col-md-offset-3">
+    <h1 class="text-center">Substitution for {{vm.event}}</h1>
 
     <div class="well">
       <form role="form" ng-submit="vm.submitSubstitutionForm()">
         <div class="form-group">
           <label for="substitution__member">Band member to substitute</label>
           <select
+            class="form-control"
             id="substitution__member"
             ng-model="vm.selectedMember"
-            ng-options="member.full_name for member in vm.unassignedMembers"
-            required>
+            ng-options="member.full_name for member in vm.unassignedMembers">
           </select>
         </div>
 
@@ -21,8 +21,7 @@
             class="form-control"
             id="substitution__reason"
             placeholder="ex. I will be saving the world"
-            ng-model="vm.substitutionReason"
-            required>
+            ng-model="vm.substitutionReason">
           </input>
         </div>
 

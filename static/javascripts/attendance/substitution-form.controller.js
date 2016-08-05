@@ -26,10 +26,24 @@
         function(response) {
           vm.unassignedMembers = response;
         }
-      )
+      );
+
+      $http.get('/api/v1/attendance/event/?id=' + $stateParams.event).success(
+        function(response) {
+          vm.event = response[0].title;
+        }
+      );
     }
 
     function submitSubstitutionForm() {
+      if (!vm.selectedMember) {
+        Snackbar.error("Please select a member to substitute for you");
+        return;
+      } else if (!vm.substitutionReason) {
+        Snackbar.error("Please enter a substitution reason");
+        return;
+      }
+
       Attendance.submitSubstitutionForm(
         parseInt($stateParams.event),
         vm.selectedMember.id,
