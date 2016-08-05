@@ -1,6 +1,9 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <h1>View member attendance</h1>
+    <h1 ng-show="vm.members.length" class="text-center">View member attendance</h1>
+    <h1 ng-hide="vm.members.length" class="text-center">
+      No attendance to view
+    </h1>
 
     <div class="well" ng-repeat="member in vm.members">
       <h1>{{member.name}}</h1>
