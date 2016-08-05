@@ -47,8 +47,8 @@
         },
         templateUrl: '/static/templates/attendance/create-event-type.html'
       })
-      .state('event_create', {
-        url: '/event/create',
+      .state('create_event', {
+        url: '/events/create',
         controller: 'EventController',
         controllerAs: 'vm',
         data: {
