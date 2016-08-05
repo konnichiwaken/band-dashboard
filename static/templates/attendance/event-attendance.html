@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <h1>{{vm.event.title}}</h1>
+    <h1 class="text-center">{{vm.event.title}}</h1>
 
     <div class="well" ng-if="vm.event.band">
       <h1>Assigned</h1>
@@ -17,7 +17,7 @@
 
         <tr ng-repeat="attendance in vm.assignedAttendances">
           <td>{{attendance.member.full_name}}</td>
-          <td>{{attendance.member.section}}</td>
+          <td>{{attendance.member.section_display}}</td>
           <td><input type="time" ng-model="attendance.check_in_time"></td>
           <td><input type="checkbox" ng-model="attendance.unexcused"></td>
           <td>{{attendance.status}}</td>
@@ -53,7 +53,7 @@
 
         <tr ng-repeat="attendance in vm.unassignedAttendances">
           <td>{{attendance.member.full_name}}</td>
-          <td>{{attendance.member.section}}</td>
+          <td>{{attendance.member.section_display}}</td>
           <td><input type="time" ng-model="attendance.check_in_time"></td>
           <td>{{attendance.status}}</td>
           <td>

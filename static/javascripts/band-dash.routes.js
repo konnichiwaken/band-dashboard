@@ -87,7 +87,7 @@
         templateUrl: '/static/templates/members/band-assignments.html'
       })
       .state('event_edit_attendance', {
-        url: '/event/edit_attendance/:event',
+        url: '/attendance/edit/:event',
         controller: 'EditAttendanceController',
         controllerAs: 'vm',
         data: {

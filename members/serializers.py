@@ -33,6 +33,7 @@ class BandMemberSerializer(serializers.ModelSerializer):
             'account',
             'full_name',
             'section',
+            'section_display',
             'instrument_number',
             'bands',
             'created_at',
