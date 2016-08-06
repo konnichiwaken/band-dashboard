@@ -11,24 +11,26 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from ConfigParser import ConfigParser
 import os
 import socket
+from ConfigParser import ConfigParser
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+config_parser = ConfigParser()
+config_parser.read("config.cfg")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '***REMOVED***'
-SECURITY_PASSWORD_SALT = '***REMOVED***'
+SECRET_KEY = config_parser.get('Server', 'SecretKey')
+SECURITY_PASSWORD_SALT = config_parser.get('Server', 'SecretSalt')
+ENV = config_parser.get('Server', 'Environment')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = ENV == "DEV"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []  # TODO: Set this properly once deployed
 
 
 # Application definition
@@ -90,8 +92,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'band_dashboard',
-        'USER': '***REMOVED***',
-        'PASSWORD': '***REMOVED***',
+        'USER': config_parser.get('Database', 'Username'),
+        'PASSWORD': config_parser.get('Database', 'Password'),
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -141,7 +143,7 @@ AUTH_USER_MODEL = 'authentication.Account'
 
 HOSTNAME = 'http://localhost:8000'
 
-parser = ConfigParser()
-parser.read("config.cfg")
-EMAIL_USERNAME = parser.get('Gmail', 'EmailAddress')
-EMAIL_PASSWORD = parser.get('Gmail', 'Password')
+EMAIL_USERNAME = config_parser.get('Gmail', 'EmailAddress')
+EMAIL_PASSWORD = config_parser.get('Gmail', 'Password')
+CSRF_COOKIE_SECURE = ENV != "DEV"
+SESSION_COOKIE_SECURE = ENV != "DEV"
