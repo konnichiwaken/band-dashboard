@@ -5,7 +5,7 @@
     .module('band-dash.authentication', ['ngCookies'])
     .run(run);
 
-  function run(RoleStore, Authentication, $filter) {
+  function run(PermissionStore, RoleStore, Authentication, $filter) {
     RoleStore
       .defineRole('director', function() {
         if (Authentication.isAuthenticated()) {
@@ -49,6 +49,11 @@
         }
 
         return false;
+      });
+
+    PermissionStore
+      .definePermission('isAuthenticated', function() {
+        return Authentication.isAuthenticated();
       });
   }
 })();

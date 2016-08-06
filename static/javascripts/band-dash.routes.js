@@ -25,7 +25,8 @@
         controllerAs: 'vm',
         data: {
           permissions: {
-            only: ['director', 'president', 'secretary']
+            only: ['director', 'president', 'secretary'],
+            redirectTo: 'view_attendance',
           }
         },
         templateUrl: '/static/templates/authentication/create-accounts.html'
@@ -42,7 +43,8 @@
         controllerAs: 'vm',
         data: {
           permissions: {
-            only: ['director', 'president', 'secretary']
+            only: ['director', 'president', 'secretary'],
+            redirectTo: 'view_attendance',
           }
         },
         templateUrl: '/static/templates/attendance/create-event-type.html'
@@ -53,7 +55,8 @@
         controllerAs: 'vm',
         data: {
           permissions: {
-            only: ['director', 'president', 'secretary']
+            only: ['director', 'president', 'secretary'],
+            redirectTo: 'view_attendance',
           }
         },
         templateUrl: '/static/templates/attendance/create-event.html'
@@ -64,7 +67,8 @@
         controllerAs: 'vm',
         data: {
           permissions: {
-            only: ['director', 'president', 'secretary']
+            only: ['director', 'president', 'secretary'],
+            redirectTo: 'view_attendance',
           }
         },
         templateUrl: '/static/templates/members/create-band.html'
@@ -75,7 +79,8 @@
         controllerAs: 'vm',
         data: {
           permissions: {
-            only: ['director', 'president', 'secretary']
+            only: ['director', 'president', 'secretary'],
+            redirectTo: 'view_attendance',
           }
         },
         templateUrl: '/static/templates/attendance/edit-attendance.html'
@@ -84,6 +89,12 @@
         url: '/bands/assign',
         controller: 'BandAssignmentController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['isAuthenticated'],
+            redirectTo: 'splash_page',
+          }
+        },
         templateUrl: '/static/templates/members/band-assignments.html'
       })
       .state('event_edit_attendance', {
@@ -92,7 +103,8 @@
         controllerAs: 'vm',
         data: {
           permissions: {
-            only: ['director', 'president', 'secretary']
+            only: ['director', 'president', 'secretary'],
+            redirectTo: 'view_attendance',
           }
         },
         templateUrl: '/static/templates/attendance/event-attendance.html'
@@ -101,24 +113,48 @@
         url: '/attendance/all',
         controller: 'ViewAttendanceController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['isAuthenticated'],
+            redirectTo: 'splash_page',
+          }
+        },
         templateUrl: '/static/templates/attendance/view-attendance.html'
       })
       .state('event_list', {
         url: '/events/all',
         controller: 'EventListController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['isAuthenticated'],
+            redirectTo: 'splash_page',
+          }
+        },
         templateUrl: '/static/templates/attendance/event-list.html'
       })
       .state('event_substitution_form', {
         url: '/event/substitution/:event',
         controller: 'SubstitutionFormController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['isAuthenticated'],
+            redirectTo: 'splash_page',
+          }
+        },
         templateUrl: '/static/templates/attendance/substitution-form.html'
       })
       .state('pending_substitution_forms', {
         url: '/attendance/substitution_forms',
         controller: 'PendingSubstitutionFormController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['isAuthenticated'],
+            redirectTo: 'splash_page',
+          }
+        },
         templateUrl: '/static/templates/attendance/pending-substitution-forms.html'
       })
       .state('confirm_account', {
