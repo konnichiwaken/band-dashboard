@@ -21,7 +21,8 @@
           <td>{{attendance.event.title}}</td>
           <td>{{attendance.event.time | date:"MM/dd/yyyy 'at' h:mma"}}</td>
           <td>{{attendance.status}}</td>
-          <td>{{attendance.assigned}}</td>
+          <td ng-show="attendance.assigned">Yes</td>
+          <td ng-hide="attendance.assigned">No</td>
           <td>{{attendance.excused}}</td>
           <td>{{attendance.points}}</td>
         </tr>
