@@ -89,6 +89,10 @@ class CreateAccountsView(views.APIView):
             section = account_data.pop('section')
             account = Account.objects.create_user(**account_data)
             band_member = BandMember.objects.create(section=section, account=account)
+            for band in Band.objects.all():
+                band.unassigned_members.add(band_member)
+                band.save()
+
             send_registration_email(account)
 
         send_unsent_emails.apply_async(())

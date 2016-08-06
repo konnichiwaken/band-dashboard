@@ -18,6 +18,7 @@ from attendance.serializers import EventSerializer
 from attendance.serializers import EventTypeSerializer
 from attendance.serializers import SubstitutionFormSerializer
 from attendance.utils import is_attendance_admin
+from emails.utils import send_substitution_form_email
 from members.models import BandMember
 
 
@@ -116,6 +117,10 @@ class SubstitutionFormViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
             validated_data = serializer.validated_data
+            send_substitution_form_email(
+                validated_data['event'],
+                validated_data['requestee'],
+                validated_data['requester'])
             return_data = {
                 'event_id': validated_data['event'].id,
                 'reason': validated_data['reason'],
