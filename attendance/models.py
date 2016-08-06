@@ -85,18 +85,18 @@ class SubstitutionForm(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def accept(self):
-        requester_attendance = Attendance.objects.get(event=self.event, member=requester)
+        requester_attendance = Attendance.objects.get(event=self.event, member=self.requester)
         requester_attendance.is_active = False
         requester_attendance.assigned = False
         requester_attendance.save()
 
         try:
-            requestee_attendance = Attendance.objects.get(event=self.event, member=requestee)
+            requestee_attendance = Attendance.objects.get(event=self.event, member=self.requestee)
             requestee_attendance.is_active = True
             requestee_attendance.assigned = True
             requestee_attendance.save()
         except Attendance.DoesNotExist:
-            Attendance.objects.create(event=self.event, member=requestee, assigned=True)
+            Attendance.objects.create(event=self.event, member=self.requestee, assigned=True)
 
         self.status = self.ACCEPTED
         self.save()
