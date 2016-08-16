@@ -30,7 +30,7 @@ ENV = config_parser.get('Server', 'Environment')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = ENV == "DEV"
 
-ALLOWED_HOSTS = []  # TODO: Set this properly once deployed
+ALLOWED_HOSTS = ['.dukemarching.band']
 
 
 # Application definition
