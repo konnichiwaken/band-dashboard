@@ -141,7 +141,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 AUTH_USER_MODEL = 'authentication.Account'
 
-HOSTNAME = 'http://localhost:8000'
+HOSTNAME = 'http://localhost:8000' if ENV == "DEV" else 'http://dukemarching.band'
 
 EMAIL_USERNAME = config_parser.get('Gmail', 'EmailAddress')
 EMAIL_PASSWORD = config_parser.get('Gmail', 'Password')
