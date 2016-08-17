@@ -9,12 +9,12 @@
     .module('band-dash.attendance')
     .controller('EventListController', EventListController);
 
-  EventListController.$inject = ['$location', '$scope', '$http'];
+  EventListController.$inject = ['$location', '$scope', '$http', 'Authentication'];
 
   /**
   * @namespace EventListController
   */
-  function EventListController($location, $scope, $http) {
+  function EventListController($location, $scope, $http, Authentication) {
     var vm = this;
     vm.attendances = {};
     vm.events = [];
@@ -27,7 +27,8 @@
     * @memberOf band-dash.attendance.EventListController
     */
     function activate() {
-      $http.get('/api/v1/attendance/event_attendance/').success(function(response) {
+      var account = Authentication.getAuthenticatedAccount();
+      $http.get('/api/v1/attendance/event_attendance/?account_id=' + account.id).success(function(response) {
         for (var i = 0; i < response.length; i++) {
           var attendance = response[i];
           vm.attendances[attendance.event_id] = attendance;

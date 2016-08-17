@@ -48,8 +48,12 @@ class AttendanceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Attendance.objects.filter(is_active=True)
         event_id = self.request.query_params.get('event_id', None)
+        account_id = self.request.query_params.get('account_id', None)
         if event_id:
             queryset = queryset.filter(event_id=event_id)
+
+        if account_id:
+            queryset = queryset.filter(member__account_id=account_id)
 
         account = self.request.user
         if not is_attendance_admin(account):
