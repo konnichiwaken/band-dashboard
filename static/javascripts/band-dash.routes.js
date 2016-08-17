@@ -12,13 +12,9 @@
   * @desc Define valid application routes
   */
   function config($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/login');
 
     $stateProvider
-      .state('splash_page', {
-        url: '/',
-        templateUrl: '/static/templates/splash-page.html'
-      })
       .state('create_accounts', {
         url: '/accounts/create',
         controller: 'CreateAccountsController',
