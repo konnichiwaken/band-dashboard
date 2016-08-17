@@ -147,4 +147,3 @@ EMAIL_USERNAME = config_parser.get('Gmail', 'EmailAddress')
 EMAIL_PASSWORD = config_parser.get('Gmail', 'Password')
 CSRF_COOKIE_SECURE = ENV != "DEV"
 SESSION_COOKIE_SECURE = ENV != "DEV"
-TEMPLATE_DEBUG = ENV == "DEV"
