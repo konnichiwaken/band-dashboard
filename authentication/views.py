@@ -15,6 +15,7 @@ from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer
 from authentication.utils import confirm_token
 from authentication.utils import send_registration_email
+from attendance.models import Band
 from emails.tasks import send_unsent_emails
 from members.models import BandMember
 
