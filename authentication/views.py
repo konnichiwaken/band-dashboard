@@ -3,6 +3,7 @@ import json
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
+from django.contrib.auth import update_session_auth_hash
 from rest_framework import status
 from rest_framework import views
 from rest_framework import viewsets
@@ -99,16 +100,17 @@ class CreatePasswordView(views.APIView):
 
     def post(self, request, format=None):
         data = json.loads(request.body)
-        email = data.get('email')
+        email = request.user.email
         password = data.get('password')
         if not email or not password:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             account = Account.objects.get(email=email)
-            account.is_active = True
+            account.is_registered = True
             account.set_password(password)
             account.save()
+            update_session_auth_hash(request, account)
             return Response({}, status=status.HTTP_204_NO_CONTENT)
         except Account.DoesNotExist:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
