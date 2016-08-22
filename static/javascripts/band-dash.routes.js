@@ -87,8 +87,8 @@
         controllerAs: 'vm',
         data: {
           permissions: {
-            only: ['isAuthenticated'],
-            redirectTo: 'splash_page',
+            only: ['isRegistered'],
+            redirectTo: 'view_attendance',
           }
         },
         templateUrl: '/static/templates/members/band-assignments.html'
@@ -111,8 +111,8 @@
         controllerAs: 'vm',
         data: {
           permissions: {
-            only: ['isAuthenticated'],
-            redirectTo: 'splash_page',
+            only: ['isRegistered'],
+            redirectTo: 'create_password',
           }
         },
         templateUrl: '/static/templates/attendance/view-attendance.html'
@@ -123,8 +123,8 @@
         controllerAs: 'vm',
         data: {
           permissions: {
-            only: ['isAuthenticated'],
-            redirectTo: 'splash_page',
+            only: ['isRegistered'],
+            redirectTo: 'view_attendance',
           }
         },
         templateUrl: '/static/templates/attendance/event-list.html'
@@ -135,8 +135,8 @@
         controllerAs: 'vm',
         data: {
           permissions: {
-            only: ['isAuthenticated'],
-            redirectTo: 'splash_page',
+            only: ['isRegistered'],
+            redirectTo: 'view_attendance',
           }
         },
         templateUrl: '/static/templates/attendance/substitution-form.html'
@@ -147,8 +147,8 @@
         controllerAs: 'vm',
         data: {
           permissions: {
-            only: ['isAuthenticated'],
-            redirectTo: 'splash_page',
+            only: ['isRegistered'],
+            redirectTo: 'view_attendance',
           }
         },
         templateUrl: '/static/templates/attendance/pending-substitution-forms.html'
@@ -157,6 +157,13 @@
         url: '/create_password',
         controller: 'CreatePasswordController',
         controllerAs: 'vm',
+        data: {
+          permissions: {
+            except: ['isRegistered'],
+            only: ['isAuthenticated'],
+            redirectTo: 'login',
+          }
+        },
         templateUrl: '/static/templates/authentication/create-password.html'
       });
   }

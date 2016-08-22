@@ -26,6 +26,7 @@ class AccountSerializer(serializers.ModelSerializer):
             'confirm_password',
             'band_member',
             'roles',
+            'is_registered',
         )
         read_only_fields = ('created_at', 'updated_at',)
 

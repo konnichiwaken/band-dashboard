@@ -28,7 +28,6 @@ from attendance.views import GetUnassignedMembersView
 from attendance.views import SubstitutionFormViewSet
 from attendance.views import UnassignedAttendanceView
 from authentication.views import AccountViewSet
-from authentication.views import ConfirmAccountView
 from authentication.views import CreateAccountsView
 from authentication.views import CreatePasswordView
 from authentication.views import LoginView
@@ -81,7 +80,6 @@ urlpatterns = patterns(
         DeclineSubstitutionForm.as_view(),
         name='decline_substitution_form'),
     url(r'^api/v1/create_accounts/$', CreateAccountsView.as_view(), name='create_accounts'),
-    url(r'^api/v1/confirm_account/$', ConfirmAccountView.as_view(), name='confirm_account'),
     url(r'^api/v1/create_password/$', CreatePasswordView.as_view(), name='create_password'),
     url('^.*$', IndexView.as_view(), name='index'),
 )

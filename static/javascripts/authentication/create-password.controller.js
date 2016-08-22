@@ -19,20 +19,6 @@
 
     vm.createPassword = createPassword;
 
-    activate();
-
-    /**
-     * @name activate
-     * @desc Actions to be performed when this controller is instantiated
-     * @memberOf band-dash.authentication.CreatePasswordController
-     */
-    function activate() {
-      var token = $stateParams.token;
-      Authentication.confirmAccount(token).then(function(email) {
-        vm.email = email;
-      });
-    }
-
     function createPassword() {
       if (!vm.password) {
         Snackbar.error("Please enter a password");
