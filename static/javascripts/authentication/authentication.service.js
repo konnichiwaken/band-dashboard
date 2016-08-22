@@ -171,12 +171,15 @@
     }
 
     function createPassword(email, password) {
-      return $http.post('/api/v1/create_password/', {email: email, password: password}).then(
+      return $http.post('/api/v1/create_password/', {password: password}).then(
         createPasswordSuccessFn,
         createPasswordErrorFn)
 
       function createPasswordSuccessFn(data, status, headers, config) {
-        window.location = '/login';
+        var account = getAuthenticatedAccount();
+        account.is_registered = true;
+        setAuthenticatedAccount(account);
+        window.location = '/attendance/all';
       }
 
       function createPasswordErrorFn(data, status, headers, config) {

@@ -10,10 +10,12 @@
       .defineRole('director', function() {
         if (Authentication.isAuthenticated()) {
           var account = Authentication.getAuthenticatedAccount();
-          for (var i = 0; i < account.roles.length; i++) {
-            var role = account.roles[i];
-            if ($filter('lowercase')(role) === 'director') {
-              return true;
+          if (account.is_registered) {
+            for (var i = 0; i < account.roles.length; i++) {
+              var role = account.roles[i];
+              if ($filter('lowercase')(role) === 'director') {
+                return true;
+              }
             }
           }
         }
@@ -25,10 +27,12 @@
       .defineRole('president', function() {
         if (Authentication.isAuthenticated()) {
           var account = Authentication.getAuthenticatedAccount();
-          for (var i = 0; i < account.roles.length; i++) {
-            var role = account.roles[i];
-            if ($filter('lowercase')(role) === 'president') {
-              return true;
+          if (account.is_registered) {
+            for (var i = 0; i < account.roles.length; i++) {
+              var role = account.roles[i];
+              if ($filter('lowercase')(role) === 'president') {
+                return true;
+              }
             }
           }
         }
@@ -40,10 +44,12 @@
       .defineRole('secretary', function() {
         if (Authentication.isAuthenticated()) {
           var account = Authentication.getAuthenticatedAccount();
-          for (var i = 0; i < account.roles.length; i++) {
-            var role = account.roles[i];
-            if ($filter('lowercase')(role) === 'secretary') {
-              return true;
+          if (account.is_registered) {
+            for (var i = 0; i < account.roles.length; i++) {
+              var role = account.roles[i];
+              if ($filter('lowercase')(role) === 'secretary') {
+                return true;
+              }
             }
           }
         }
@@ -54,6 +60,16 @@
     PermissionStore
       .definePermission('isAuthenticated', function() {
         return Authentication.isAuthenticated();
+      });
+
+    PermissionStore
+      .definePermission('isRegistered', function() {
+        var account = Authentication.getAuthenticatedAccount();
+        if (account) {
+          return account.is_registered;
+        } else {
+          return false;
+        }
       });
   }
 })();

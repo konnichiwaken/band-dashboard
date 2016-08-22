@@ -3,6 +3,7 @@ import json
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
+from django.contrib.auth import update_session_auth_hash
 from rest_framework import status
 from rest_framework import views
 from rest_framework import viewsets
@@ -13,8 +14,6 @@ from authentication.models import Account
 from authentication.permissions import CanCreateAccount
 from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer
-from authentication.utils import confirm_token
-from authentication.utils import send_registration_email
 from attendance.models import Band
 from emails.tasks import send_unsent_emails
 from members.models import BandMember
@@ -94,48 +93,24 @@ class CreateAccountsView(views.APIView):
                 band.unassigned_members.add(band_member)
                 band.save()
 
-            send_registration_email(account)
-
-        send_unsent_emails.apply_async(())
         return Response({}, status=status.HTTP_201_CREATED)
-
-
-class ConfirmAccountView(views.APIView):
-
-    def post(self, request, format=None):
-        data = json.loads(request.body)
-        token = data.get('token')
-        if token:
-            email = confirm_token(token)
-        else:
-            return Response({}, status=status.HTTP_400_BAD_REQUEST)
-
-        if email:
-            try:
-                account = Account.objects.get(email=email)
-            except Account.DoesNotExist:
-                return Response({}, status=status.HTTP_404_NOT_FOUND)
-            else:
-                return Response({
-                    'email': email,
-                    'name': account.get_full_name(),
-                }, status=status.HTTP_200_OK)
 
 
 class CreatePasswordView(views.APIView):
 
     def post(self, request, format=None):
         data = json.loads(request.body)
-        email = data.get('email')
+        email = request.user.email
         password = data.get('password')
         if not email or not password:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             account = Account.objects.get(email=email)
-            account.is_active = True
+            account.is_registered = True
             account.set_password(password)
             account.save()
+            update_session_auth_hash(request, account)
             return Response({}, status=status.HTTP_204_NO_CONTENT)
         except Account.DoesNotExist:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
