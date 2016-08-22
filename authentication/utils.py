@@ -10,22 +10,6 @@ def is_account_creation_admin(account):
     return bool(roles.intersection(ACCOUNT_CREATION_ADMIN_ROLES))
 
 
-def send_registration_email(account):
-    token = generate_confirmation_token(account.email)
-    message = """
-    Hello!
-
-    Welcome to DUMBDash. DUMBDash is the online portal used by the Duke University Marching Band to manage attendance as well as other administrative needs by the band. Please click on this link to activate your account: {}/confirm/{}.
-
-    Sincerely,
-    SG
-    """.format(settings.HOSTNAME, token)
-    Email.objects.create(
-        recipient=account.email,
-        subject="Register your DUMBDash account",
-        body=message)
-
-
 def generate_confirmation_token(email):
     serializer = URLSafeTimedSerializer(settings.SECRET_KEY)
     return serializer.dumps(email, salt=settings.SECURITY_PASSWORD_SALT)
