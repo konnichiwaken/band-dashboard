@@ -7,14 +7,14 @@
 
   angular
     .module('band-dash.authentication')
-    .controller('ConfirmAccountController', ConfirmAccountController);
+    .controller('CreatePasswordController', CreatePasswordController);
 
-  ConfirmAccountController.$inject = ['$location', '$scope', '$stateParams', 'Authentication', 'Snackbar'];
+  CreatePasswordController.$inject = ['$location', '$scope', '$stateParams', 'Authentication', 'Snackbar'];
 
   /**
-  * @namespace ConfirmAccountController
+  * @namespace CreatePasswordController
   */
-  function ConfirmAccountController($location, $scope, $stateParams, Authentication, Snackbar) {
+  function CreatePasswordController($location, $scope, $stateParams, Authentication, Snackbar) {
     var vm = this;
 
     vm.createPassword = createPassword;
@@ -24,7 +24,7 @@
     /**
      * @name activate
      * @desc Actions to be performed when this controller is instantiated
-     * @memberOf band-dash.authentication.ConfirmAccountController
+     * @memberOf band-dash.authentication.CreatePasswordController
      */
     function activate() {
       var token = $stateParams.token;

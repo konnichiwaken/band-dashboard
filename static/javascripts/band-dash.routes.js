@@ -153,11 +153,11 @@
         },
         templateUrl: '/static/templates/attendance/pending-substitution-forms.html'
       })
-      .state('confirm_account', {
-        url: '/confirm/:token',
-        controller: 'ConfirmAccountController',
+      .state('create_password', {
+        url: '/create_password',
+        controller: 'CreatePasswordController',
         controllerAs: 'vm',
-        templateUrl: '/static/templates/authentication/confirm-account.html'
+        templateUrl: '/static/templates/authentication/create-password.html'
       });
   }
 })();
