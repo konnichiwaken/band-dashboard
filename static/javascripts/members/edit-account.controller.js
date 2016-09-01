@@ -9,13 +9,15 @@
     .module('band-dash.members')
     .controller('EditAccountController', EditAccountController);
 
-  EditAccountController.$inject = ['$http', '$stateParams'];
+  EditAccountController.$inject = ['$http', '$stateParams', 'Members'];
 
   /**
   * @namespace EditAccountController
   */
-  function EditAccountController($http, $stateParams) {
+  function EditAccountController($http, $stateParams, Members) {
     var vm = this;
+
+    vm.editAccount = editAccount;
 
     activate();
 
@@ -23,6 +25,10 @@
       $http.get('/api/v1/accounts/' + $stateParams.account + '/').success(function(response) {
         vm.account = response;
       });
+    }
+
+    function editAccount() {
+      Members.editMember(vm.account.band_member);
     }
   }
 })();

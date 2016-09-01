@@ -21,7 +21,8 @@
     * @desc The Factory to be returned
     */
     var Members = {
-      createBand: createBand
+      createBand: createBand,
+      editMember: editMember,
     };
 
     return Members;
@@ -38,6 +39,12 @@
     function createBand(identifier) {
       return $http.post('/api/v1/members/band/', {
         identifier: identifier
+      });
+    }
+
+    function editMember(member) {
+      return $http.patch('/api/v1/members/' + member.id + '/', {
+        instrument_number: member.instrument_number,
       });
     }
   }
