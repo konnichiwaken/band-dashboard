@@ -165,6 +165,18 @@
           }
         },
         templateUrl: '/static/templates/authentication/create-password.html'
+      })
+      .state('member_management', {
+        url: '/members/all',
+        controller: 'MemberManagementController',
+        controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['director', 'president', 'secretary'],
+            redirectTo: 'login',
+          }
+        },
+        templateUrl: '/static/templates/members/member-management.html'
       });
   }
 })();

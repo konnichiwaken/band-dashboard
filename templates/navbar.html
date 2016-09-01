@@ -33,6 +33,11 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Members <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/bands/assign">Band Assignments</a></li>
+              <li>
+                <a href="/members/all" permission permission-only="['director','president','secretary']">
+                  Band Member Management
+                </a>
+              </li>
               <li role="separator" class="divider" permission permission-only="['director','president','secretary']"></li>
               <li>
                 <a href="/bands/create" permission permission-only="['director','president','secretary']">
