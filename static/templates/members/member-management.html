@@ -9,9 +9,9 @@
           <th>Section</th>
         </tr>
 
-        <tr ng-repeat="member in vm.members">
-          <td>{{member.name}}</td>
-          <td>{{member.section}}</td>
+        <tr ng-repeat="account in vm.accounts">
+          <td>{{account.first_name}} {{account.last_name}}</td>
+          <td>{{account.member.section}}</td>
         </tr>
       </table>
     </div>

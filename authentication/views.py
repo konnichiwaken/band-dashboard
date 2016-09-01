@@ -12,7 +12,7 @@ from rest_framework.response import Response
 
 from authentication.models import Account
 from authentication.permissions import CanCreateAccount
-from authentication.permissions import IsAccountOwner
+from authentication.permissions import IsAccountAdminOrAccountOwner
 from authentication.serializers import AccountSerializer
 from attendance.models import Band
 from emails.tasks import send_unsent_emails
@@ -24,8 +24,7 @@ class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
     permission_classes = (
-        CanCreateAccount,
-        IsAccountOwner,
+        IsAccountAdminOrAccountOwner,
         IsAuthenticated,
     )
 

@@ -9,12 +9,20 @@
     .module('band-dash.members')
     .controller('MemberManagementController', MemberManagementController);
 
-  MemberManagementController.$inject = [];
+  MemberManagementController.$inject = ['$http'];
 
   /**
   * @namespace MemberManagementController
   */
-  function MemberManagementController() {
+  function MemberManagementController($http) {
     var vm = this;
+
+    activate();
+
+    function activate() {
+      $http.get('/api/v1/accounts/').success(function(response) {
+        vm.accounts = response;
+      });
+    }
   }
 })();
