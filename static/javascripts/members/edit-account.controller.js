@@ -9,12 +9,18 @@
     .module('band-dash.members')
     .controller('EditAccountController', EditAccountController);
 
-  EditAccountController.$inject = ['$http', '$stateParams', 'Authentication', 'Members'];
+  EditAccountController.$inject = [
+    '$http',
+    '$stateParams',
+    'Authentication',
+    'Members',
+    'Snackbar',
+  ];
 
   /**
   * @namespace EditAccountController
   */
-  function EditAccountController($http, $stateParams, Authentication, Members) {
+  function EditAccountController($http, $stateParams, Authentication, Members, Snackbar) {
     var vm = this;
 
     vm.editAccount = editAccount;
@@ -39,13 +45,26 @@
     }
 
     function editAccount() {
+      var error = '';
       if ((vm.password || vm.confirmedPassword) && vm.password !== vm.confirmedPassword) {
+        error = 'Password and confirmed password do not match';
+      } else if (!vm.account.first_name) {
+        error = 'Please enter a first name';
+      } else if (!vm.account.last_name) {
+        error = 'Please enter a last name';
+      } else if (!vm.account.email) {
+        error = 'Please enter an email';
+      }
+
+      if (error) {
+        Snackbar.error(error);
         return;
       }
 
       Members.editMember(vm.account.band_member);
       Authentication.editAccount(vm.account, vm.password);
       vm.firstName = vm.account.first_name;
+      Snackbar.show(`Successfully updated ${vm.account.first_name}'s information`);
     }
   }
 })();
