@@ -39,8 +39,12 @@
     }
 
     function editAccount() {
+      if ((vm.password || vm.confirmedPassword) && vm.password !== vm.confirmedPassword) {
+        return;
+      }
+
       Members.editMember(vm.account.band_member);
-      Authentication.editAccount(vm.account);
+      Authentication.editAccount(vm.account, vm.password);
       vm.firstName = vm.account.first_name;
     }
   }
