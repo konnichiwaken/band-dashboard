@@ -38,7 +38,14 @@
     activate();
 
     function activate() {
-      $http.get('/api/v1/accounts/' + $stateParams.account + '/').success(function(response) {
+      var account_id = parseInt($stateParams.account);
+      if (Authentication.getAuthenticatedAccount().id === account_id) {
+        vm.isEditingSelf = true;
+      } else {
+        vm.isEditingSelf = false;
+      }
+
+      $http.get('/api/v1/accounts/' + account_id + '/').success(function(response) {
         vm.account = response;
         vm.firstName = vm.account.first_name;
       });

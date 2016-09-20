@@ -39,6 +39,17 @@ class AccountViewSet(viewsets.ModelViewSet):
             'message': 'Account could not be created with received data.',
         }, status=status.HTTP_400_BAD_REQUEST)
 
+    def partial_update(self, request, pk=None):
+        data = json.loads(request.body)
+        if 'password' in data and request.user.id != int(pk):
+            return Response({
+                'status': "Forbidden",
+                'message': "Don't have permission to update password",
+            }, status=status.HTTP_403_FORBIDDEN)
+
+
+        return super(AccountViewSet, self).partial_update(request, pk=pk)
+
 
 class LoginView(views.APIView):
 
