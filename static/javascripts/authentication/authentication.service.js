@@ -24,6 +24,7 @@
       createAccounts: createAccounts,
       createPassword: createPassword,
       confirmAccount: confirmAccount,
+      editAccount: editAccount,
       login: login,
       logout: logout,
       getAuthenticatedAccount: getAuthenticatedAccount,
@@ -185,6 +186,12 @@
       function createPasswordErrorFn(data, status, headers, config) {
         Snackbar.error(data.data);
       }
+    }
+
+    function editAccount(account) {
+      return $http.patch('/api/v1/accounts/' + account.id + '/', {
+        email: account.email,
+      });
     }
   }
 })();

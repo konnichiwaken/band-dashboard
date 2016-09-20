@@ -5,6 +5,11 @@
     <div class="well">
       <form role="form" ng-submit="vm.editAccount()">
         <div class="form-group">
+          <label for="edit__email">Email</label>
+          <input type="email" class="form-control" id="edit__email" ng-model="vm.account.email">
+        </div>
+
+        <div class="form-group">
           <label for="edit__instrument_number">Instrument Number</label>
           <input type="number" class="form-control" id="edit__instrument_number" ng-model="vm.account.band_member.instrument_number">
         </div>

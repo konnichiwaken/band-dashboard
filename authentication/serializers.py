@@ -41,12 +41,13 @@ class AccountSerializer(serializers.ModelSerializer):
         return account
 
     def update(self, instance, validated_data):
-        password = validated_data.get('password', None)
-        confirm_password = validated_data.get('confirm_password', None)
+        password = validated_data.pop('password', None)
+        confirm_password = validated_data.pop('confirm_password', None)
 
         if password and confirm_password and password == confirm_password:
             instance.set_password(password)
             instance.save()
 
         update_session_auth_hash(self.context.get('request'), instance)
+        instance = super(AccountSerializer, self).update(instance, validated_data)
         return instance
