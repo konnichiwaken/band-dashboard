@@ -10,6 +10,12 @@
         </div>
 
         <div class="form-group">
+          <label for="edit__section">Section</label>
+          <select class="form-control" id="edit__section" ng-model="vm.account.band_member.section" ng-options="section.value as section.name for section in vm.sections">
+          </select>
+        </div>
+
+        <div class="form-group">
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>

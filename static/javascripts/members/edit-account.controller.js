@@ -18,6 +18,16 @@
     var vm = this;
 
     vm.editAccount = editAccount;
+    vm.sections = [
+      {value: 'bass', name: 'Bass'},
+      {value: 'clarinet', name: 'Clarinet'},
+      {value: 'drumline', name: 'Drumline'},
+      {value: 'flute', name: 'Flute'},
+      {value: 'mellophone', name: 'Mellophone'},
+      {value: 'saxophone', name: 'Saxophone'},
+      {value: 'trombone', name: 'Trombone'},
+      {value: 'trumpet', name: 'Trumpet'},
+    ];
 
     activate();
 

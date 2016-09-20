@@ -45,6 +45,7 @@
     function editMember(member) {
       return $http.patch('/api/v1/members/' + member.id + '/', {
         instrument_number: member.instrument_number,
+        section: member.section,
       });
     }
   }
