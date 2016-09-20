@@ -34,12 +34,14 @@
     function activate() {
       $http.get('/api/v1/accounts/' + $stateParams.account + '/').success(function(response) {
         vm.account = response;
+        vm.firstName = vm.account.first_name;
       });
     }
 
     function editAccount() {
       Members.editMember(vm.account.band_member);
       Authentication.editAccount(vm.account);
+      vm.firstName = vm.account.first_name;
     }
   }
 })();

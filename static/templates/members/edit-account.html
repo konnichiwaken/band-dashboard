@@ -1,17 +1,31 @@
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <h1 class="text-center">Edit {{vm.account.first_name}}'s Account</h1>
+  <div class="col-md-6 col-md-offset-3">
+    <h1 class="text-center">Edit {{vm.firstName}}'s Account</h1>
 
     <div class="well">
       <form role="form" ng-submit="vm.editAccount()">
-        <div class="form-group">
-          <label for="edit__email">Email</label>
-          <input type="email" class="form-control" id="edit__email" ng-model="vm.account.email">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="edit__first_name">First Name</label>
+            <input type="text" class="form-control" id="edit__first_name" ng-model="vm.account.first_name">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="edit__last_name">Last Name</label>
+            <input type="text" class="form-control" id="edit__last_name" ng-model="vm.account.last_name">
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="edit__instrument_number">Instrument Number</label>
-          <input type="number" class="form-control" id="edit__instrument_number" ng-model="vm.account.band_member.instrument_number">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="edit__email">Email</label>
+            <input type="email" class="form-control" id="edit__email" ng-model="vm.account.email">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="edit__instrument_number">Instrument Number</label>
+            <input type="number" class="form-control" id="edit__instrument_number" ng-model="vm.account.band_member.instrument_number">
+          </div>
         </div>
 
         <div class="form-group">

@@ -191,6 +191,8 @@
     function editAccount(account) {
       return $http.patch('/api/v1/accounts/' + account.id + '/', {
         email: account.email,
+        first_name: account.first_name,
+        last_name: account.last_name,
       });
     }
   }
