@@ -12,7 +12,7 @@ from rest_framework.response import Response
 
 from authentication.models import Account
 from authentication.permissions import CanCreateAccount
-from authentication.permissions import IsAccountOwner
+from authentication.permissions import IsAccountAdminOrAccountOwner
 from authentication.serializers import AccountSerializer
 from attendance.models import Band
 from emails.tasks import send_unsent_emails
@@ -20,12 +20,10 @@ from members.models import BandMember
 
 
 class AccountViewSet(viewsets.ModelViewSet):
-    lookup_field = 'email'
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
     permission_classes = (
-        CanCreateAccount,
-        IsAccountOwner,
+        IsAccountAdminOrAccountOwner,
         IsAuthenticated,
     )
 
@@ -40,6 +38,17 @@ class AccountViewSet(viewsets.ModelViewSet):
             'status': 'Bad request',
             'message': 'Account could not be created with received data.',
         }, status=status.HTTP_400_BAD_REQUEST)
+
+    def partial_update(self, request, pk=None):
+        data = json.loads(request.body)
+        if 'password' in data and request.user.id != int(pk):
+            return Response({
+                'status': "Forbidden",
+                'message': "Don't have permission to update password",
+            }, status=status.HTTP_403_FORBIDDEN)
+
+
+        return super(AccountViewSet, self).partial_update(request, pk=pk)
 
 
 class LoginView(views.APIView):

@@ -33,6 +33,7 @@ from authentication.views import CreatePasswordView
 from authentication.views import LoginView
 from authentication.views import LogoutView
 from band_dashboard.views import IndexView
+from members.views import BandMemberViewSet
 from members.views import BandViewSet
 from members.views import BandAssignmentView
 from members.views import UnassignedMembersView
@@ -43,6 +44,7 @@ router.register(r'accounts', AccountViewSet)
 router.register(r'attendance/event', EventViewSet, base_name='event')
 router.register(r'attendance/event_type', EventTypeViewSet)
 router.register(r'attendance/event_attendance', AttendanceViewSet, base_name='event_attendance')
+router.register(r'members', BandMemberViewSet)
 router.register(r'members/band', BandViewSet)
 router.register(
     r'attendance/substitution_form',

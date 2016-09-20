@@ -165,6 +165,30 @@
           }
         },
         templateUrl: '/static/templates/authentication/create-password.html'
+      })
+      .state('member_management', {
+        url: '/members/all',
+        controller: 'MemberManagementController',
+        controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['director', 'president', 'secretary'],
+            redirectTo: 'view_attendance',
+          }
+        },
+        templateUrl: '/static/templates/members/member-management.html'
+      })
+      .state('edit_account', {
+        url: '/accounts/edit/:account',
+        controller: 'EditAccountController',
+        controllerAs: 'vm',
+        data: {
+          permissions: {
+            only: ['director', 'president', 'secretary'],
+            redirectTo: 'view_attendance',
+          }
+        },
+        templateUrl: '/static/templates/members/edit-account.html'
       });
   }
 })();

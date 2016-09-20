@@ -11,8 +11,10 @@ from attendance.models import Event
 from attendance.permissions import IsAttendanceAdmin
 from attendance.permissions import IsAttendanceAdminOrReadOnly
 from authentication.models import Account
+from authentication.permissions import IsAccountAdminOrAccountOwner
 from members.models import Band
 from members.models import BandMember
+from members.serializers import BandMemberSerializer
 from members.serializers import BandSerializer
 
 
@@ -103,6 +105,12 @@ class BandAssignmentView(views.APIView):
                 'status': 'Bad request',
                 'message': 'Missing parameter in request',
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class BandMemberViewSet(viewsets.ModelViewSet):
+    queryset = BandMember.objects.all()
+    serializer_class = BandMemberSerializer
+    permission_classes = (IsAuthenticated, IsAccountAdminOrAccountOwner,)
 
 
 class UnassignedMembersView(views.APIView):
