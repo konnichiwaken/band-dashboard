@@ -11,6 +11,7 @@
 
   EditAccountController.$inject = [
     '$http',
+    '$q',
     '$stateParams',
     'Authentication',
     'Members',
@@ -20,7 +21,7 @@
   /**
   * @namespace EditAccountController
   */
-  function EditAccountController($http, $stateParams, Authentication, Members, Snackbar) {
+  function EditAccountController($http, $q, $stateParams, Authentication, Members, Snackbar) {
     var vm = this;
 
     vm.editAccount = editAccount;
@@ -68,10 +69,14 @@
         return;
       }
 
-      Members.editMember(vm.account.band_member);
-      Authentication.editAccount(vm.account, vm.password);
-      vm.firstName = vm.account.first_name;
-      Snackbar.show(`Successfully updated ${vm.account.first_name}'s information`);
+      var editMemberPromise = Members.editMember(vm.account.band_member);
+      var editAccountPromise = Authentication.editAccount(vm.account, vm.password);
+      $q.all([editMemberPromise, editAccountPromise]).then(function() {
+        vm.firstName = vm.account.first_name;
+        Snackbar.show(`Successfully updated ${vm.account.first_name}'s information`);
+      }).catch(function() {
+        Snackbar.error(`Was not able to update ${vm.account.first_name}'s information`);
+      });
     }
   }
 })();
